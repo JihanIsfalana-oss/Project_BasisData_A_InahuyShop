@@ -1,0 +1,151 @@
+@startuml UML-UseCaseDiagram-v1.0-Alpha
+' InahuyShop — UML Use Case Diagram v1.0-Alpha
+' Initial use-case model derived from PRD_Final_Fixed.md v2.0 and Architecture.md.
+' Validate and refine against the authoritative ERD and implementation decisions.
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #444444
+}
+skinparam ArrowColor #555555
+
+title InahuyShop — UML Use Case Diagram v1.0-Alpha
+
+actor "Pengunjung" as Visitor
+actor "Pelanggan" as Customer
+actor "Admin Toko" as Admin
+
+rectangle "InahuyShop E-Commerce Platform" {
+  package "Katalog Publik" {
+    usecase "Lihat katalog produk" as UC_Catalog
+    usecase "Cari produk" as UC_Search
+    usecase "Filter kategori" as UC_Filter
+    usecase "Lihat detail produk" as UC_ProductDetail
+    usecase "Lihat varian, harga,\nketersediaan, gambar,\ndan ulasan" as UC_ProductInfo
+  }
+
+  package "Akun Pelanggan" {
+    usecase "Registrasi pelanggan" as UC_Register
+    usecase "Login pelanggan" as UC_Login
+    usecase "Logout pelanggan" as UC_Logout
+    usecase "Kelola profil" as UC_Profile
+    usecase "Kelola buku alamat" as UC_Address
+  }
+
+  package "Belanja dan Transaksi" {
+    usecase "Kelola keranjang" as UC_Cart
+    usecase "Tambah varian ke keranjang" as UC_AddCart
+    usecase "Ubah jumlah item" as UC_ChangeQty
+    usecase "Hapus item dari keranjang" as UC_RemoveCart
+    usecase "Checkout dan buat pesanan" as UC_Checkout
+    usecase "Validasi keranjang,\nharga, stok, dan total" as UC_ValidateOrder
+    usecase "Terapkan voucher" as UC_Voucher
+    usecase "Pilih alamat pengiriman" as UC_SelectAddress
+    usecase "Bayar dengan simulasi" as UC_Payment
+    usecase "Lihat riwayat dan\ndetail pesanan" as UC_OrderHistory
+    usecase "Lihat status pembayaran" as UC_PaymentStatus
+  }
+
+  package "Pemenuhan Pesanan" {
+    usecase "Akses unduhan digital" as UC_Download
+    usecase "Validasi pembayaran,\nkepemilikan, dan token" as UC_DownloadAuth
+    usecase "Lihat status pengiriman" as UC_ShipmentStatus
+    usecase "Lihat riwayat tracking" as UC_Tracking
+    usecase "Tulis ulasan produk" as UC_Review
+  }
+
+  package "Administrasi Toko" {
+    usecase "Login admin" as UC_AdminLogin
+    usecase "Lihat ringkasan operasional" as UC_Dashboard
+    usecase "Kelola kategori" as UC_Categories
+    usecase "Kelola produk, varian,\ndan gambar" as UC_Products
+    usecase "Kelola ketersediaan stok" as UC_Stock
+    usecase "Kelola voucher" as UC_Vouchers
+    usecase "Cari dan filter pesanan" as UC_AdminOrders
+    usecase "Kelola status pesanan\ndan pembayaran simulasi" as UC_AdminPayment
+    usecase "Kelola pengiriman fisik" as UC_AdminShipment
+    usecase "Kelola nomor dan riwayat tracking" as UC_AdminTracking
+  }
+}
+
+Visitor --> UC_Catalog
+Visitor --> UC_Search
+Visitor --> UC_Filter
+Visitor --> UC_ProductDetail
+Visitor --> UC_Register
+Visitor --> UC_Login
+
+Customer --> UC_Catalog
+Customer --> UC_Search
+Customer --> UC_Filter
+Customer --> UC_ProductDetail
+Customer --> UC_Logout
+Customer --> UC_Profile
+Customer --> UC_Address
+Customer --> UC_Cart
+Customer --> UC_Checkout
+Customer --> UC_Voucher
+Customer --> UC_Payment
+Customer --> UC_OrderHistory
+Customer --> UC_Download
+Customer --> UC_ShipmentStatus
+Customer --> UC_Tracking
+Customer --> UC_Review
+
+Admin --> UC_AdminLogin
+Admin --> UC_Dashboard
+Admin --> UC_Categories
+Admin --> UC_Products
+Admin --> UC_Stock
+Admin --> UC_Vouchers
+Admin --> UC_AdminOrders
+Admin --> UC_AdminPayment
+Admin --> UC_AdminShipment
+Admin --> UC_AdminTracking
+
+UC_ProductDetail .> UC_ProductInfo : <<include>>
+UC_Cart .> UC_AddCart : <<include>>
+UC_Cart .> UC_ChangeQty : <<include>>
+UC_Cart .> UC_RemoveCart : <<include>>
+UC_Checkout .> UC_ValidateOrder : <<include>>
+UC_Voucher .> UC_Checkout : <<extend>>
+UC_SelectAddress .> UC_Checkout : <<extend>>
+UC_Checkout .> UC_SelectAddress : <<include>>\n[jika pesanan fisik/campuran]
+UC_Payment .> UC_Checkout : <<extend>>\n[pesanan dibuat]
+UC_OrderHistory .> UC_PaymentStatus : <<include>>
+UC_Download .> UC_DownloadAuth : <<include>>
+UC_ShipmentStatus .> UC_Tracking : <<include>>
+UC_Review .> UC_OrderHistory : <<extend>>\n[item pesanan memenuhi syarat]
+UC_Products .> UC_Stock : <<include>>
+UC_AdminShipment .> UC_AdminTracking : <<include>>\n[pengiriman fisik]
+
+note right of UC_Payment
+  Pembayaran adalah simulasi internal.
+  Tidak ada integrasi payment gateway eksternal.
+end note
+
+note bottom of UC_Download
+  File digital hanya dapat diakses jika pembayaran berhasil
+  dan kepemilikan pesanan divalidasi oleh backend.
+  Akses harus menggunakan mekanisme/token yang terlindungi.
+end note
+
+note bottom of UC_AdminShipment
+  Pengiriman manual hanya berlaku jika pesanan
+  mengandung varian bertipe physical.
+  Integrasi otomatis API kurir tidak termasuk cakupan.
+end note
+
+note bottom
+  Version: v1.0-Alpha
+  Status: Initial draft; not yet reconciled against all ERD details.
+  Scope source: PRD_Final_Fixed.md v2.0 and Architecture.md.
+  Cross-platform: customer web + Android/iOS; admin web + Android/iOS.
+  Backend/API is authoritative for validation, authorization, and business rules.
+end note
+
+@enduml
