@@ -6,13 +6,13 @@
         "id": "e807ef23-6b4c-44d0-af36-1e93b55691c4",
         "type": "Entity",
         "position": {
-          "x": -500,
-          "y": 300
+          "x": -1012.0156899475877,
+          "y": -134.02361602795744
         },
         "data": {
           "label": "customers",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -26,13 +26,13 @@
         "id": "5c399966-a9ee-49c6-9106-a54e849edeb2",
         "type": "Entity",
         "position": {
-          "x": -720,
-          "y": 100
+          "x": -1354.2693141992368,
+          "y": 107.97219911418362
         },
         "data": {
           "label": "categories",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -46,13 +46,13 @@
         "id": "50eccc1b-2048-4040-bb5d-f70a9e5ed39e",
         "type": "Entity",
         "position": {
-          "x": -420,
-          "y": 100
+          "x": -615.4325664764128,
+          "y": -101.01398266744503
         },
         "data": {
           "label": "products",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -66,13 +66,13 @@
         "id": "68c96cd5-8d25-4ff2-bea6-67438d6fb607",
         "type": "Entity",
         "position": {
-          "x": 350,
-          "y": 250
+          "x": 650,
+          "y": -350
         },
         "data": {
           "label": "orders",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -86,13 +86,13 @@
         "id": "469c6201-c89d-4ca8-9e19-f51202a14e4d",
         "type": "Entity",
         "position": {
-          "x": 720,
-          "y": 220
+          "x": 962.4904775854335,
+          "y": -121.18410196270504
         },
         "data": {
           "label": "payments",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -106,13 +106,13 @@
         "id": "3a170dc7-7341-48b5-a4e8-31d18005cb2b",
         "type": "Entity",
         "position": {
-          "x": 720,
-          "y": 820
+          "x": 309.9785834866581,
+          "y": 910.023558164676
         },
         "data": {
           "label": "shipments",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -126,13 +126,13 @@
         "id": "d5aaaac5-4ded-494f-8d1f-7bd2a246b7fb",
         "type": "Entity",
         "position": {
-          "x": -520,
-          "y": 700
+          "x": -590,
+          "y": 988
         },
         "data": {
           "label": "carts",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -146,13 +146,13 @@
         "id": "d8d441b3-09f1-4385-838f-7977c51721f4",
         "type": "Entity",
         "position": {
-          "x": 970,
-          "y": 120
+          "x": 1356.987140457754,
+          "y": 534.4283688348554
         },
         "data": {
           "label": "vouchers",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -166,13 +166,13 @@
         "id": "5f977320-471c-4cc5-9ac9-1fe5fa6cef00",
         "type": "Entity",
         "position": {
-          "x": -850,
-          "y": 500
+          "x": -871.5932999545388,
+          "y": 292.0850146851599
         },
         "data": {
           "label": "seller",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -186,13 +186,13 @@
         "id": "78b51673-7f17-4fff-9c68-c2cd672d5b07",
         "type": "Entity",
         "position": {
-          "x": 600,
-          "y": 480
+          "x": 885.1938230979255,
+          "y": 645.2509570605497
         },
         "data": {
           "label": "order_item",
           "type": "Associative",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -206,13 +206,13 @@
         "id": "2bb1e5af-89c3-4517-98c9-ad29ee21b29d",
         "type": "Entity",
         "position": {
-          "x": -760,
-          "y": 920
+          "x": -870,
+          "y": 884
         },
         "data": {
           "label": "cart_item",
           "type": "Associative",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -226,13 +226,13 @@
         "id": "90dace06-cd88-4e7d-a618-df8e15f293af",
         "type": "Entity",
         "position": {
-          "x": 120,
-          "y": 110
+          "x": 207.93073330505146,
+          "y": -269.62873051507574
         },
         "data": {
           "label": "product_image",
           "type": "Weak",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -246,13 +246,13 @@
         "id": "98581510-3860-4ccd-88d3-fcc634c96d45",
         "type": "Entity",
         "position": {
-          "x": -140,
-          "y": 120
+          "x": -210,
+          "y": -280
         },
         "data": {
           "label": "product_variant",
           "type": "Weak",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -266,13 +266,13 @@
         "id": "b75b4e2c-19ce-43c8-8040-dec3b909ac0e",
         "type": "Entity",
         "position": {
-          "x": 950,
-          "y": 980
+          "x": 554,
+          "y": 1224
         },
         "data": {
           "label": "shipment_track",
           "type": "Weak",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -286,13 +286,13 @@
         "id": "d799de3e-b1bf-4c3f-b4c5-44699eb2b45d",
         "type": "Entity",
         "position": {
-          "x": 900,
-          "y": 620
+          "x": 1470.2137008581751,
+          "y": 45.751435761082455
         },
         "data": {
           "label": "reviews",
           "type": "Associative",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -306,13 +306,13 @@
         "id": "495cd183-1c2d-4820-936e-ddf6ec4bd15a",
         "type": "Entity",
         "position": {
-          "x": 1030,
-          "y": 360
+          "x": 1108.1927486200773,
+          "y": 286.0042833026684
         },
         "data": {
           "label": "order_vouchers",
           "type": "Associative",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -338,7 +338,7 @@
             "Multivalued": false
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -361,7 +361,7 @@
             "Composite": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -375,14 +375,14 @@
         "parentId": "9644f5bf-909d-4139-b2dd-ed9f5bd77e3a",
         "type": "Attribute",
         "position": {
-          "x": -47,
-          "y": -98
+          "x": -1.4376263899856099,
+          "y": -64.59785448184758
         },
         "data": {
           "label": "first_name",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -403,7 +403,7 @@
           "label": "last_name",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -426,7 +426,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -449,7 +449,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -470,7 +470,7 @@
           "label": "password_hash",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -491,7 +491,7 @@
           "label": "birth_date",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -512,7 +512,7 @@
           "label": "created_at",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -533,7 +533,7 @@
           "label": "is_active",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -556,7 +556,7 @@
             "Derived": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -569,13 +569,13 @@
         "id": "a0775d34-a133-42e0-8dad-35f0974dddce",
         "type": "Entity",
         "position": {
-          "x": -180,
-          "y": 520
+          "x": -134,
+          "y": 1031.75
         },
         "data": {
           "label": "customer_address",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -599,7 +599,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -620,7 +620,7 @@
           "label": "customer_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -641,7 +641,7 @@
           "label": "label",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -662,7 +662,7 @@
           "label": "street",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -684,7 +684,7 @@
             "Composite": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -705,7 +705,7 @@
           "label": "city",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -726,7 +726,7 @@
           "label": "province",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -747,7 +747,7 @@
           "label": "postal_code",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -768,7 +768,7 @@
           "label": "is_default",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -791,7 +791,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -812,7 +812,7 @@
           "label": "parent_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -833,7 +833,7 @@
           "label": "name",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -856,7 +856,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -879,7 +879,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -899,7 +899,7 @@
           "label": "category_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -920,7 +920,7 @@
           "label": "name",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -941,7 +941,7 @@
           "label": "description",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -962,7 +962,7 @@
           "label": "brand",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -983,7 +983,7 @@
           "label": "is_active",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1004,7 +1004,7 @@
           "label": "created_at",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1027,7 +1027,7 @@
             "Partially Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1048,7 +1048,7 @@
           "label": "product_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1069,7 +1069,7 @@
           "label": "sku",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1090,7 +1090,7 @@
           "label": "variant_name",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1111,7 +1111,7 @@
           "label": "price",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1132,7 +1132,7 @@
           "label": "stock_qty",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1153,7 +1153,7 @@
           "label": "weight_gram",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1176,7 +1176,7 @@
             "Partially Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1197,7 +1197,7 @@
           "label": "product_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1218,7 +1218,7 @@
           "label": "url",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1239,7 +1239,7 @@
           "label": "sort_order",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1262,7 +1262,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1282,7 +1282,7 @@
           "label": "customer_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1303,7 +1303,7 @@
           "label": "updated_at",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1326,7 +1326,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1346,7 +1346,7 @@
           "label": "variant_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1367,7 +1367,7 @@
           "label": "quantity",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1390,7 +1390,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1413,7 +1413,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1434,7 +1434,7 @@
           "label": "customer_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1455,7 +1455,7 @@
           "label": "shipping_address_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1476,7 +1476,7 @@
           "label": "order_date",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1497,7 +1497,7 @@
           "label": "status",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1518,7 +1518,7 @@
           "label": "subtotal",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1539,7 +1539,7 @@
           "label": "discount_amount",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1560,7 +1560,7 @@
           "label": "shipping_cost",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1581,7 +1581,7 @@
           "label": "grand_total",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1604,7 +1604,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1625,7 +1625,7 @@
           "label": "order_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1646,7 +1646,7 @@
           "label": "variant_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1660,14 +1660,14 @@
         "parentId": "78b51673-7f17-4fff-9c68-c2cd672d5b07",
         "type": "Attribute",
         "position": {
-          "x": 154.2462120245873,
-          "y": 78.24621202458752
+          "x": 212.0123598954483,
+          "y": 71.07029303441846
         },
         "data": {
           "label": "product_name_snapshot",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1681,34 +1681,35 @@
         "parentId": "78b51673-7f17-4fff-9c68-c2cd672d5b07",
         "type": "Attribute",
         "position": {
-          "x": 1.928818708657081e-14,
-          "y": 105
+          "x": 108,
+          "y": 133
         },
         "data": {
           "label": "unit_price",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
           "height": 50
         },
-        "selected": false
+        "selected": false,
+        "dragging": false
       },
       {
         "id": "ca5ad8bf-bbbb-4150-b45a-61dbdb8c57ee",
         "parentId": "78b51673-7f17-4fff-9c68-c2cd672d5b07",
         "type": "Attribute",
         "position": {
-          "x": -131.24621202458752,
-          "y": 110.24621202458752
+          "x": -111.24621202458752,
+          "y": 100.24621202458752
         },
         "data": {
           "label": "quantity",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1729,7 +1730,7 @@
           "label": "line_total",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1752,7 +1753,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1773,7 +1774,7 @@
           "label": "order_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1794,7 +1795,7 @@
           "label": "method",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1815,7 +1816,7 @@
           "label": "amount",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1836,7 +1837,7 @@
           "label": "status",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1856,7 +1857,7 @@
           "label": "payment_reference",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1877,7 +1878,7 @@
           "label": "paid_at",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1900,7 +1901,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1923,7 +1924,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1944,7 +1945,7 @@
           "label": "courier",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1965,7 +1966,7 @@
           "label": "service_type",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -1986,7 +1987,7 @@
           "label": "tracking_number",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2007,7 +2008,7 @@
           "label": "shipped_at",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2030,7 +2031,7 @@
             "Partially Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2051,7 +2052,7 @@
           "label": "tracking_seq",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2072,7 +2073,7 @@
           "label": "status",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2093,7 +2094,7 @@
           "label": "event_time",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2116,7 +2117,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2139,7 +2140,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2160,7 +2161,7 @@
           "label": "discount_type",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2181,7 +2182,7 @@
           "label": "discount_value",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2202,7 +2203,7 @@
           "label": "min_purchase",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2223,7 +2224,7 @@
           "label": "valid_until",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2244,7 +2245,7 @@
           "label": "usage_limit",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2265,7 +2266,7 @@
           "label": "order_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2285,7 +2286,7 @@
           "label": "voucher_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2306,7 +2307,7 @@
           "label": "discount_applied",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2329,7 +2330,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2349,7 +2350,7 @@
           "label": "order_item_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2370,7 +2371,7 @@
           "label": "rating",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2391,7 +2392,7 @@
           "label": "comment",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2412,7 +2413,7 @@
           "label": "created_at",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2435,7 +2436,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2457,7 +2458,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2478,7 +2479,7 @@
           "label": "password_hash",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2509,7 +2510,7 @@
             "maxCardinality": "Many"
           },
           "isSelected": false,
-          "isConnectable": false,
+          "isConnectable": true,
           "isIdentifying": false
         },
         "measured": {
@@ -2523,8 +2524,8 @@
         "id": "9bf7a2d1-8026-4722-8c2a-8cda00829790",
         "type": "Relationship",
         "position": {
-          "x": 325.338134765625,
-          "y": 384.5
+          "x": 499.338134765625,
+          "y": -123.5
         },
         "data": {
           "label": "membuat",
@@ -2539,20 +2540,21 @@
             "exactConstraints": []
           },
           "isSelected": false,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
           "height": 50
         },
-        "selected": false
+        "selected": false,
+        "dragging": false
       },
       {
         "id": "9b2012b3-ada5-4b4e-a57f-232fa6b51211",
         "type": "Relationship",
         "position": {
-          "x": -193.3125,
-          "y": 368.5
+          "x": -460.1684074335024,
+          "y": 433.2518010684234
         },
         "data": {
           "label": "memiliki",
@@ -2565,7 +2567,7 @@
             "maxCardinality": "One"
           },
           "isSelected": false,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2578,8 +2580,8 @@
         "id": "f0d63776-7e4a-4346-98a4-4712509897a2",
         "type": "Relationship",
         "position": {
-          "x": -590.442138671875,
-          "y": 436
+          "x": -645.3830607905372,
+          "y": 693.0450284837412
         },
         "data": {
           "label": "berisi",
@@ -2592,7 +2594,7 @@
             "maxCardinality": "Many"
           },
           "isSelected": false,
-          "isConnectable": false,
+          "isConnectable": true,
           "isIdentifying": true
         },
         "measured": {
@@ -2620,7 +2622,7 @@
             "maxCardinality": "Many"
           },
           "isSelected": false,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2649,7 +2651,7 @@
           },
           "isSelected": false,
           "isIdentifying": true,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2662,8 +2664,8 @@
         "id": "f071da67-c4f4-4e21-a9bd-dc92f73a4788",
         "type": "Relationship",
         "position": {
-          "x": 535.275634765625,
-          "y": 577.5624923706055
+          "x": 541.275634765625,
+          "y": 653.5624923706055
         },
         "data": {
           "label": "dibayar lewat",
@@ -2677,7 +2679,7 @@
             "minCardinality": "Mandatory"
           },
           "isSelected": false,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2705,7 +2707,7 @@
           },
           "isSelected": false,
           "isIdentifying": true,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2718,8 +2720,8 @@
         "id": "fac0b06f-a082-4c91-b89b-3fd520cf9c1b",
         "type": "Relationship",
         "position": {
-          "x": -608.75,
-          "y": 1231.3749694824219
+          "x": -1332.75,
+          "y": -7.625030517578125
         },
         "data": {
           "label": "induk dari",
@@ -2734,7 +2736,7 @@
           "isSelfReferencing": true,
           "isIdentifying": false,
           "isSelected": false,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2747,8 +2749,8 @@
         "id": "5e7078e4-fdef-4828-b513-e5d3793f8f08",
         "type": "Relationship",
         "position": {
-          "x": -435.4375,
-          "y": 914.6874847412109
+          "x": -939.4223212204718,
+          "y": 109.76092863347264
         },
         "data": {
           "label": "mengelompokkan",
@@ -2761,7 +2763,7 @@
             "maxCardinality": "Many"
           },
           "isSelected": false,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2790,7 +2792,7 @@
           },
           "isSelected": false,
           "isIdentifying": true,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2802,8 +2804,8 @@
         "id": "0cd23adb-85db-4da1-841d-7bfd81d91e1d",
         "type": "Relationship",
         "position": {
-          "x": 512.525634765625,
-          "y": 188
+          "x": 530.0876154278549,
+          "y": 72.54068561384878
         },
         "data": {
           "label": "dikirim via",
@@ -2816,7 +2818,7 @@
             "maxCardinality": "One"
           },
           "isSelected": false,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2829,8 +2831,8 @@
         "id": "783a2fcb-48a7-4199-bcab-c01f85c93728",
         "type": "Relationship",
         "position": {
-          "x": 255.25,
-          "y": 3.875
+          "x": 435.25,
+          "y": 1050.125
         },
         "data": {
           "label": "memiliki",
@@ -2844,12 +2846,14 @@
           },
           "isSelected": false,
           "isIdentifying": true,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
           "height": 50
-        }
+        },
+        "selected": false,
+        "dragging": false
       },
       {
         "id": "67051ac6-64f9-435e-ad86-f3cb88c3f6d1",
@@ -2869,7 +2873,7 @@
             "maxCardinality": "Many"
           },
           "isSelected": false,
-          "isConnectable": false
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2896,7 +2900,8 @@
             "maxCardinality": "One",
             "minCardinality": "Optional"
           },
-          "isSelected": false
+          "isSelected": false,
+          "isConnectable": true
         },
         "measured": {
           "width": 100,
@@ -2909,14 +2914,14 @@
         "parentId": "98581510-3860-4ccd-88d3-fcc634c96d45",
         "type": "Attribute",
         "position": {
-          "x": 148,
-          "y": 84
+          "x": -89.67029053204487,
+          "y": -103.98921089351867
         },
         "data": {
           "label": "delivery_type",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2930,14 +2935,14 @@
         "parentId": "90dace06-cd88-4e7d-a618-df8e15f293af",
         "type": "Attribute",
         "position": {
-          "x": -70,
-          "y": 105
+          "x": -78,
+          "y": -83
         },
         "data": {
           "label": "alt_text",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -2950,13 +2955,13 @@
         "id": "d133d3bf-fc56-45ad-933d-7de6a57f4859",
         "type": "Entity",
         "position": {
-          "x": 1040,
-          "y": 560
+          "x": 1188.4215009430209,
+          "y": 911.5499387124478
         },
         "data": {
           "label": "digital_asset",
           "type": "Regular",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -2980,7 +2985,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3001,7 +3006,7 @@
           "label": "variant_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3022,7 +3027,7 @@
           "label": "file_url",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3043,7 +3048,7 @@
           "label": "file_name",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3064,7 +3069,7 @@
           "label": "file_size",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3085,7 +3090,7 @@
           "label": "created_at",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3098,13 +3103,13 @@
         "id": "a13045d6-c789-417b-9555-9c0d621b5538",
         "type": "Entity",
         "position": {
-          "x": 1220,
-          "y": 820
+          "x": 1058.0728161453626,
+          "y": 1271.6787522998711
         },
         "data": {
           "label": "digital_delivery",
           "type": "Associative",
-          "isConnectable": true,
+          "isConnectable": false,
           "isSelected": false
         },
         "measured": {
@@ -3128,7 +3133,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3149,7 +3154,7 @@
           "label": "order_item_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3170,7 +3175,7 @@
           "label": "asset_id",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3193,7 +3198,7 @@
             "Unique": true
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3214,7 +3219,7 @@
           "label": "expires_at",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3235,7 +3240,7 @@
           "label": "download_count",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3256,7 +3261,7 @@
           "label": "created_at",
           "types": [],
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": false
         },
         "measured": {
           "width": 100,
@@ -3275,7 +3280,7 @@
         "data": {
           "label": "menggunakan alamat",
           "isSelected": false,
-          "isConnectable": false,
+          "isConnectable": true,
           "sourceEntityDetails": {
             "id": "68c96cd5-8d25-4ff2-bea6-67438d6fb607",
             "maxCardinality": "One",
@@ -3304,7 +3309,7 @@
         "data": {
           "label": "dipesan sebagai",
           "isSelected": false,
-          "isConnectable": false,
+          "isConnectable": true,
           "sourceEntityDetails": {
             "id": "98581510-3860-4ccd-88d3-fcc634c96d45",
             "maxCardinality": "One"
@@ -3327,13 +3332,13 @@
         "id": "ca5936f4-97b5-467f-bd70-7ef3317196e3",
         "type": "Relationship",
         "position": {
-          "x": 830,
-          "y": 820
+          "x": 690,
+          "y": 888
         },
         "data": {
           "label": "memiliki aset digital",
           "isSelected": false,
-          "isConnectable": false,
+          "isConnectable": true,
           "sourceEntityDetails": {
             "id": "98581510-3860-4ccd-88d3-fcc634c96d45",
             "maxCardinality": "One"
@@ -3341,7 +3346,7 @@
           "targetEntityDetails": {
             "id": "d133d3bf-fc56-45ad-933d-7de6a57f4859",
             "maxCardinality": "Many",
-            "minCardinality": "Mandatory"
+            "minCardinality": "Optional"
           },
           "isIdentifying": false
         },
@@ -3362,7 +3367,7 @@
         "data": {
           "label": "menerima penyerahan digital",
           "isSelected": false,
-          "isConnectable": false,
+          "isConnectable": true,
           "sourceEntityDetails": {
             "id": "78b51673-7f17-4fff-9c68-c2cd672d5b07",
             "maxCardinality": "One"
@@ -3385,13 +3390,13 @@
         "id": "d5ef1e35-6857-4d56-9cc6-16ebaa8346cb",
         "type": "Relationship",
         "position": {
-          "x": 1260,
-          "y": 790
+          "x": 1326.13278238272,
+          "y": 1087.7237269778893
         },
         "data": {
           "label": "digunakan pada penyerahan",
           "isSelected": false,
-          "isConnectable": false,
+          "isConnectable": true,
           "sourceEntityDetails": {
             "id": "d133d3bf-fc56-45ad-933d-7de6a57f4859",
             "maxCardinality": "One"
@@ -4504,9 +4509,9 @@
       }
     ],
     "viewport": {
-      "x": 80,
-      "y": 40,
-      "zoom": 0.78
+      "x": 175.00412668572062,
+      "y": -154.19504724531822,
+      "zoom": 0.5
     }
   },
   "name": "Online_Shop_Final_FIXED",
@@ -4514,8 +4519,8 @@
     "name": "Diagrams",
     "folderType": 1,
     "depth": 0,
-    "id": 429934
+    "id": 429932
   },
-  "id": 602403,
-  "updatedAtTimestamp": 1791377707647
+  "id": 707075,
+  "updatedAtTimestamp": 1793246625
 }
