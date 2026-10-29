@@ -1,0 +1,199 @@
+' InahuyShop — UML Sequence Diagram v1.0-Alpha
+' Initial sequence model derived from PRD_Final_Fixed.md and current class diagram draft.
+' Status: Initial draft; validate against authoritative ERD and finalized API contracts.
+
+@startuml UML-SequenceDiagram-v1.0-Alpha-01-Checkout-Payment
+ title InahuyShop — Checkout dan Pembayaran Simulasi (v1.0-Alpha)
+ autonumber
+ actor Customer
+ boundary "Storefront Web / Customer Mobile" as Client
+ control "Backend / API" as API
+ database "MySQL" as DB
+ participant "Simulation Payment Service" as PaymentSim
+
+ Customer -> Client: Checkout keranjang
+ Client -> API: POST /checkout (addressId?, voucherCode?)
+ API -> API: Autentikasi dan otorisasi pelanggan
+ API -> DB: Baca cart, cart_item, product_variant, voucher
+ DB --> API: Data keranjang dan ketersediaan
+ API -> API: Validasi item, jumlah, stok, voucher
+ alt Keranjang atau voucher tidak valid
+   API --> Client: 4xx validation error
+   Client --> Customer: Tampilkan kesalahan dan minta koreksi
+ else Checkout valid
+   API -> API: Hitung subtotal, diskon, ongkir, grand_total di server
+   note right of API
+     shipping_address_id wajib hanya jika ada varian fisik.
+     shipping_cost = 0 untuk pesanan digital murni.
+     Maksimal satu voucher per order.
+   end note
+   API -> DB: BEGIN TRANSACTION
+   API -> DB: Buat orders (pending_payment)
+   API -> DB: Buat order_item dengan snapshot nama/harga
+   API -> DB: Buat payments (method=simulation, status=pending)
+   API -> DB: Catat order_vouchers bila voucher dipakai
+   API -> DB: Perbarui stok sesuai aturan varian
+   API -> DB: Tandai/bersihkan cart setelah order dibuat
+   API -> DB: COMMIT
+   DB --> API: Order dan payment tersimpan
+   API --> Client: Order number, total, status pembayaran
+   Client --> Customer: Tampilkan instruksi pembayaran simulasi
+   Customer -> Client: Pilih hasil simulasi (success/failed/expired)
+   Client -> API: POST /orders/{id}/payment-simulation
+   API -> API: Verifikasi pemilik order dan status payment
+   API -> PaymentSim: Simulasikan hasil pembayaran
+   PaymentSim --> API: payment_reference + status
+   API -> DB: BEGIN TRANSACTION
+   API -> DB: Perbarui payments.status dan reference
+   alt Pembayaran success
+     API -> DB: Ubah orders.status menjadi paid
+     API -> DB: Buat digital_delivery untuk item digital
+     API -> DB: Siapkan shipment untuk item fisik (bila ada)
+   else Pembayaran failed atau expired
+     API -> DB: Simpan status payment hasil simulasi
+     note right of DB
+       Transisi status order dan kebijakan
+       pelepasan/pemulihan stok harus mengikuti
+       aturan final PRD/ERD.
+     end note
+   end
+   API -> DB: COMMIT
+   API --> Client: Status pembayaran dan order terbaru
+   Client --> Customer: Tampilkan hasil pembayaran
+ end
+@enduml
+
+@startuml UML-SequenceDiagram-v1.0-Alpha-02-Digital-Download
+ title InahuyShop — Akses File Digital (v1.0-Alpha)
+ autonumber
+ actor Customer
+ boundary "Storefront Web / Customer Mobile" as Client
+ control "Backend / API" as API
+ database "MySQL" as DB
+ participant "Protected Asset Storage" as Storage
+
+ Customer -> Client: Buka detail pesanan / unduhan
+ Client -> API: GET /orders/{id}/digital-deliveries
+ API -> API: Autentikasi pelanggan
+ API -> DB: Ambil order, order_item, digital_delivery
+ DB --> API: Data order dan delivery
+ API -> API: Verifikasi pemilik order dan pembayaran success
+ alt Bukan pemilik atau pembayaran belum success
+   API --> Client: 403/404 sesuai kebijakan keamanan
+   Client --> Customer: Akses tidak tersedia
+ else Pemilik sah dan pembayaran success
+   API --> Client: Daftar item digital yang berhak diakses
+   Customer -> Client: Minta unduhan untuk item
+   Client -> API: POST /digital-deliveries/{id}/download
+   API -> DB: Baca token, expires_at, download_count, status
+   DB --> API: Data entitlement/delivery
+   API -> API: Validasi kepemilikan, token, expiry, batas unduhan
+   alt Token tidak valid / kedaluwarsa / batas tercapai
+     API --> Client: Tolak unduhan
+     Client --> Customer: Tampilkan pesan akses tidak tersedia
+   else Unduhan diizinkan
+     API -> Storage: Minta akses file berdasarkan storage key
+     Storage --> API: Stream file atau URL bertanda tangan berumur pendek
+     API -> DB: Catat download_count dan aktivitas unduhan
+     API --> Client: File atau URL sementara yang terproteksi
+     Client --> Customer: Mulai unduhan
+   end
+ end
+ note over API,Storage
+   Jangan mengandalkan URL publik permanen.
+   Pemeriksaan kepemilikan dilakukan di server pada setiap akses.
+ end note
+@enduml
+
+@startuml UML-SequenceDiagram-v1.0-Alpha-03-Admin-Product-Management
+ title InahuyShop — Admin Mengelola Katalog (v1.0-Alpha)
+ autonumber
+ actor Admin
+ boundary "Admin Web / Admin Mobile" as AdminClient
+ control "Backend / API" as API
+ database "MySQL" as DB
+
+ Admin -> AdminClient: Login admin
+ AdminClient -> API: POST /admin/auth/login
+ API -> DB: Verifikasi akun dan role admin
+ DB --> API: Identitas dan role
+ alt Kredensial tidak valid atau tidak berwenang
+   API --> AdminClient: 401/403
+   AdminClient --> Admin: Tampilkan kegagalan login
+ else Login berhasil
+   API --> AdminClient: Sesi/token
+   Admin -> AdminClient: Buat/perbarui produk atau varian
+   AdminClient -> API: POST/PATCH /admin/products
+   API -> API: Validasi input dan izin admin
+   API -> DB: Simpan produk, kategori, varian, gambar/aset terkait
+   DB --> API: Hasil penyimpanan
+   API --> AdminClient: Data produk terbaru
+   AdminClient --> Admin: Tampilkan hasil perubahan
+ end
+@enduml
+
+@startuml UML-SequenceDiagram-v1.0-Alpha-04-Physical-Shipping
+ title InahuyShop — Pengelolaan Pengiriman Fisik (v1.0-Alpha)
+ autonumber
+ actor Admin
+ actor Customer
+ boundary "Admin Web / Admin Mobile" as AdminClient
+ boundary "Storefront Web / Customer Mobile" as CustomerClient
+ control "Backend / API" as API
+ database "MySQL" as DB
+
+ Admin -> AdminClient: Buka order yang berisi varian fisik
+ AdminClient -> API: GET /admin/orders/{id}
+ API -> DB: Baca order, order_item, shipment
+ DB --> API: Data order dan pengiriman
+ API --> AdminClient: Detail order
+ Admin -> AdminClient: Isi kurir, layanan, tracking number, tanggal kirim
+ AdminClient -> API: POST/PATCH /admin/orders/{id}/shipment
+ API -> API: Verifikasi izin admin dan adanya item fisik
+ API -> DB: Simpan shipment dan shipment_track
+ DB --> API: Data pengiriman tersimpan
+ API --> AdminClient: Status pengiriman terbaru
+ Customer -> CustomerClient: Buka detail pesanan
+ CustomerClient -> API: GET /orders/{id}/shipment-tracking
+ API -> API: Verifikasi pemilik order
+ API -> DB: Ambil shipment dan shipment_track
+ DB --> API: Status dan riwayat tracking
+ API --> CustomerClient: Data tracking
+ CustomerClient --> Customer: Tampilkan status dan riwayat pengiriman
+ note over AdminClient,API
+   Pengiriman dikelola manual pada baseline;
+   integrasi otomatis API kurir di luar cakupan.
+ end note
+@enduml
+
+@startuml UML-SequenceDiagram-v1.0-Alpha-05-Review
+ title InahuyShop — Membuat Ulasan Produk (v1.0-Alpha)
+ autonumber
+ actor Customer
+ boundary "Storefront Web / Customer Mobile" as Client
+ control "Backend / API" as API
+ database "MySQL" as DB
+
+ Customer -> Client: Kirim rating dan komentar untuk order item
+ Client -> API: POST /order-items/{id}/review
+ API -> API: Autentikasi pelanggan
+ API -> DB: Ambil order_item dan order terkait
+ DB --> API: Pemilik, status order, produk terkait
+ API -> API: Validasi kepemilikan, status pembayaran/order, rating 1..5
+ API -> DB: Periksa apakah order_item sudah memiliki review
+ DB --> API: Hasil pemeriksaan
+ alt Tidak memenuhi syarat atau review sudah ada
+   API --> Client: 4xx validation/authorization error
+   Client --> Customer: Tampilkan alasan penolakan
+ else Valid
+   API -> DB: Simpan review yang terkait ke order_item
+   DB --> API: Review tersimpan
+   API --> Client: Review berhasil dibuat
+   Client --> Customer: Tampilkan konfirmasi
+ end
+ note right of DB
+   customer_id dan product_id pada reviews
+   diturunkan melalui order_item; jangan disimpan
+   ulang bila mengikuti model ERD dalam PRD.
+ end note
+@enduml
