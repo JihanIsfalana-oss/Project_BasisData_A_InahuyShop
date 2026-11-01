@@ -1,24 +1,13 @@
 # InahuyShop --- Project Milestones & Delivery Checklist
 
----
-
-Atribut Nilai
-
----
-
-Proyek InahuyShop --- Product Digital E-Commerce
-
-Versi dokumen 1.0
-
-Tanggal pembaruan 1 November 2026
-
-Status Baseline tracking berdasarkan dokumen dan progres
-percakapan proyek
-
-Repository `JihanIsfalana-oss/Project_BasisData_A_InahuyShop`
-
-Branch terakhir yang diketahui `chore/repository-stabilization-01-4-shared-packages`
--------------------------------------------------------------------------------------------
+| Atribut                   | Nilai                                                               |
+| ------------------------- | ------------------------------------------------------------------- |
+| Proyek                    | InahuyShop --- Product Digital E-Commerce                           |
+| Versi dokumen             | 1.1                                                                 |
+| Tanggal pembaruan         | 2 November 2026                                                     |
+| Status                    | Baseline tracking; direkonsiliasi dengan repository setelah RS-01.6 |
+| Repository                | `JihanIsfalana-oss/Project_BasisData_A_InahuyShop`                  |
+| Branch terakhir diketahui | `chore/repository-stabilization-01-6-verification`                  |
 
 > **Catatan status:** `[x]` berarti selesai dan telah dikonfirmasi.
 > `[ ]` berarti belum selesai, belum dimulai, atau belum ada bukti yang
@@ -43,51 +32,22 @@ pemisahan UI web dan native ketika kebutuhan platform berbeda.
 
 ### Status terkini
 
----
-
-Area Status Keterangan
-
----
-
-Analisis repository Selesai sebagai Repository telah
-aktivitas analisis ditinjau pada sesi awal
-
-PRD Baseline dokumen Menjadi sumber perilaku
-tersedia produk
-
-Arsitektur Selesai sebagai Target multi-platform
-rancangan telah ditetapkan
-
-Struktur folder Selesai sebagai Dokumen struktur
-rancangan tersedia
-
-Design system Blueprint selesai File Figma aktual dan
-implementasi UI belum
-dikonfirmasi
-
-UML Perlu konfirmasi Class Diagram
-v1.0-Alpha diminta;
-artefak final belum
-terkonfirmasi
-
-RS-01.1--RS-01.3 Selesai Commit dan push
-tahap-tahap tersebut
-tercatat
-
-RS-01.4 Implementasi awal Package dan tooling
-selesai; penutupan dibuat; commit akhir
-perlu verifikasi belum dibuktikan
-
-RS-01.5 Selesai menurut Pemeriksaan tooling
-konfirmasi pengguna dilaporkan aman
-
-RS-01.6 Belum selesai Verification terpusat
-
-RS-01.7 Belum selesai CI foundation
-
-Implementasi fitur Belum dikonfirmasi Starter app bukan fitur
-produk produk yang selesai
------------------------------------------------------------------------
+| Area                      | Status                              | Keterangan                                                                                         |
+| ------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Analisis repository       | Selesai sebagai aktivitas analisis  | Repository telah ditinjau pada sesi awal                                                           |
+| PRD                       | Baseline dokumen tersedia           | Menjadi sumber perilaku produk                                                                     |
+| Arsitektur                | Selesai sebagai rancangan           | Target multi-platform telah ditetapkan                                                             |
+| Struktur folder           | Selesai sebagai rancangan           | Dokumen struktur tersedia                                                                          |
+| Design system             | Blueprint selesai                   | File Figma aktual dan implementasi UI belum dikonfirmasi                                           |
+| ERD                       | Artefak tersedia                    | `docs/ERD/Online_Shop_Final_FIXED.erdplus`; validasi terhadap PRD belum dikonfirmasi               |
+| UML                       | Artefak tersedia; review belum      | Folder `docs/UML` memuat class, use case, dan sequence diagram; validasi silang belum dikonfirmasi |
+| RS-01.1--RS-01.3          | Selesai                             | Commit dan push tercatat                                                                           |
+| RS-01.4                   | Selesai dengan butir terbuka        | Commit `6c2a075`; verifikasi konsumsi package oleh aplikasi dipindahkan ke RS-01.8                 |
+| RS-01.5                   | Selesai                             | Commit `046fb2b`, ter-push                                                                         |
+| RS-01.6                   | Selesai bersyarat (1 November 2026) | `pnpm verify` exit 0; butir cakupan terbuka dipindahkan ke RS-01.8                                 |
+| RS-01.7                   | Belum dimulai                       | CI foundation                                                                                      |
+| RS-01.8                   | Diusulkan                           | Integration proof source-first ESM; menunggu persetujuan                                           |
+| Implementasi fitur produk | Belum dikonfirmasi                  | Starter app bukan fitur produk yang selesai                                                        |
 
 ## 2. Konvensi status
 
@@ -95,6 +55,9 @@ produk produk yang selesai
       tercatat.
 - [ ] Belum selesai --- belum dikerjakan, belum dikonfirmasi, atau
       masih menunggu verifikasi.
+- **Selesai bersyarat** --- seluruh butir wajib terpenuhi dan terbukti,
+  tetapi ada butir cakupan yang sengaja dipindahkan ke item bernomor
+  lain. Butir tersebut tidak boleh dicentang sebelum dibuktikan.
 - **Perlu konfirmasi** --- ada aktivitas/rancangan, tetapi bukti
   artefak, validasi, atau commit belum tersedia.
 - **Diusulkan** --- breakdown delivery untuk pekerjaan mendatang,
@@ -373,7 +336,7 @@ Branch: `chore/repo-stabilization-01-3-dependency-lockfile`.
 sama. Pemeriksaan web dilakukan terpisah setelah masalah lint
 rekursif/concurrency pada tahap awal.
 
-### RS-01.4 Shared Package Initialization --- Perlu verifikasi penutupan
+### RS-01.4 Shared Package Initialization --- Selesai dengan butir terbuka
 
 #### RS-01.4.1 Audit package
 
@@ -418,10 +381,14 @@ rekursif/concurrency pada tahap awal.
 - [x] Shared ESLint web config.
 - [x] Export konfigurasi native pada `config-eslint`.
 - [x] Konfigurasi ESLint pada aplikasi mobile.
-- [ ] Memverifikasi isi final `native.mjs` dan `api.mjs` secara
-      menyeluruh.
-- [ ] Memverifikasi seluruh package exports dan peer/dependencies
-      secara konsisten.
+- [x] Memverifikasi `native.mjs`: dikonsumsi dan lulus lint pada
+      customer-mobile dan admin-mobile.
+- [x] `api.mjs` kosong dan tidak terdaftar pada `exports`; dihapus pada
+      RS-01.6 (commit `e0dc7d6`). ESLint API ditunda ke M-06.2.
+- [x] Memverifikasi seluruh target package exports ada (RS-01.6; 8
+      package runtime masih kosong).
+- [ ] Mengaudit konsistensi peer/dependencies antar package secara
+      menyeluruh (belum dilakukan; dipindahkan ke RS-01.8).
 
 #### RS-01.4.5 Integrasi aplikasi
 
@@ -431,9 +398,11 @@ rekursif/concurrency pada tahap awal.
 - [x] Menambahkan ESLint Expo pada customer-mobile.
 - [x] Menghubungkan konfigurasi ESLint mobile ke
       `@inahuyshop/config-eslint/native`.
-- [ ] Memverifikasi runtime package benar-benar dikonsumsi aplikasi.
+- [ ] Memverifikasi runtime package benar-benar dikonsumsi aplikasi
+      (belum ada import permanen; dipindahkan ke RS-01.8).
 - [ ] Memverifikasi source-first package pada Vite, Expo, dan Node
-      melalui integrasi aktual.
+      melalui integrasi aktual. Baru Expo/Android yang terbukti melalui
+      probe sementara pada RS-01.6; Vite dan Node belum (RS-01.8).
 
 #### RS-01.4.6 Lockfile dan build scripts
 
@@ -458,8 +427,13 @@ rekursif/concurrency pada tahap awal.
 - [x] Menjalankan ESLint storefront-web.
 - [x] Menangani `react-hooks/set-state-in-effect` dengan suppression
       lokal beralasan pada hydration gate.
-- [ ] Meninjau final diff agar formatting tidak menutupi perubahan
-      fungsional yang tidak disengaja.
+- [x] Meninjau diff dokumen: perubahan hanya format, diverifikasi dengan
+      perbandingan yang mengabaikan whitespace. Rekonsiliasi v1.1
+      menemukan bahwa Prettier meratakan lima tabel non-GFM pada
+      dokumen ini; sudah diperbaiki.
+- [ ] Meninjau diff kode baris demi baris (belum dilakukan; lint dan
+      build lulus, tetapi itu bukan bukti tidak ada perubahan
+      fungsional tidak disengaja).
 
 #### RS-01.4.8 Commit
 
@@ -468,11 +442,11 @@ rekursif/concurrency pada tahap awal.
 - [x] Memastikan working tree bersih.
 - [x] Memastikan status remote/push secara eksplisit jika akan dipush.
 
-**Catatan:** package dan tooling telah dibuat serta pemeriksaan lokal
-dilaporkan aman oleh pengguna. Commit akhir belum dibuktikan dalam
-konteks terakhir.
+**Catatan:** commit `6c2a075`
+(`chore(repo): initialize shared workspace packages`) terverifikasi pada
+riwayat Git remote.
 
-### RS-01.5 Development Tooling --- Selesai menurut konfirmasi pengguna
+### RS-01.5 Development Tooling --- Selesai
 
 - [x] Konfigurasi Prettier terpusat.
 - [x] Konfigurasi ESLint web terpusat.
@@ -480,18 +454,47 @@ konteks terakhir.
 - [x] Konfigurasi ESLint empat aplikasi.
 - [x] Formatting file yang ditargetkan.
 - [x] `.prettierignore` tersedia.
-- [x] Pemeriksaan lint empat aplikasi dilaporkan aman.
-- [x] `pnpm install --frozen-lockfile` dilaporkan berhasil.
-- [x] Commit akhir tooling --- menunggu bukti output Git.
+- [x] Pemeriksaan lint empat aplikasi lulus.
+- [x] `pnpm install --frozen-lockfile` berhasil.
+- [x] Commit akhir tooling: `046fb2b`
+      `chore(tooling): configure shared ESLint and Prettier`, ter-push.
 
-Commit message yang disiapkan:
-`chore(tooling): configure shared ESLint and Prettier`.
+### RS-01.6 Verification --- Selesai bersyarat
 
-### RS-01.6 Verification ---  selesai bersyarat
+Diselesaikan pada 1 November 2026. Branch:
+`chore/repository-stabilization-01-6-verification`. Commit: `0999183`
+(script verifikasi), `e0dc7d6` (penghapusan `api.mjs` dan
+`tamagui.config.ts`), `c48f773` (dokumentasi progres).
 
-RS-01.6 Verification, selesai pada 1 November 2026. Hasil dari instalasi bersih (pnpm 12.16.1): frozen install lulus; pnpm verify exit 0 (Prettier, ESLint empat aplikasi, build storefront-web dan admin-web, sintaks API, pemeriksaan repository); /api/health merespons 200 OK; seluruh target exports ada, dengan 8 package runtime masih kosong sampai M-07. Probe Expo/Metro: @inahuyshop/contracts berhasil dibundel pada Android (satu package, bundel produksi). Dihapus: tamagui.config.ts (sisa Tamagui) dan api.mjs (kosong dan tidak ter-export; ESLint API ditunda ke M-06.2).
+- [x] Menjalankan pemeriksaan workspace dari root (`pnpm verify`).
+- [x] Frozen lockfile install berhasil dari instalasi bersih
+      (`node_modules` dihapus; pnpm 12.16.1).
+- [x] Prettier check dari root bersih.
+- [x] ESLint empat aplikasi lulus. API belum memiliki lint (ditunda ke
+      M-06.2).
+- [x] Build storefront-web berhasil.
+- [x] Build admin-web berhasil.
+- [x] API: sintaks valid, server menyala, `/api/health` mengembalikan
+      `200 OK`.
+- [x] Expo/Metro memuat workspace package: `@inahuyshop/contracts`
+      berhasil dibundel pada Android (satu package, bundel produksi,
+      probe sementara yang tidak di-commit).
+- [x] Seluruh target package exports ada. Package runtime berstatus
+      kosong: `api-client`, `contracts`, `database`, `design-tokens`,
+      `domain`, `ui-native`, `ui-web`, `validation`.
+- [x] Tidak ada lockfile aplikasi yang tersisa.
+- [x] Tidak ada `node_modules`, `.DS_Store`, atau `.env` yang ter-track.
+- [x] `git diff --check` bersih.
+- [x] Branch, working tree, dan commit diperiksa; branch ter-push.
+- [x] Hasil verifikasi dicatat (bagian ini).
+- [ ] Dependency boundaries teruji. Saat ini terpenuhi secara trivial
+      karena belum ada package yang saling bergantung (RS-01.8).
+- [ ] Expo/Metro pada iOS, web, dan dev server, serta package
+      ber-peer-dependency seperti `ui-native` (RS-01.8).
 
-Tetap terbuka: verifikasi source-first pada Vite dan Node; Expo di iOS, web, dan dev server; package dengan peer dependency (ui-native); isi 8 package runtime.
+**Catatan jujur:** hasil hijau pada lint dan build tidak membuktikan
+package dikonsumsi dengan benar, karena belum ada aplikasi yang
+mengimpor package runtime secara permanen.
 
 ### RS-01.7 CI Foundation --- Belum dimulai
 
@@ -507,6 +510,27 @@ Tetap terbuka: verifikasi source-first pada Vite dan Node; Expo di iOS, web, dan
 - [ ] Menetapkan branch protection dan required checks.
 - [ ] Menguji workflow melalui pull request.
 - [ ] Mendokumentasikan cara membaca kegagalan CI.
+
+### RS-01.8 Integration Proof --- Diusulkan (menunggu persetujuan)
+
+Tujuan: membuktikan asumsi source-first ESM pada ketiga runtime dan
+menutup butir terbuka RS-01.4.5 dan RS-01.6.
+
+- [ ] Satu package (`contracts`) diimpor secara permanen oleh API
+      (Node ESM).
+- [ ] Package yang sama diimpor oleh storefront-web dan admin-web
+      (build Vite berhasil).
+- [ ] Package yang sama diimpor oleh customer-mobile dan admin-mobile
+      (Expo; Android, iOS, dev server, dan web Expo diuji).
+- [ ] `ui-native` (peer dependency React Native) diimpor oleh aplikasi
+      mobile tanpa duplikasi React.
+- [ ] `ui-web` diimpor oleh aplikasi web (JSX melalui Vite).
+- [ ] Dependency graph aktual diperiksa (`pnpm why` / `pnpm ls`); web
+      dan mobile tidak memuat `database`.
+- [ ] Audit peer/dependencies antar package.
+- [ ] Jika source-first gagal pada salah satu runtime: keputusan dan
+      alasan perubahan strategi didokumentasikan sebelum M-06.
+- [ ] Hasil dicatat dan `pnpm verify` tetap lulus.
 
 **Kriteria selesai RS-01:** workspace stabil, dependency terkonsolidasi,
 package/tooling memiliki boundary jelas, dan pemeriksaan lokal serta CI
@@ -877,61 +901,25 @@ selesai.
 
 ## 20. Urutan milestone
 
----
-
-                        Urutan Milestone             Status saat dokumen
-                                                     dibuat
-
----
-
-                             1 M-00 Project          Selesai
-                               Discovery &
-                               Repository Assessment
-
-                             2 M-01 Product          Baseline dokumen
-                               Requirement Baseline  tersedia
-
-                             3 M-02 Target           Selesai sebagai
-                               Architecture          rancangan
-                               Definition
-
-                             4 M-03 Application &    Selesai sebagai
-                               Monorepo Structure    rancangan
-                               Design
-
-                             5 M-04 Design System &  Selesai sebagai
-                               UX Blueprint          blueprint
-
-                             6 M-05 UML & System     Sebagian/perlu
-                               Model Documentation   konfirmasi
-
-                             7 RS-01 Repository      Dalam proses
-                               Stabilization
-
-                             8 M-06 Backend & Data   Belum dikonfirmasi
-                               Foundation
-
-                             9 M-07 Shared Runtime   Skeleton; isi belum
-                               Packages              dikonfirmasi
-
-                            10 M-08 Storefront Web   Belum dikonfirmasi
-
-                            11 M-09 Customer Mobile  Belum dikonfirmasi
-
-                            12 M-10 Admin Web        Belum dikonfirmasi
-
-                            13 M-11 Admin Mobile     Belum dikonfirmasi
-
-                            14 M-12 Cross-Platform   Belum dimulai
-                               Integration
-
-                            15 M-13 QA & Security    Belum dimulai
-
-                            16 M-14 Deployment &     Belum dimulai
-                               Production Readiness
-
-                            17 M-15 Release &        Belum dimulai
-                               Handover
+| Urutan | Milestone                                      | Status                                  |
+| -----: | ---------------------------------------------- | --------------------------------------- |
+|      1 | M-00 Project Discovery & Repository Assessment | Selesai                                 |
+|      2 | M-01 Product Requirement Baseline              | Baseline dokumen tersedia               |
+|      3 | M-02 Target Architecture Definition            | Selesai sebagai rancangan               |
+|      4 | M-03 Application & Monorepo Structure Design   | Selesai sebagai rancangan               |
+|      5 | M-04 Design System & UX Blueprint              | Selesai sebagai blueprint               |
+|      6 | M-05 UML & System Model Documentation          | Artefak tersedia; review belum          |
+|      7 | RS-01 Repository Stabilization                 | Dalam proses (RS-01.1--RS-01.6 selesai) |
+|      8 | M-06 Backend & Data Foundation                 | Belum dikonfirmasi                      |
+|      9 | M-07 Shared Runtime Packages                   | Skeleton; isi belum                     |
+|     10 | M-08 Storefront Web                            | Belum dikonfirmasi                      |
+|     11 | M-09 Customer Mobile                           | Belum dikonfirmasi                      |
+|     12 | M-10 Admin Web                                 | Belum dikonfirmasi                      |
+|     13 | M-11 Admin Mobile                              | Belum dikonfirmasi                      |
+|     14 | M-12 Cross-Platform Integration                | Belum dimulai                           |
+|     15 | M-13 QA & Security                             | Belum dimulai                           |
+|     16 | M-14 Deployment & Production Readiness         | Belum dimulai                           |
+|     17 | M-15 Release & Handover                        | Belum dimulai                           |
 
 ---
 
@@ -954,64 +942,39 @@ selesai.
 
 ## 22. Prioritas pekerjaan berikutnya
 
-1.  [ ] **Tutup commit RS-01.4/RS-01.5.** Verifikasi commit lokal, hash,
-        dan working tree. Jangan menganggap commit telah terjadi tanpa
-        output Git.
-2.  [ ] **Selesaikan RS-01.6 Verification.** Jalankan pemeriksaan
-        terpusat dari root dan catat hasil.
-3.  [ ] **Selesaikan RS-01.7 CI Foundation.** Siapkan CI minimum untuk
-        frozen install, formatting, lint, dan build relevan.
-4.  [ ] **Tutup M-05 UML.** Pastikan Class Diagram v1.0-Alpha tersimpan
-        dan direview; lanjutkan Use Case dan Sequence Diagram.
-5.  [ ] **Validasi ERD dan database schema** sebagai prasyarat backend.
-6.  [ ] **Mulai M-06 Backend & Data Foundation** berdasarkan PRD dan
+1.  [x] **Tutup commit RS-01.4/RS-01.5.** Terverifikasi: `6c2a075` dan
+        `046fb2b`.
+2.  [x] **Selesaikan RS-01.6 Verification** (bersyarat; butir terbuka
+        dipindahkan ke RS-01.8).
+3.  [ ] **Selesaikan RS-01.7 CI Foundation.** Siapkan CI minimum yang
+        menjalankan frozen install dan `pnpm verify`.
+4.  [ ] **Putuskan RS-01.8 Integration Proof** (diusulkan): buktikan
+        source-first ESM pada Vite, Expo, dan Node sebelum M-06.
+5.  [ ] **Tinjau M-05 UML.** Artefak tersedia di `docs/UML`; lakukan
+        review silang terhadap PRD, Architecture, dan ERD.
+6.  [ ] **Validasi ERD dan database schema** sebagai prasyarat backend.
+        `schema.prisma` saat ini kosong.
+7.  [ ] **Mulai M-06 Backend & Data Foundation** berdasarkan PRD dan
         ERD.
-7.  [ ] Implementasikan shared packages berdasarkan kebutuhan consumer
+8.  [ ] Implementasikan shared packages berdasarkan kebutuhan consumer
         nyata, bukan spekulasi.
-8.  [ ] Bangun kanal secara bertahap dan integrasikan melalui API yang
+9.  [ ] Bangun kanal secara bertahap dan integrasikan melalui API yang
         sama.
 
 ## 23. Risiko dan pengendalian
 
----
-
-Risiko Dampak Pengendalian
-
----
-
-Dokumen dianggap Status proyek tampak Pisahkan status
-implementasi lebih maju dari kondisi dokumen, skeleton,
-nyata implementasi, dan
-verifikasi
-
-Package tanpa consumer Kompleksitas dan biaya Implementasikan
-maintenance berdasarkan kebutuhan
-nyata
-
-Business rules Manipulasi transaksi Backend tetap sumber
-diduplikasi di frontend dan status inkonsisten kebenaran
-
-Source-first ESM tidak Build/runtime error di Buat integration proof
-kompatibel Vite, Expo, atau Node untuk tiap consumer
-
-Formatting besar Review diff sulit Pisahkan commit
-menutupi perubahan formatting dan
-fungsional konfigurasi bila
-memungkinkan
-
-Lockfile diformat Diff canonical pnpm Kecualikan
-Prettier membesar `pnpm-lock.yaml` dari
-Prettier
-
-Scope admin mobile UX dan biaya Prioritaskan tugas
-terlalu luas implementasi meningkat operasional;
-kompleksitas tetap di
-admin web
-
-UI menjanjikan fitur Ekspektasi pengguna Sinkronkan UI dengan
-yang belum didukung API keliru PRD dan kemampuan
-backend
------------------------------------------------------------------------
+| Risiko                                         | Dampak                                        | Pengendalian                                                         |
+| ---------------------------------------------- | --------------------------------------------- | -------------------------------------------------------------------- |
+| Dokumen dianggap implementasi nyata            | Status proyek tampak lebih maju dari kondisi  | Pisahkan status dokumen, skeleton, implementasi, dan verifikasi      |
+| Package tanpa consumer                         | Kompleksitas dan biaya maintenance            | Implementasikan berdasarkan kebutuhan nyata                          |
+| Business rules diduplikasi di frontend         | Manipulasi transaksi dan status inkonsisten   | Backend tetap sumber kebenaran                                       |
+| Source-first ESM tidak kompatibel              | Build/runtime error di Vite, Expo, atau Node  | Integration proof untuk tiap consumer (RS-01.8)                      |
+| Formatting besar menutupi perubahan fungsional | Review diff sulit                             | Pisahkan commit formatting dan konfigurasi bila memungkinkan         |
+| Lockfile diformat Prettier                     | Diff canonical pnpm membesar                  | Kecualikan `pnpm-lock.yaml` dari Prettier                            |
+| Formatter merusak tabel Markdown non-GFM       | Tabel status tidak terbaca di dokumen kendali | Gunakan tabel pipe (GFM) saja; periksa render setelah `format:write` |
+| Satu probe dianggap bukti kompatibilitas penuh | Kegagalan baru muncul saat implementasi fitur | Catat cakupan bukti; selesaikan RS-01.8 sebelum M-06                 |
+| Scope admin mobile terlalu luas                | UX dan biaya implementasi meningkat           | Prioritaskan tugas operasional; kompleksitas tetap di admin web      |
+| UI menjanjikan fitur yang belum didukung API   | Ekspektasi pengguna keliru                    | Sinkronkan UI dengan PRD dan kemampuan backend                       |
 
 ## 24. Definition of Done --- Project Release
 
@@ -1036,20 +999,10 @@ backend
 
 ## 25. Change log
 
----
-
-Versi Tanggal Perubahan
-
----
-
-1.0 1 November 2026 Inisialisasi rangkuman
-milestone,
-submilestone,
-checklist, urutan
-eksekusi, dan gate
-proyek
-
----
+| Versi | Tanggal         | Perubahan                                                                                                                                                                                                                                   |
+| ----- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1.0   | 1 November 2026 | Inisialisasi rangkuman milestone, submilestone, checklist, urutan eksekusi, dan gate proyek                                                                                                                                                 |
+| 1.1   | 2 November 2026 | Rekonsiliasi pasca RS-01.6: status RS-01.4 sampai RS-01.6 dan hash commit diperbarui; checklist RS-01.6 dipulihkan; RS-01.8 diusulkan; lima tabel yang rusak akibat Prettier diperbaiki; risiko dan prioritas diperbarui; header diperbarui |
 
 ## 26. Sumber baseline
 
@@ -1057,6 +1010,8 @@ proyek
 - `Architecture.md` --- target arsitektur dan keputusan platform.
 - `InahuyShop-Design-System.md` --- blueprint UX/UI empat kanal.
 - `Github-Repository-Project.txt` --- referensi repository.
+- Hasil verifikasi RS-01.6 (output terminal, 1 November 2026) dan
+  pemeriksaan riwayat Git remote.
 - Riwayat percakapan proyek tentang analisis repository, struktur
   folder, arsitektur, UML Class Diagram v1.0-Alpha, dan RS-01
   Repository Stabilization.
