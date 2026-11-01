@@ -7,6 +7,12 @@
     "dev:storefront": "pnpm --filter storefront-web dev",
     "dev:admin-web": "pnpm --filter admin-web dev",
     "dev:customer-mobile": "pnpm --filter customer-mobile start",
-    "dev:admin-mobile": "pnpm --filter admin-mobile start"
+    "dev:admin-mobile": "pnpm --filter admin-mobile start",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write ."
+  },
+  "devDependencies": {
+    "@inahuyshop/config-prettier": "workspace:*",
+    "prettier": "^3.9.10"
   }
 }
