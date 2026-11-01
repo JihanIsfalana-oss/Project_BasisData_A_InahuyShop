@@ -14,14 +14,14 @@ Dokumen ini merupakan rancangan arsitektur target, bukan klaim bahwa seluruh kom
 
 ## 2. Target Platform
 
-| Area | Target |
-|---|---|
-| Web pelanggan | React + Vite + JavaScript + JSX |
-| Aplikasi mobile pelanggan | Android dan iOS |
-| Dashboard admin | Website dan aplikasi mobile |
-| Backend | API terpisah dari frontend; framework dan bahasa backend ditetapkan secara eksplisit pada keputusan teknis berikutnya |
-| Database | MySQL sesuai PRD yang ada |
-| Strategi reuse | Mengutamakan penggunaan ulang kode, termasuk abstraksi UI lintas platform jika benar-benar kompatibel |
+| Area                      | Target                                                                                                                |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Web pelanggan             | React + Vite + JavaScript + JSX                                                                                       |
+| Aplikasi mobile pelanggan | Android dan iOS                                                                                                       |
+| Dashboard admin           | Website dan aplikasi mobile                                                                                           |
+| Backend                   | API terpisah dari frontend; framework dan bahasa backend ditetapkan secara eksplisit pada keputusan teknis berikutnya |
+| Database                  | MySQL sesuai PRD yang ada                                                                                             |
+| Strategi reuse            | Mengutamakan penggunaan ulang kode, termasuk abstraksi UI lintas platform jika benar-benar kompatibel                 |
 
 ## 3. Keputusan Frontend Web
 
@@ -29,32 +29,32 @@ Frontend web menggunakan **React + Vite dengan JavaScript dan JSX**, serta React
 
 ### 3.1 Konfigurasi yang relevan
 
-| File | Fungsi | Status |
-|---|---|---|
-| `vite.config.js` | Konfigurasi Vite, plugin React, dan integrasi React Compiler | Diperlukan untuk konfigurasi Vite |
-| `package.json` | Dependensi, metadata, dan perintah proyek | Wajib |
-| `index.html` | Dokumen HTML utama Vite | Wajib |
-| `jsconfig.json` | IntelliSense JavaScript, path alias, dan konfigurasi editor | Opsional; direkomendasikan jika diperlukan |
-| `eslint.config.js` | Aturan linting dan pemeriksaan kualitas kode | Direkomendasikan |
-| `tsconfig.json` | Konfigurasi TypeScript | Tidak diperlukan untuk proyek JavaScript murni |
+| File               | Fungsi                                                       | Status                                         |
+| ------------------ | ------------------------------------------------------------ | ---------------------------------------------- |
+| `vite.config.js`   | Konfigurasi Vite, plugin React, dan integrasi React Compiler | Diperlukan untuk konfigurasi Vite              |
+| `package.json`     | Dependensi, metadata, dan perintah proyek                    | Wajib                                          |
+| `index.html`       | Dokumen HTML utama Vite                                      | Wajib                                          |
+| `jsconfig.json`    | IntelliSense JavaScript, path alias, dan konfigurasi editor  | Opsional; direkomendasikan jika diperlukan     |
+| `eslint.config.js` | Aturan linting dan pemeriksaan kualitas kode                 | Direkomendasikan                               |
+| `tsconfig.json`    | Konfigurasi TypeScript                                       | Tidak diperlukan untuk proyek JavaScript murni |
 
 ### 3.2 Contoh `vite.config.js`
 
 Contoh berikut berlaku apabila proyek menggunakan `@vitejs/plugin-react` dan integrasi React Compiler melalui Babel:
 
 ```js
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: ["babel-plugin-react-compiler"],
+        plugins: ['babel-plugin-react-compiler'],
       },
     }),
   ],
-});
+})
 ```
 
 Pastikan `babel-plugin-react-compiler` sudah dipasang dan versinya kompatibel dengan versi React serta plugin yang digunakan. Jika React Compiler sudah dikonfigurasi melalui mekanisme lain, jangan menambahkan konfigurasi kedua tanpa memeriksa konfigurasi yang aktif.

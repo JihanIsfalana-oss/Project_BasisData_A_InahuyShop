@@ -1,14 +1,14 @@
 # InahuyShop — Design System & Figma Blueprint
 
-| Atribut | Nilai |
-|---|---|
-| Produk | InahuyShop |
-| Versi panduan | 1.0 |
-| Status | Rekomendasi desain untuk eksplorasi dan validasi Figma |
-| Bahasa produk | Bahasa Indonesia |
-| Platform | Storefront web, admin web, customer mobile, admin mobile |
-| Arah visual | Modern, tepercaya, bersih; putih sebagai warna dasar |
-| Acuan produk utama | `../PRD/PRD_Final_Fixed.md` |
+| Atribut            | Nilai                                                    |
+| ------------------ | -------------------------------------------------------- |
+| Produk             | InahuyShop                                               |
+| Versi panduan      | 1.0                                                      |
+| Status             | Rekomendasi desain untuk eksplorasi dan validasi Figma   |
+| Bahasa produk      | Bahasa Indonesia                                         |
+| Platform           | Storefront web, admin web, customer mobile, admin mobile |
+| Arah visual        | Modern, tepercaya, bersih; putih sebagai warna dasar     |
+| Acuan produk utama | `../PRD/PRD_Final_Fixed.md`                              |
 
 > Panduan ini merupakan spesifikasi desain produk dan blueprint library Figma. Ini bukan file Figma, bukan klaim bahwa UI sudah diimplementasikan, dan bukan pengganti validasi prototipe dengan pengguna.
 
@@ -18,11 +18,11 @@ InahuyShop adalah platform e-commerce **single-store** yang terutama menjual pro
 
 ### 1.1 Peran dan kebutuhan inti
 
-| Peran | Tujuan utama | Kebutuhan desain |
-|---|---|---|
-| Pengunjung | Menemukan produk yang sesuai | Katalog mudah dijelajahi, pencarian/filter jelas, detail varian dan harga transparan |
-| Pelanggan | Membeli dan menerima produk | Checkout sederhana; bedakan unduhan dan pengiriman; status pesanan mudah dipahami |
-| Admin toko | Mengoperasikan toko | Prioritaskan pekerjaan tertunda, pencarian cepat, kontrol status dengan konfirmasi yang tepat |
+| Peran      | Tujuan utama                 | Kebutuhan desain                                                                              |
+| ---------- | ---------------------------- | --------------------------------------------------------------------------------------------- |
+| Pengunjung | Menemukan produk yang sesuai | Katalog mudah dijelajahi, pencarian/filter jelas, detail varian dan harga transparan          |
+| Pelanggan  | Membeli dan menerima produk  | Checkout sederhana; bedakan unduhan dan pengiriman; status pesanan mudah dipahami             |
+| Admin toko | Mengoperasikan toko          | Prioritaskan pekerjaan tertunda, pencarian cepat, kontrol status dengan konfirmasi yang tepat |
 
 ### 1.2 Prinsip pengalaman
 
@@ -48,15 +48,15 @@ InahuyShop adalah platform e-commerce **single-store** yang terutama menjual pro
 
 ### 2.1 Temuan yang relevan bagi desain
 
-| Area | Kondisi yang ditemukan | Konsekuensi desain |
-|---|---|---|
-| Baseline produk | PRD final mendefinisikan toko tunggal, produk digital dengan varian fisik opsional, pembelian campuran, pembayaran simulasi, dan empat kanal | Gunakan PRD final sebagai sumber perilaku dan istilah utama |
-| Dokumen analisis lama | Menyebut peran penjual dan produk digital/fisik secara umum; cakupannya lebih awal daripada PRD final | Hindari mengembangkan UI marketplace atau alur seller terpisah |
-| Aplikasi web | Admin-web dan storefront-web masih menampilkan starter React/Vite | Tidak ada pola visual produk yang perlu dipertahankan |
-| Aplikasi mobile | Customer-mobile dan admin-mobile masih menampilkan starter Expo | Rancang navigasi mobile dari alur produk, bukan dari tab starter |
-| Design tokens | Berkas di `packages/design-tokens/src` terdeteksi kosong | Token pada panduan ini adalah rekomendasi awal untuk Figma, belum merupakan token runtime |
-| Design system/UI | Berkas di `packages/design-system/src` dan `packages/ui/src` terdeteksi kosong | Komponen yang dideskripsikan perlu dibuat sebagai library Figma; jangan mengasumsikan komponen produksi sudah ada |
-| Data dan alur | PRD mendefinisikan 19 entitas dan status order, payment, shipment; skema Prisma yang diperiksa kosong | Status UI harus mengikuti PRD; konfirmasi skema aplikasi sebelum implementasi |
+| Area                  | Kondisi yang ditemukan                                                                                                                       | Konsekuensi desain                                                                                                |
+| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Baseline produk       | PRD final mendefinisikan toko tunggal, produk digital dengan varian fisik opsional, pembelian campuran, pembayaran simulasi, dan empat kanal | Gunakan PRD final sebagai sumber perilaku dan istilah utama                                                       |
+| Dokumen analisis lama | Menyebut peran penjual dan produk digital/fisik secara umum; cakupannya lebih awal daripada PRD final                                        | Hindari mengembangkan UI marketplace atau alur seller terpisah                                                    |
+| Aplikasi web          | Admin-web dan storefront-web masih menampilkan starter React/Vite                                                                            | Tidak ada pola visual produk yang perlu dipertahankan                                                             |
+| Aplikasi mobile       | Customer-mobile dan admin-mobile masih menampilkan starter Expo                                                                              | Rancang navigasi mobile dari alur produk, bukan dari tab starter                                                  |
+| Design tokens         | Berkas di `packages/design-tokens/src` terdeteksi kosong                                                                                     | Token pada panduan ini adalah rekomendasi awal untuk Figma, belum merupakan token runtime                         |
+| Design system/UI      | Berkas di `packages/design-system/src` dan `packages/ui/src` terdeteksi kosong                                                               | Komponen yang dideskripsikan perlu dibuat sebagai library Figma; jangan mengasumsikan komponen produksi sudah ada |
+| Data dan alur         | PRD mendefinisikan 19 entitas dan status order, payment, shipment; skema Prisma yang diperiksa kosong                                        | Status UI harus mengikuti PRD; konfirmasi skema aplikasi sebelum implementasi                                     |
 
 ### 2.2 Ketentuan sumber kebenaran
 
@@ -110,58 +110,58 @@ Arah warna: kanvas putih dan netral dingin untuk menjaga rasa bersih serta teper
 
 #### Primitive palette (rekomendasi)
 
-| Token | Nilai | Penggunaan |
-|---|---|---|
-| `blue/50` | `#EFF6FF` | Latar sorotan lembut |
-| `blue/100` | `#DBEAFE` | Latar info, pilihan aktif ringan |
-| `blue/200` | `#BFDBFE` | Border sorotan |
-| `blue/500` | `#3B82F6` | Aksen dekoratif, grafik |
-| `blue/600` | `#2563EB` | Aksen brand dasar |
-| `blue/700` | `#1D4ED8` | Aksi primer pada latar terang |
-| `blue/800` | `#1E40AF` | Hover/link kuat |
-| `blue/900` | `#1E3A8A` | Active/teks aksen gelap |
-| `slate/25` | `#FCFCFD` | Surface sangat lembut |
-| `slate/50` | `#F8FAFC` | Latar halaman sekunder |
-| `slate/100` | `#F1F5F9` | Surface sunken/hover netral |
-| `slate/200` | `#E2E8F0` | Border lembut |
-| `slate/300` | `#CBD5E1` | Border kontrol |
-| `slate/500` | `#64748B` | Teks sekunder |
-| `slate/600` | `#475569` | Teks sekunder kuat |
-| `slate/700` | `#334155` | Teks isi kuat |
-| `slate/900` | `#0F172A` | Teks utama |
-| `white` | `#FFFFFF` | Surface utama |
-| `black` | `#000000` | Hindari untuk teks kecil; gunakan hanya bila diperlukan |
+| Token       | Nilai     | Penggunaan                                              |
+| ----------- | --------- | ------------------------------------------------------- |
+| `blue/50`   | `#EFF6FF` | Latar sorotan lembut                                    |
+| `blue/100`  | `#DBEAFE` | Latar info, pilihan aktif ringan                        |
+| `blue/200`  | `#BFDBFE` | Border sorotan                                          |
+| `blue/500`  | `#3B82F6` | Aksen dekoratif, grafik                                 |
+| `blue/600`  | `#2563EB` | Aksen brand dasar                                       |
+| `blue/700`  | `#1D4ED8` | Aksi primer pada latar terang                           |
+| `blue/800`  | `#1E40AF` | Hover/link kuat                                         |
+| `blue/900`  | `#1E3A8A` | Active/teks aksen gelap                                 |
+| `slate/25`  | `#FCFCFD` | Surface sangat lembut                                   |
+| `slate/50`  | `#F8FAFC` | Latar halaman sekunder                                  |
+| `slate/100` | `#F1F5F9` | Surface sunken/hover netral                             |
+| `slate/200` | `#E2E8F0` | Border lembut                                           |
+| `slate/300` | `#CBD5E1` | Border kontrol                                          |
+| `slate/500` | `#64748B` | Teks sekunder                                           |
+| `slate/600` | `#475569` | Teks sekunder kuat                                      |
+| `slate/700` | `#334155` | Teks isi kuat                                           |
+| `slate/900` | `#0F172A` | Teks utama                                              |
+| `white`     | `#FFFFFF` | Surface utama                                           |
+| `black`     | `#000000` | Hindari untuk teks kecil; gunakan hanya bila diperlukan |
 
 #### Semantic tokens
 
-| Semantic token | Nilai awal | Aturan penggunaan |
-|---|---|---|
-| `surface/page` | `#FFFFFF` | Kanvas utama pelanggan dan admin |
-| `surface/subtle` | `#F8FAFC` | Bagian halaman yang perlu dibedakan |
-| `surface/raised` | `#FFFFFF` | Card, menu, dialog |
-| `surface/selected` | `#EFF6FF` | Pilihan aktif |
-| `border/default` | `#E2E8F0` | Garis pembatas ringan |
-| `border/strong` | `#CBD5E1` | Batas input dan pemisah tegas |
-| `text/primary` | `#0F172A` | Judul dan isi utama |
-| `text/secondary` | `#475569` | Deskripsi dan metadata |
-| `text/muted` | `#64748B` | Bantuan dan metadata sekunder |
-| `text/disabled` | `#64748B` | Konten nonaktif; tetap terbaca pada latar terang |
-| `text/inverse` | `#FFFFFF` | Teks pada aksi biru gelap |
-| `action/primary` | `#1D4ED8` | Tombol primer, link penting |
-| `action/primary-hover` | `#1E40AF` | Hover web |
-| `action/primary-pressed` | `#1E3A8A` | Pressed/active |
-| `action/secondary` | `#FFFFFF` | Tombol sekunder berbingkai |
-| `focus/ring` | `#2563EB` | Focus ring yang terlihat |
-| `status/success` | `#166534` | Teks/ikon sukses |
-| `status/success-bg` | `#DCFCE7` | Latar sukses |
-| `status/warning` | `#92400E` | Teks/ikon perhatian |
-| `status/warning-bg` | `#FEF3C7` | Latar perhatian |
-| `status/danger` | `#B91C1C` | Teks/ikon gagal atau destruktif |
-| `status/danger-bg` | `#FEE2E2` | Latar gagal |
-| `status/info` | `#1E40AF` | Teks/ikon informasi |
-| `status/info-bg` | `#DBEAFE` | Latar informasi |
-| `status/neutral` | `#475569` | Teks/ikon status netral |
-| `status/neutral-bg` | `#F1F5F9` | Latar netral |
+| Semantic token           | Nilai awal | Aturan penggunaan                                |
+| ------------------------ | ---------- | ------------------------------------------------ |
+| `surface/page`           | `#FFFFFF`  | Kanvas utama pelanggan dan admin                 |
+| `surface/subtle`         | `#F8FAFC`  | Bagian halaman yang perlu dibedakan              |
+| `surface/raised`         | `#FFFFFF`  | Card, menu, dialog                               |
+| `surface/selected`       | `#EFF6FF`  | Pilihan aktif                                    |
+| `border/default`         | `#E2E8F0`  | Garis pembatas ringan                            |
+| `border/strong`          | `#CBD5E1`  | Batas input dan pemisah tegas                    |
+| `text/primary`           | `#0F172A`  | Judul dan isi utama                              |
+| `text/secondary`         | `#475569`  | Deskripsi dan metadata                           |
+| `text/muted`             | `#64748B`  | Bantuan dan metadata sekunder                    |
+| `text/disabled`          | `#64748B`  | Konten nonaktif; tetap terbaca pada latar terang |
+| `text/inverse`           | `#FFFFFF`  | Teks pada aksi biru gelap                        |
+| `action/primary`         | `#1D4ED8`  | Tombol primer, link penting                      |
+| `action/primary-hover`   | `#1E40AF`  | Hover web                                        |
+| `action/primary-pressed` | `#1E3A8A`  | Pressed/active                                   |
+| `action/secondary`       | `#FFFFFF`  | Tombol sekunder berbingkai                       |
+| `focus/ring`             | `#2563EB`  | Focus ring yang terlihat                         |
+| `status/success`         | `#166534`  | Teks/ikon sukses                                 |
+| `status/success-bg`      | `#DCFCE7`  | Latar sukses                                     |
+| `status/warning`         | `#92400E`  | Teks/ikon perhatian                              |
+| `status/warning-bg`      | `#FEF3C7`  | Latar perhatian                                  |
+| `status/danger`          | `#B91C1C`  | Teks/ikon gagal atau destruktif                  |
+| `status/danger-bg`       | `#FEE2E2`  | Latar gagal                                      |
+| `status/info`            | `#1E40AF`  | Teks/ikon informasi                              |
+| `status/info-bg`         | `#DBEAFE`  | Latar informasi                                  |
+| `status/neutral`         | `#475569`  | Teks/ikon status netral                          |
+| `status/neutral-bg`      | `#F1F5F9`  | Latar netral                                     |
 
 **Aturan kontras:** teks normal memenuhi rasio minimal WCAG AA 4.5:1 terhadap latar; teks besar minimal 3:1. Jangan gunakan `blue/500` untuk teks kecil di atas putih tanpa pemeriksaan kontras. Status sukses/peringatan/gagal/info selalu menampilkan label dan/atau ikon. Lakukan pemeriksaan kontras aktual pada kombinasi token sebelum handoff.
 
@@ -172,20 +172,20 @@ Arah warna: kanvas putih dan netral dingin untuk menjaga rasa bersih serta teper
 - Harga menggunakan angka tabular jika tersedia; gunakan format lokal Rupiah konsisten, contoh `Rp1.250.000`.
 - Body text tidak lebih kecil dari 14 px untuk konten penting; teks tambahan 12 px hanya untuk metadata yang tidak kritis.
 
-| Style token | Size / line-height | Weight | Contoh penggunaan |
-|---|---:|---:|---|
-| `display/1` | 48 / 56 px | 700 | Headline promosi storefront desktop |
-| `heading/1` | 36 / 44 px | 700 | Judul halaman utama |
-| `heading/2` | 30 / 38 px | 700 | Judul halaman / bagian utama |
-| `heading/3` | 24 / 32 px | 600 | Judul card besar / panel |
-| `heading/4` | 20 / 28 px | 600 | Judul subsection |
-| `title/large` | 18 / 26 px | 600 | Judul card/produk |
-| `body/large` | 16 / 24 px | 400 | Isi utama |
-| `body/default` | 14 / 22 px | 400 | Isi umum, tabel, form |
-| `label/default` | 14 / 20 px | 500 | Label input dan kontrol |
-| `body/small` | 12 / 18 px | 400 | Metadata sekunder |
-| `button/default` | 14 / 20 px | 600 | Label tombol |
-| `price/large` | 24 / 32 px | 700 | Harga detail / total checkout |
+| Style token      | Size / line-height | Weight | Contoh penggunaan                   |
+| ---------------- | -----------------: | -----: | ----------------------------------- |
+| `display/1`      |         48 / 56 px |    700 | Headline promosi storefront desktop |
+| `heading/1`      |         36 / 44 px |    700 | Judul halaman utama                 |
+| `heading/2`      |         30 / 38 px |    700 | Judul halaman / bagian utama        |
+| `heading/3`      |         24 / 32 px |    600 | Judul card besar / panel            |
+| `heading/4`      |         20 / 28 px |    600 | Judul subsection                    |
+| `title/large`    |         18 / 26 px |    600 | Judul card/produk                   |
+| `body/large`     |         16 / 24 px |    400 | Isi utama                           |
+| `body/default`   |         14 / 22 px |    400 | Isi umum, tabel, form               |
+| `label/default`  |         14 / 20 px |    500 | Label input dan kontrol             |
+| `body/small`     |         12 / 18 px |    400 | Metadata sekunder                   |
+| `button/default` |         14 / 20 px |    600 | Label tombol                        |
+| `price/large`    |         24 / 32 px |    700 | Harga detail / total checkout       |
 
 Di mobile, headline dapat turun satu langkah ukuran (misalnya `heading/1` menjadi 30/38 px). Jangan mengecilkan body text untuk memasukkan konten; susun ulang atau gunakan scroll.
 
@@ -202,14 +202,14 @@ Gunakan basis 4 px. Token: `space/0 = 0`, `space/1 = 4`, `space/2 = 8`, `space/3
 
 ### 4.4 Radius, border, dan elevation
 
-| Token | Nilai | Penggunaan |
-|---|---:|---|
-| `radius/xs` | 4 px | Label/status compact |
-| `radius/sm` | 8 px | Input, tombol kecil |
-| `radius/md` | 12 px | Card standar, tombol |
-| `radius/lg` | 16 px | Panel, card produk |
-| `radius/xl` | 24 px | Hero/overlay yang menonjol |
-| `radius/full` | 999 px | Avatar, chip/pill |
+| Token         |  Nilai | Penggunaan                 |
+| ------------- | -----: | -------------------------- |
+| `radius/xs`   |   4 px | Label/status compact       |
+| `radius/sm`   |   8 px | Input, tombol kecil        |
+| `radius/md`   |  12 px | Card standar, tombol       |
+| `radius/lg`   |  16 px | Panel, card produk         |
+| `radius/xl`   |  24 px | Hero/overlay yang menonjol |
+| `radius/full` | 999 px | Avatar, chip/pill          |
 
 - Border standar 1 px `border/default`; gunakan 2 px hanya untuk focus/selected state.
 - Elevation rendah dan halus: card umumnya dibedakan oleh border; shadow disimpan untuk dropdown, popover, sticky bar, dan dialog.
@@ -220,13 +220,13 @@ Gunakan basis 4 px. Token: `space/0 = 0`, `space/1 = 4`, `space/2 = 8`, `space/3
 
 Ini adalah starting point untuk desain; validasi dengan konten dan perangkat uji.
 
-| Ukuran | Frame Figma awal | Grid | Margin / gutter | Layout |
-|---|---|---|---|---|
-| Desktop wide | 1440 × 1000 | 12 kolom | 80 px / 24 px | Admin sidebar; storefront max-width 1200 px |
-| Desktop | 1280 × 900 | 12 kolom | 48 px / 24 px | Admin sidebar 240–264 px |
-| Tablet | 768 × 1024 | 8 kolom | 24 px / 16 px | Sidebar dapat menjadi drawer; katalog 2–3 kolom |
-| Mobile | 390 × 844 | 4 kolom | 16 px / 16 px | Single column, bottom navigation bila sesuai |
-| Mobile compact | 360 × 800 | 4 kolom | 16 px / 12 px | Uji overflow dan label panjang |
+| Ukuran         | Frame Figma awal | Grid     | Margin / gutter | Layout                                          |
+| -------------- | ---------------- | -------- | --------------- | ----------------------------------------------- |
+| Desktop wide   | 1440 × 1000      | 12 kolom | 80 px / 24 px   | Admin sidebar; storefront max-width 1200 px     |
+| Desktop        | 1280 × 900       | 12 kolom | 48 px / 24 px   | Admin sidebar 240–264 px                        |
+| Tablet         | 768 × 1024       | 8 kolom  | 24 px / 16 px   | Sidebar dapat menjadi drawer; katalog 2–3 kolom |
+| Mobile         | 390 × 844        | 4 kolom  | 16 px / 16 px   | Single column, bottom navigation bila sesuai    |
+| Mobile compact | 360 × 800        | 4 kolom  | 16 px / 12 px   | Uji overflow dan label panjang                  |
 
 Breakpoint awal: mobile `< 768 px`, tablet `768–1023 px`, desktop `≥ 1024 px`. Web tetap fluid; breakpoint bukan pengganti layout constraints.
 
@@ -270,30 +270,30 @@ Semua komponen interaktif minimal mempunyai `Default`, `Hover` (web), `Focused`,
 
 ### 6.1 Komponen umum
 
-| Komponen | Variant / ukuran | State dan catatan |
-|---|---|---|
-| `Button` | Primary, Secondary, Tertiary/Ghost, Destructive; sm/md/lg; icon leading/trailing | Default, hover, pressed, focus, disabled, loading; teks CTA berupa kata kerja |
-| `Icon Button` | Subtle, outlined, filled; sm/md/lg | Wajib ada accessible name/tooltip; hit area mobile min 44 px |
-| `Text Field` | Text, email, password, number, phone | Empty, filled, focus, error, success, disabled; label persisten di atas field |
-| `Search Field` | Desktop inline / mobile expanded | Empty, typed, loading, no result; tombol clear tidak menghapus label |
-| `Textarea` | Default / dengan counter | Focus, error, disabled; tunjukkan batas karakter bila ada |
-| `Select / Combobox` | Single, searchable | Open, selected, empty, error; alternatif keyboard dan pembaca layar |
-| `Checkbox` | Unchecked / checked / indeterminate | Focus, disabled; label bisa diklik |
-| `Radio` | Unselected / selected | Group wajib memiliki legend/label |
-| `Switch` | On / off | Gunakan untuk preferensi yang langsung tersimpan; bukan pengganti pilihan kritis |
-| `Chip` | Filter, removable, category | Selected state dibedakan selain dengan warna |
-| `Badge` | Status, count, category | Teks singkat; jangan pakai badge untuk paragraf |
-| `Tabs` | Underline / pill | Tampilkan selected state dan jumlah jika relevan |
-| `Tooltip` | Informasi singkat | Bukan tempat menyimpan instruksi wajib atau error |
-| `Toast` | Success, info, warning, error | Ringkas, dapat diumumkan; error/action penting tidak hilang terlalu cepat |
-| `Alert / Banner` | Info, success, warning, error | Untuk pesan kontekstual yang perlu tetap terlihat |
-| `Dialog` | Confirm, form, notice | Judul jelas; destructive action menyebut objek yang terdampak |
-| `Bottom Sheet` | Action list, filter, summary | Mobile; menyediakan close dan tidak mengunci aksi utama |
-| `Pagination` | Compact / full | Tampilkan halaman aktif dan kontrol sebelumnya/berikutnya |
-| `Skeleton` | Text, image, card, row | Samakan bentuk dengan konten akhir; jangan menjadi loading tanpa akhir |
-| `Empty State` | No data, no search result, error/retry | Berisi sebab singkat dan satu tindakan berikutnya |
-| `Price Text` | Regular, sale, total | Format IDR konsisten; diskon tidak boleh mengaburkan harga akhir |
-| `Avatar` | Initial / image | Fallback inisial; bukan kontrol tanpa label |
+| Komponen            | Variant / ukuran                                                                 | State dan catatan                                                                |
+| ------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `Button`            | Primary, Secondary, Tertiary/Ghost, Destructive; sm/md/lg; icon leading/trailing | Default, hover, pressed, focus, disabled, loading; teks CTA berupa kata kerja    |
+| `Icon Button`       | Subtle, outlined, filled; sm/md/lg                                               | Wajib ada accessible name/tooltip; hit area mobile min 44 px                     |
+| `Text Field`        | Text, email, password, number, phone                                             | Empty, filled, focus, error, success, disabled; label persisten di atas field    |
+| `Search Field`      | Desktop inline / mobile expanded                                                 | Empty, typed, loading, no result; tombol clear tidak menghapus label             |
+| `Textarea`          | Default / dengan counter                                                         | Focus, error, disabled; tunjukkan batas karakter bila ada                        |
+| `Select / Combobox` | Single, searchable                                                               | Open, selected, empty, error; alternatif keyboard dan pembaca layar              |
+| `Checkbox`          | Unchecked / checked / indeterminate                                              | Focus, disabled; label bisa diklik                                               |
+| `Radio`             | Unselected / selected                                                            | Group wajib memiliki legend/label                                                |
+| `Switch`            | On / off                                                                         | Gunakan untuk preferensi yang langsung tersimpan; bukan pengganti pilihan kritis |
+| `Chip`              | Filter, removable, category                                                      | Selected state dibedakan selain dengan warna                                     |
+| `Badge`             | Status, count, category                                                          | Teks singkat; jangan pakai badge untuk paragraf                                  |
+| `Tabs`              | Underline / pill                                                                 | Tampilkan selected state dan jumlah jika relevan                                 |
+| `Tooltip`           | Informasi singkat                                                                | Bukan tempat menyimpan instruksi wajib atau error                                |
+| `Toast`             | Success, info, warning, error                                                    | Ringkas, dapat diumumkan; error/action penting tidak hilang terlalu cepat        |
+| `Alert / Banner`    | Info, success, warning, error                                                    | Untuk pesan kontekstual yang perlu tetap terlihat                                |
+| `Dialog`            | Confirm, form, notice                                                            | Judul jelas; destructive action menyebut objek yang terdampak                    |
+| `Bottom Sheet`      | Action list, filter, summary                                                     | Mobile; menyediakan close dan tidak mengunci aksi utama                          |
+| `Pagination`        | Compact / full                                                                   | Tampilkan halaman aktif dan kontrol sebelumnya/berikutnya                        |
+| `Skeleton`          | Text, image, card, row                                                           | Samakan bentuk dengan konten akhir; jangan menjadi loading tanpa akhir           |
+| `Empty State`       | No data, no search result, error/retry                                           | Berisi sebab singkat dan satu tindakan berikutnya                                |
+| `Price Text`        | Regular, sale, total                                                             | Format IDR konsisten; diskon tidak boleh mengaburkan harga akhir                 |
+| `Avatar`            | Initial / image                                                                  | Fallback inisial; bukan kontrol tanpa label                                      |
 
 ### 6.2 Komponen e-commerce
 
@@ -327,25 +327,25 @@ Semua komponen interaktif minimal mempunyai `Default`, `Hover` (web), `Focused`,
 
 Label berikut menerjemahkan status PRD ke bahasa antarmuka; status backend tetap menjadi sumber kebenaran.
 
-| Domain | Nilai data | Label UI | Semantic |
-|---|---|---|---|
-| Order | `pending_payment` | Menunggu pembayaran | Warning |
-| Order | `paid` | Sudah dibayar | Success |
-| Order | `processing` | Sedang diproses | Info |
-| Order | `shipped` | Dalam pengiriman | Info |
-| Order | `completed` | Selesai | Success |
-| Order | `cancelled` | Dibatalkan | Neutral |
-| Order | `expired` | Kedaluwarsa | Neutral / warning |
-| Payment | `pending` | Menunggu pembayaran | Warning |
-| Payment | `success` | Pembayaran berhasil | Success |
-| Payment | `failed` | Pembayaran gagal | Danger |
-| Payment | `expired` | Pembayaran kedaluwarsa | Neutral / warning |
-| Shipment | `picked_up` | Paket diterima kurir | Info |
-| Shipment | `in_transit` | Paket dalam perjalanan | Info |
-| Shipment | `out_for_delivery` | Sedang diantar | Info |
-| Shipment | `delivered` | Paket diterima | Success |
-| Variant | `digital` | Produk digital | Info |
-| Variant | `physical` | Produk fisik | Neutral |
+| Domain   | Nilai data         | Label UI               | Semantic          |
+| -------- | ------------------ | ---------------------- | ----------------- |
+| Order    | `pending_payment`  | Menunggu pembayaran    | Warning           |
+| Order    | `paid`             | Sudah dibayar          | Success           |
+| Order    | `processing`       | Sedang diproses        | Info              |
+| Order    | `shipped`          | Dalam pengiriman       | Info              |
+| Order    | `completed`        | Selesai                | Success           |
+| Order    | `cancelled`        | Dibatalkan             | Neutral           |
+| Order    | `expired`          | Kedaluwarsa            | Neutral / warning |
+| Payment  | `pending`          | Menunggu pembayaran    | Warning           |
+| Payment  | `success`          | Pembayaran berhasil    | Success           |
+| Payment  | `failed`           | Pembayaran gagal       | Danger            |
+| Payment  | `expired`          | Pembayaran kedaluwarsa | Neutral / warning |
+| Shipment | `picked_up`        | Paket diterima kurir   | Info              |
+| Shipment | `in_transit`       | Paket dalam perjalanan | Info              |
+| Shipment | `out_for_delivery` | Sedang diantar         | Info              |
+| Shipment | `delivered`        | Paket diterima         | Success           |
+| Variant  | `digital`          | Produk digital         | Info              |
+| Variant  | `physical`         | Produk fisik           | Neutral           |
 
 Jangan menyamakan `paid` dengan `completed`: order fisik bisa masih diproses atau dikirim setelah pembayaran berhasil. Jangan menyediakan dropdown status bebas jika transisi dikendalikan backend.
 
@@ -368,35 +368,35 @@ Matriks berikut mengubah inventaris PRD menjadi backlog desain. Buat state norma
 
 **Navigasi:** header toko dengan kategori, pencarian, akun, keranjang; footer untuk informasi toko dan bantuan yang memang tersedia.
 
-| Layar | Tujuan dan konten utama | State/variasi yang harus dirancang |
-|---|---|---|
-| Beranda dan katalog | Hero yang tidak menutupi produk, kategori, produk pilihan/terbaru, katalog dengan pagination | loading, kosong, error/retry |
-| Pencarian dan filter | Pencarian nama/brand, kategori, hasil dan jumlah hasil | tidak ada hasil, filter aktif, clear |
-| Detail produk | Gallery, nama/brand, rating, deskripsi, varian, jenis pemenuhan, harga, stok, ulasan, CTA | varian digital/fisik, tidak tersedia, review kosong |
-| Registrasi | Nama, email, telepon, password, tanggal lahir jika diwajibkan PRD | validasi field, duplicate/conflict, sukses |
-| Login | Email dan password, akses registrasi | kredensial gagal tanpa mengungkap keberadaan akun, loading |
-| Keranjang | Item, tipe produk, kuantitas, hapus, subtotal, lanjut checkout | kosong, stok berubah, sesi login |
-| Checkout dan alamat | Alamat hanya untuk pesanan fisik; review item dan ringkasan harga; voucher (P1) | digital-only, fisik, campuran, alamat kosong, voucher error |
-| Pembayaran simulasi | Nomor order, jumlah, simulasi hasil pembayaran | pending, success, failed, expired |
-| Riwayat dan detail pesanan | Snapshot order, payment, status; digital delivery dan tracking bila relevan | pending/paid, campuran, tidak punya akses |
-| Profil dan buku alamat | Data profil dan CRUD alamat/default | data kosong, validasi, konfirmasi hapus |
-| Ulasan produk | Rating, komentar, kelayakan review | eligible, sudah mengulas, tidak eligible |
+| Layar                      | Tujuan dan konten utama                                                                      | State/variasi yang harus dirancang                          |
+| -------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Beranda dan katalog        | Hero yang tidak menutupi produk, kategori, produk pilihan/terbaru, katalog dengan pagination | loading, kosong, error/retry                                |
+| Pencarian dan filter       | Pencarian nama/brand, kategori, hasil dan jumlah hasil                                       | tidak ada hasil, filter aktif, clear                        |
+| Detail produk              | Gallery, nama/brand, rating, deskripsi, varian, jenis pemenuhan, harga, stok, ulasan, CTA    | varian digital/fisik, tidak tersedia, review kosong         |
+| Registrasi                 | Nama, email, telepon, password, tanggal lahir jika diwajibkan PRD                            | validasi field, duplicate/conflict, sukses                  |
+| Login                      | Email dan password, akses registrasi                                                         | kredensial gagal tanpa mengungkap keberadaan akun, loading  |
+| Keranjang                  | Item, tipe produk, kuantitas, hapus, subtotal, lanjut checkout                               | kosong, stok berubah, sesi login                            |
+| Checkout dan alamat        | Alamat hanya untuk pesanan fisik; review item dan ringkasan harga; voucher (P1)              | digital-only, fisik, campuran, alamat kosong, voucher error |
+| Pembayaran simulasi        | Nomor order, jumlah, simulasi hasil pembayaran                                               | pending, success, failed, expired                           |
+| Riwayat dan detail pesanan | Snapshot order, payment, status; digital delivery dan tracking bila relevan                  | pending/paid, campuran, tidak punya akses                   |
+| Profil dan buku alamat     | Data profil dan CRUD alamat/default                                                          | data kosong, validasi, konfirmasi hapus                     |
+| Ulasan produk              | Rating, komentar, kelayakan review                                                           | eligible, sudah mengulas, tidak eligible                    |
 
 ### 8.2 Admin web
 
 **Navigasi:** Ringkasan, Produk, Kategori, Pesanan, Voucher. Akses di menu dapat disesuaikan dengan hak akses/fitur yang benar-benar dirilis.
 
-| Layar | Tujuan dan konten utama | State/variasi yang harus dirancang |
-|---|---|---|
-| Login admin | Autentikasi terpisah dari pelanggan | salah, loading, nonaktif/akses ditolak |
-| Ringkasan operasional | Pesanan menunggu, pembayaran, pemenuhan fisik, produk stok rendah; shortcut ke antrean | tanpa data, periode/filter, error |
-| Kategori | Daftar, pencarian, parent, tambah/edit | empty, kategori masih digunakan, konfirmasi |
-| Produk | List/search/filter status dan tipe, tambah/edit produk | published/draft/nonaktif, stok rendah, empty |
-| Editor produk/varian | Informasi produk, gambar/alt text, varian, SKU/harga, stok/berat kondisional | digital-only, physical, campuran, validasi/upload |
-| Voucher | Daftar, buat/edit/nonaktif, masa berlaku dan batas | aktif, kedaluwarsa, pernah dipakai, invalid |
-| Daftar pesanan | Pencarian, filter status/tanggal, ringkasan item dan jumlah | filter kosong, loading/error |
-| Detail order/pembayaran | Snapshot order, payment simulation, status, item digital/physical | failed/expired/pending/success |
-| Pengiriman/tracking | Isi kurir dan tracking, lihat histori tracking | hanya order fisik; shipped/delivered |
+| Layar                   | Tujuan dan konten utama                                                                | State/variasi yang harus dirancang                |
+| ----------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Login admin             | Autentikasi terpisah dari pelanggan                                                    | salah, loading, nonaktif/akses ditolak            |
+| Ringkasan operasional   | Pesanan menunggu, pembayaran, pemenuhan fisik, produk stok rendah; shortcut ke antrean | tanpa data, periode/filter, error                 |
+| Kategori                | Daftar, pencarian, parent, tambah/edit                                                 | empty, kategori masih digunakan, konfirmasi       |
+| Produk                  | List/search/filter status dan tipe, tambah/edit produk                                 | published/draft/nonaktif, stok rendah, empty      |
+| Editor produk/varian    | Informasi produk, gambar/alt text, varian, SKU/harga, stok/berat kondisional           | digital-only, physical, campuran, validasi/upload |
+| Voucher                 | Daftar, buat/edit/nonaktif, masa berlaku dan batas                                     | aktif, kedaluwarsa, pernah dipakai, invalid       |
+| Daftar pesanan          | Pencarian, filter status/tanggal, ringkasan item dan jumlah                            | filter kosong, loading/error                      |
+| Detail order/pembayaran | Snapshot order, payment simulation, status, item digital/physical                      | failed/expired/pending/success                    |
+| Pengiriman/tracking     | Isi kurir dan tracking, lihat histori tracking                                         | hanya order fisik; shipped/delivered              |
 
 **Pola desktop:** sidebar konsisten; gunakan tabel untuk scan dan detail halaman untuk tindakan. Tampilkan KPI hanya bila angka memiliki definisi dan sumber yang jelas.
 
@@ -404,18 +404,18 @@ Matriks berikut mengubah inventaris PRD menjadi backlog desain. Buat state norma
 
 **Navigasi utama:** `Beranda`, `Jelajahi`, `Keranjang`, `Pesanan`, `Akun`. Keranjang boleh memiliki count badge; jangan menaruh tab sekunder pada bar yang sama.
 
-| Layar | Tujuan dan konten utama | Adaptasi mobile |
-|---|---|---|
-| Beranda | Pencarian, kategori, pilihan produk | komponen vertikal, carousel hanya jika tetap dapat diakses |
-| Jelajahi/search | Search, filter, grid produk | filter dalam bottom sheet; hasil 2 kolom bila nyaman |
-| Detail produk | Gallery, varian, harga, rating, CTA | pilihan varian mudah dijangkau; sticky CTA tidak menutupi konten |
-| Login/registrasi | Akses akun pelanggan | keyboard type sesuai field; password visibility |
-| Keranjang | Item dan subtotal | edit kuantitas inline; CTA checkout di area aman |
-| Checkout | Pilih/tambah alamat jika ada fisik, voucher, total | step/section jelas; ringkasan collapsible; input besar |
-| Pembayaran simulasi | Hasil simulasi dan jumlah | penjelasan simulasi terlihat sebelum aksi |
-| Pesanan dan detail | Riwayat, timeline, unduhan, tracking | status ringkas; digital dan shipment jadi panel terpisah |
-| Akun/alamat | Profil, alamat, logout | form satu kolom dan aksi berukuran sentuh |
-| Ulasan | Rating dan komentar | keyboard-aware, feedback setelah simpan |
+| Layar               | Tujuan dan konten utama                            | Adaptasi mobile                                                  |
+| ------------------- | -------------------------------------------------- | ---------------------------------------------------------------- |
+| Beranda             | Pencarian, kategori, pilihan produk                | komponen vertikal, carousel hanya jika tetap dapat diakses       |
+| Jelajahi/search     | Search, filter, grid produk                        | filter dalam bottom sheet; hasil 2 kolom bila nyaman             |
+| Detail produk       | Gallery, varian, harga, rating, CTA                | pilihan varian mudah dijangkau; sticky CTA tidak menutupi konten |
+| Login/registrasi    | Akses akun pelanggan                               | keyboard type sesuai field; password visibility                  |
+| Keranjang           | Item dan subtotal                                  | edit kuantitas inline; CTA checkout di area aman                 |
+| Checkout            | Pilih/tambah alamat jika ada fisik, voucher, total | step/section jelas; ringkasan collapsible; input besar           |
+| Pembayaran simulasi | Hasil simulasi dan jumlah                          | penjelasan simulasi terlihat sebelum aksi                        |
+| Pesanan dan detail  | Riwayat, timeline, unduhan, tracking               | status ringkas; digital dan shipment jadi panel terpisah         |
+| Akun/alamat         | Profil, alamat, logout                             | form satu kolom dan aksi berukuran sentuh                        |
+| Ulasan              | Rating dan komentar                                | keyboard-aware, feedback setelah simpan                          |
 
 ### 8.4 Admin mobile (operasional-prioritas)
 
@@ -423,15 +423,15 @@ Admin mobile tidak perlu menyalin seluruh desktop. Fokus pada melihat apa yang p
 
 **Navigasi awal:** `Ringkasan`, `Pesanan`, `Produk`, `Akun`; shipment menjadi filter/aksi dalam detail pesanan, bukan tab utama.
 
-| Layar | Tujuan dan konten utama | Catatan desain |
-|---|---|---|
-| Login admin | Autentikasi admin khusus | tidak berbagi tampilan/identitas login pelanggan |
-| Ringkasan | Antrean menunggu pembayaran, pesanan perlu diproses, pengiriman tertunda, stok rendah | angka membuka daftar terfilter; hindari KPI dekoratif |
-| Daftar pesanan | Search, filter status, tanggal, jenis fulfillment | list-card dengan pelanggan/order/status/usia order; filter di sheet |
-| Detail order | Item, status payment/order, jenis pemenuhan, informasi pelanggan minimum yang dibutuhkan | aksi sesuai transisi valid; data pribadi tidak berlebihan |
-| Tindak lanjut pengiriman | Input kurir dan tracking, konfirmasi kirim, tracking history | hanya untuk order fisik; konfirmasi sebelum mengubah status |
-| Produk ringkas | Cari produk, lihat harga/stok/status, quick edit stok/status bila aman | CRUD kompleks dan pengelolaan gambar penuh diarahkan ke admin-web |
-| Notifikasi/inbox tugas (opsional) | Pengingat operasional yang berasal dari data nyata | jangan menjadi sistem notifikasi eksternal yang belum ada |
+| Layar                             | Tujuan dan konten utama                                                                  | Catatan desain                                                      |
+| --------------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Login admin                       | Autentikasi admin khusus                                                                 | tidak berbagi tampilan/identitas login pelanggan                    |
+| Ringkasan                         | Antrean menunggu pembayaran, pesanan perlu diproses, pengiriman tertunda, stok rendah    | angka membuka daftar terfilter; hindari KPI dekoratif               |
+| Daftar pesanan                    | Search, filter status, tanggal, jenis fulfillment                                        | list-card dengan pelanggan/order/status/usia order; filter di sheet |
+| Detail order                      | Item, status payment/order, jenis pemenuhan, informasi pelanggan minimum yang dibutuhkan | aksi sesuai transisi valid; data pribadi tidak berlebihan           |
+| Tindak lanjut pengiriman          | Input kurir dan tracking, konfirmasi kirim, tracking history                             | hanya untuk order fisik; konfirmasi sebelum mengubah status         |
+| Produk ringkas                    | Cari produk, lihat harga/stok/status, quick edit stok/status bila aman                   | CRUD kompleks dan pengelolaan gambar penuh diarahkan ke admin-web   |
+| Notifikasi/inbox tugas (opsional) | Pengingat operasional yang berasal dari data nyata                                       | jangan menjadi sistem notifikasi eksternal yang belum ada           |
 
 **Jangan masukkan pada mobile awal:** editor tabel massal, konfigurasi kategori bercabang yang kompleks, pengelolaan konten panjang, atau pengaturan voucher mendalam. Bila tetap diperlukan, arahkan admin ke admin-web; jangan menyembunyikan bahwa fungsi tersebut belum tersedia di mobile.
 
