@@ -3,11 +3,11 @@
 | Atribut                   | Nilai                                                               |
 | ------------------------- | ------------------------------------------------------------------- |
 | Proyek                    | InahuyShop --- Product Digital E-Commerce                           |
-| Versi dokumen             | 1.1                                                                 |
+| Versi dokumen             | 1.2                                                                 |
 | Tanggal pembaruan         | 2 November 2026                                                     |
 | Status                    | Baseline tracking; direkonsiliasi dengan repository setelah RS-01.6 |
 | Repository                | `JihanIsfalana-oss/Project_BasisData_A_InahuyShop`                  |
-| Branch terakhir diketahui | `chore/repository-stabilization-01-6-verification`                  |
+| Branch terakhir diketahui | `ci/rs-01-7-ci-foundation`                                          |
 
 > **Catatan status:** `[x]` berarti selesai dan telah dikonfirmasi.
 > `[ ]` berarti belum selesai, belum dimulai, atau belum ada bukti yang
@@ -45,8 +45,8 @@ pemisahan UI web dan native ketika kebutuhan platform berbeda.
 | RS-01.4                   | Selesai dengan butir terbuka        | Commit `6c2a075`; verifikasi konsumsi package oleh aplikasi dipindahkan ke RS-01.8                 |
 | RS-01.5                   | Selesai                             | Commit `046fb2b`, ter-push                                                                         |
 | RS-01.6                   | Selesai bersyarat (1 November 2026) | `pnpm verify` exit 0; butir cakupan terbuka dipindahkan ke RS-01.8                                 |
-| RS-01.7                   | Belum dimulai                       | CI foundation                                                                                      |
-| RS-01.8                   | Diusulkan                           | Integration proof source-first ESM; menunggu persetujuan                                           |
+| RS-01.7                   | Dalam proses                        | Workflow ditulis dan divalidasi lokal; belum dijalankan pada runner GitHub                         |
+| RS-01.8                   | Disetujui (2 November 2026)         | Integration proof source-first ESM; dikerjakan setelah RS-01.7                                     |
 | Implementasi fitur produk | Belum dikonfirmasi                  | Starter app bukan fitur produk yang selesai                                                        |
 
 ## 2. Konvensi status
@@ -496,22 +496,33 @@ Diselesaikan pada 1 November 2026. Branch:
 package dikonsumsi dengan benar, karena belum ada aplikasi yang
 mengimpor package runtime secara permanen.
 
-### RS-01.7 CI Foundation --- Belum dimulai
+### RS-01.7 CI Foundation --- Dalam proses
 
-- [ ] Menentukan platform CI.
-- [ ] Menentukan trigger workflow untuk pull request dan push.
-- [ ] Menyiapkan pnpm versi terkunci pada CI.
-- [ ] Menjalankan frozen lockfile install pada CI.
-- [ ] Menjalankan Prettier check.
-- [ ] Menjalankan ESLint.
-- [ ] Menjalankan build web.
-- [ ] Menentukan pemeriksaan API/mobile yang realistis.
-- [ ] Menyiapkan dependency caching.
-- [ ] Menetapkan branch protection dan required checks.
-- [ ] Menguji workflow melalui pull request.
-- [ ] Mendokumentasikan cara membaca kegagalan CI.
+Artefak: `.github/workflows/ci.yml`, `.nvmrc`, `docs/CI.md`. Workflow
+telah lulus `actionlint` dan `pnpm verify` lokal, tetapi **belum pernah
+dijalankan pada runner GitHub**. Butir bertanda `[ ]` di bawah menunggu
+run pertama.
 
-### RS-01.8 Integration Proof --- Diusulkan (menunggu persetujuan)
+- [x] Menentukan platform CI: GitHub Actions.
+- [x] Menentukan trigger: `pull_request`, `push` ke `main`, dan
+      `workflow_dispatch`.
+- [x] Menentukan versi Node: 22, melalui `.nvmrc`.
+- [ ] Pnpm versi terkunci pada CI (dibaca dari `packageManager`; belum
+      terbukti pada runner).
+- [ ] Frozen lockfile install pada CI.
+- [ ] Prettier check, ESLint, dan build web pada CI (melalui
+      `pnpm verify`).
+- [x] Menentukan pemeriksaan API/mobile yang realistis: sintaks API
+      dan `expo lint`. Build Android/iOS dan uji startup API belum
+      masuk CI (dicatat pada `docs/CI.md`).
+- [ ] Dependency caching (`cache: pnpm`; belum terbukti pada runner).
+- [ ] Memastikan versi Node lokal pengembang sesuai `.nvmrc`.
+- [ ] Menguji workflow melalui Pull Request percobaan.
+- [ ] Menetapkan branch protection dan required check **Verify**
+      (setelah workflow terbukti hijau).
+- [x] Mendokumentasikan cara membaca kegagalan CI: `docs/CI.md`.
+
+### RS-01.8 Integration Proof --- Disetujui (belum dimulai)
 
 Tujuan: membuktikan asumsi source-first ESM pada ketiga runtime dan
 menutup butir terbuka RS-01.4.5 dan RS-01.6.
@@ -946,10 +957,11 @@ selesai.
         `046fb2b`.
 2.  [x] **Selesaikan RS-01.6 Verification** (bersyarat; butir terbuka
         dipindahkan ke RS-01.8).
-3.  [ ] **Selesaikan RS-01.7 CI Foundation.** Siapkan CI minimum yang
+3.  [ ] **Selesaikan RS-01.7 CI Foundation** (dalam proses). CI minimum yang
         menjalankan frozen install dan `pnpm verify`.
-4.  [ ] **Putuskan RS-01.8 Integration Proof** (diusulkan): buktikan
-        source-first ESM pada Vite, Expo, dan Node sebelum M-06.
+4.  [ ] **Kerjakan RS-01.8 Integration Proof** (disetujui 2 November
+        2026): buktikan source-first ESM pada Vite, Expo, dan Node
+        sebelum M-06.
 5.  [ ] **Tinjau M-05 UML.** Artefak tersedia di `docs/UML`; lakukan
         review silang terhadap PRD, Architecture, dan ERD.
 6.  [ ] **Validasi ERD dan database schema** sebagai prasyarat backend.
@@ -1003,6 +1015,7 @@ selesai.
 | ----- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1.0   | 1 November 2026 | Inisialisasi rangkuman milestone, submilestone, checklist, urutan eksekusi, dan gate proyek                                                                                                                                                 |
 | 1.1   | 2 November 2026 | Rekonsiliasi pasca RS-01.6: status RS-01.4 sampai RS-01.6 dan hash commit diperbarui; checklist RS-01.6 dipulihkan; RS-01.8 diusulkan; lima tabel yang rusak akibat Prettier diperbaiki; risiko dan prioritas diperbarui; header diperbarui |
+| 1.2   | 2 November 2026 | RS-01.7 dimulai: workflow CI, `.nvmrc`, dan `docs/CI.md` ditambahkan; RS-01.8 disetujui; status dan prioritas diperbarui                                                                                                                    |
 
 ## 26. Sumber baseline
 
