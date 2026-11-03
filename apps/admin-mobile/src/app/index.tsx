@@ -2,6 +2,7 @@ import * as Device from 'expo-device'
 import { Platform, StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { API_HEALTH_MESSAGE } from '@inahuyshop/contracts'
+import { Card } from '@inahuyshop/ui-native'
 
 import { AnimatedIcon } from '@/components/animated-icon'
 import { HintRow } from '@/components/hint-row'
@@ -44,7 +45,9 @@ export default function HomeScreen() {
           get started
         </ThemedText>
 
-        <ThemedText type="small">{API_HEALTH_MESSAGE}</ThemedText>
+        <Card>
+          <ThemedText type="small">{API_HEALTH_MESSAGE}</ThemedText>
+        </Card>
 
         <ThemedView type="backgroundElement" style={styles.stepContainer}>
           <HintRow
