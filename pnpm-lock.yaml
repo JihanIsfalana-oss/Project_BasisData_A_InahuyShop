@@ -269,6 +269,9 @@ importers:
 
   apps/admin-web:
     dependencies:
+      '@inahuyshop/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       react:
         specifier: ^19.3.1
         version: 19.3.1
@@ -425,6 +428,9 @@ importers:
 
   apps/storefront-web:
     dependencies:
+      '@inahuyshop/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       react:
         specifier: ^19.3.1
         version: 19.3.1
