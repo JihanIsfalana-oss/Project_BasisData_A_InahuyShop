@@ -275,6 +275,9 @@ importers:
       '@inahuyshop/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@inahuyshop/ui-web':
+        specifier: workspace:*
+        version: link:../../packages/ui-web
       react:
         specifier: ^19.3.1
         version: 19.3.1
@@ -437,6 +440,9 @@ importers:
       '@inahuyshop/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@inahuyshop/ui-web':
+        specifier: workspace:*
+        version: link:../../packages/ui-web
       react:
         specifier: ^19.3.1
         version: 19.3.1

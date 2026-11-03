@@ -4,6 +4,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import { API_HEALTH_MESSAGE } from '@inahuyshop/contracts'
+import { Card } from '@inahuyshop/ui-web'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,7 +22,9 @@ function App() {
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
-          <p className="api-health">{API_HEALTH_MESSAGE}</p>
+          <Card>
+            <p className="api-health">{API_HEALTH_MESSAGE}</p>
+          </Card>
         </div>
         <button type="button" className="counter" onClick={() => setCount((count) => count + 1)}>
           Count is {count}
