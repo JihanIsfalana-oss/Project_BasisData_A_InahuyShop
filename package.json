@@ -13,8 +13,9 @@
     "lint": "pnpm -r --workspace-concurrency=1 --if-present run lint",
     "build": "pnpm --filter storefront-web --filter admin-web run build",
     "check:api": "node --check apps/api/src/index.js",
+    "check:boundaries": "node scripts/check-boundaries.mjs",
     "check:repo": "node scripts/verify-repo.mjs && git diff --check",
-    "verify": "pnpm format:check && pnpm lint && pnpm build && pnpm check:api && pnpm check:repo"
+    "verify": "pnpm format:check && pnpm lint && pnpm build && pnpm check:api && pnpm check:boundaries && pnpm check:repo"
   },
   "devDependencies": {
     "@inahuyshop/config-prettier": "workspace:*",
