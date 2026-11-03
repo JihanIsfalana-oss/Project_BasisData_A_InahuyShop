@@ -4,6 +4,7 @@
   "main": "expo-router/entry",
   "dependencies": {
     "@expo/ui": "~58.0.25",
+    "@inahuyshop/contracts": "workspace:*",
     "expo": "~58.0.21",
     "expo-constants": "~58.0.14",
     "expo-device": "~58.0.5",
