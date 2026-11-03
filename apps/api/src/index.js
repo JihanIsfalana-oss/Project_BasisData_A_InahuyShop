@@ -1,5 +1,6 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import { API_HEALTH_MESSAGE } from '@inahuyshop/contracts'
 
 dotenv.config()
 
@@ -11,7 +12,7 @@ app.use(express.json())
 app.get('/api/health', (_req, res) => {
   res.status(200).json({
     success: true,
-    message: 'InahuyShop API is running',
+    message: API_HEALTH_MESSAGE,
   })
 })
 
