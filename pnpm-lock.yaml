@@ -318,6 +318,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@inahuyshop/contracts':
+        specifier: workspace:*
+        version: link:../../packages/contracts
       dotenv:
         specifier: ^18.0.9
         version: 18.0.9
