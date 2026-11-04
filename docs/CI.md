@@ -7,6 +7,8 @@ Workflow: `.github/workflows/ci.yml`. Job: **Verify**.
 - CI menjalankan perintah yang sama dengan pemeriksaan lokal: `pnpm verify`.
 - Versi Node dibaca dari `.nvmrc`; versi pnpm dari `packageManager` pada
   `package.json` root. Ubah versi hanya di dua tempat tersebut.
+- `.gitattributes` menetapkan line ending LF agar `prettier --check .`
+  konsisten pada checkout Windows dan runner CI.
 - Action GitHub di-pin ke commit SHA. Perbarui secara sengaja dan catat
   versinya pada komentar di workflow.
 
