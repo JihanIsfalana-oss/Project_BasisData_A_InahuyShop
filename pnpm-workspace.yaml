@@ -1,0 +1,11 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+sharedWorkspaceLockfile: true
+
+overrides:
+  'rolldown@~1.2.14': '1.2.15'
+
+allowBuilds:
+  unrs-resolver: false

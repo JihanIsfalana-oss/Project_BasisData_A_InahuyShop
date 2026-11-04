@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      # Action di-pin ke commit SHA (bukan tag) agar tidak berubah diam-diam.
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Versi pnpm dibaca dari "packageManager" pada package.json root.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      # Versi Node dibaca dari .nvmrc agar lokal dan CI memakai sumber yang sama.
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies (frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      # Satu sumber kebenaran: perintah yang sama dengan pemeriksaan lokal.
+      # Urutan: format:check, lint, build, check:api, check:repo.
+      - name: Verify
+        run: pnpm verify
+
+  build-api-image:
+    name: Build API image
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Generate temporary MySQL credentials
+        run: |
+          {
+            echo "MYSQL_DATABASE=ci_inahuyshop"
+            echo "MYSQL_USER=ci_inahuyshop"
+            echo "MYSQL_PASSWORD=$(openssl rand -hex 24)"
+            echo "MYSQL_ROOT_PASSWORD=$(openssl rand -hex 24)"
+          } >> "$GITHUB_ENV"
+
+      - name: Build API image
+        run: docker build --file apps/api/Dockerfile --tag inahuyshop-api:local .
+
+      - name: Start API and MySQL with Compose
+        run: docker compose up --detach --wait --no-build --wait-timeout 120
+
+      - name: Check API health endpoint
+        run: curl --fail --retry 30 --retry-delay 1 --retry-connrefused http://127.0.0.1:3000/api/health
+
+      - name: Stop API and MySQL
+        if: always()
+        run: docker compose down --volumes

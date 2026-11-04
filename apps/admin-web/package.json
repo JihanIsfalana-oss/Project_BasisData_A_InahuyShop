@@ -10,12 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@inahuyshop/contracts": "workspace:*",
+    "@inahuyshop/ui-web": "workspace:*",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@eslint/js": "^10.0.1",
+    "@inahuyshop/config-eslint": "workspace:*",
     "@rolldown/plugin-babel": "^0.2.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
