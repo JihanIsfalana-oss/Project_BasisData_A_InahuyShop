@@ -1,18 +1,18 @@
-import { Image } from 'expo-image';
-import * as SplashScreen from 'expo-splash-screen';
-import { useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
-import Animated, { Easing, Keyframe } from 'react-native-reanimated';
-import { scheduleOnRN } from 'react-native-worklets';
+import { Image } from 'expo-image'
+import * as SplashScreen from 'expo-splash-screen'
+import { useState } from 'react'
+import { Dimensions, StyleSheet, View } from 'react-native'
+import Animated, { Easing, Keyframe } from 'react-native-reanimated'
+import { scheduleOnRN } from 'react-native-worklets'
 
-const INITIAL_SCALE_FACTOR = Dimensions.get('screen').height / 90;
-const DURATION = 600;
+const INITIAL_SCALE_FACTOR = Dimensions.get('screen').height / 90
+const DURATION = 600
 
 export function AnimatedSplashOverlay() {
-  const [animate, setAnimate] = useState(false);
-  const [visible, setVisible] = useState(true);
+  const [animate, setAnimate] = useState(false)
+  const [visible, setVisible] = useState(true)
 
-  if (!visible) return null;
+  if (!visible) return null
 
   const splashKeyframe = new Keyframe({
     0: {
@@ -31,32 +31,34 @@ export function AnimatedSplashOverlay() {
       transform: [{ scale: 1 }],
       easing: Easing.elastic(0.7),
     },
-  });
+  })
 
-  const image = <Image style={styles.image} source={require('@/assets/images/expo-logo.png')} />;
+  const image = <Image style={styles.image} source={require('@/assets/images/expo-logo.png')} />
 
   return animate ? (
     <Animated.View
       entering={splashKeyframe.duration(DURATION).withCallback((finished) => {
-        'worklet';
+        'worklet'
         if (finished) {
-          scheduleOnRN(setVisible, false);
+          scheduleOnRN(setVisible, false)
         }
       })}
-      style={styles.splashOverlay}>
+      style={styles.splashOverlay}
+    >
       {image}
     </Animated.View>
   ) : (
     <View
       onLayout={() => {
         SplashScreen.hideAsync().finally(() => {
-          setAnimate(true);
-        });
+          setAnimate(true)
+        })
       }}
-      style={styles.splashOverlay}>
+      style={styles.splashOverlay}
+    >
       {image}
     </View>
-  );
+  )
 }
 
 const keyframe = new Keyframe({
@@ -67,7 +69,7 @@ const keyframe = new Keyframe({
     transform: [{ scale: 1 }],
     easing: Easing.elastic(0.7),
   },
-});
+})
 
 const logoKeyframe = new Keyframe({
   0: {
@@ -84,7 +86,7 @@ const logoKeyframe = new Keyframe({
     transform: [{ scale: 1 }],
     easing: Easing.elastic(0.7),
   },
-});
+})
 
 const glowKeyframe = new Keyframe({
   0: {
@@ -93,7 +95,7 @@ const glowKeyframe = new Keyframe({
   100: {
     transform: [{ rotateZ: '7200deg' }],
   },
-});
+})
 
 export function AnimatedIcon() {
   return (
@@ -107,7 +109,7 @@ export function AnimatedIcon() {
         <Image style={styles.image} source={require('@/assets/images/expo-logo.png')} />
       </Animated.View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -145,4 +147,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 1000,
   },
-});
+})

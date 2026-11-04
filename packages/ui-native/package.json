@@ -1,0 +1,17 @@
+{
+  "name": "@inahuyshop/ui-native",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "peerDependencies": {
+    "react": "^19.3.0",
+    "react-native": "0.88.1"
+  },
+  "devDependencies": {
+    "react": "19.3.0",
+    "react-native": "0.88.1"
+  }
+}
