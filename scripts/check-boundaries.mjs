@@ -27,12 +27,14 @@ const manifestPaths = git('ls-files', 'apps/*/package.json', 'packages/*/package
 )
 
 const workspaces = new Map()
+const manifests = new Map()
 for (const path of manifestPaths) {
   const manifest = JSON.parse(readFileSync(path, 'utf8'))
   const deps = new Set()
   for (const field of DEP_FIELDS) {
     for (const name of Object.keys(manifest[field] ?? {})) deps.add(name)
   }
+  manifests.set(manifest.name, manifest)
   workspaces.set(manifest.name, deps)
 }
 
@@ -79,10 +81,27 @@ for (const [name, deps] of workspaces) {
 for (const app of WEB_APPS) forbid('R7', app, [pkg('ui-native')])
 for (const app of MOBILE_APPS) forbid('R7', app, [pkg('ui-web')])
 
+const uiNativeManifest = manifests.get(pkg('ui-native'))
+for (const app of MOBILE_APPS) {
+  const appManifest = manifests.get(app)
+  for (const dep of ['react', 'react-native']) {
+    const uiNativeVersion = uiNativeManifest?.devDependencies?.[dep]
+    const appVersion = appManifest?.dependencies?.[dep]
+    if (!uiNativeVersion || !appVersion) {
+      fail('R8', `${pkg('ui-native')} dan ${app} harus mendeklarasikan ${dep}`)
+    } else if (uiNativeVersion !== appVersion) {
+      fail(
+        'R8',
+        `${dep} pada ${pkg('ui-native')} (${uiNativeVersion}) harus sama dengan ${app} (${appVersion})`,
+      )
+    }
+  }
+}
+
 if (failures.length > 0) {
   console.error('check-boundaries GAGAL:')
   for (const failure of failures) console.error(` - ${failure}`)
   process.exit(1)
 }
 
-console.log(`check-boundaries OK: ${workspaces.size} workspace, aturan R0-R7 terpenuhi.`)
+console.log(`check-boundaries OK: ${workspaces.size} workspace, aturan R0-R8 terpenuhi.`)
