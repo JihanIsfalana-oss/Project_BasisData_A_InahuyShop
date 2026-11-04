@@ -1,13 +1,13 @@
 # InahuyShop --- Project Milestones & Delivery Checklist
 
-| Atribut                   | Nilai                                                               |
-| ------------------------- | ------------------------------------------------------------------- |
-| Proyek                    | InahuyShop --- Product Digital E-Commerce                           |
-| Versi dokumen             | 1.2                                                                 |
-| Tanggal pembaruan         | 2 November 2026                                                     |
-| Status                    | Baseline tracking; direkonsiliasi dengan repository setelah RS-01.6 |
-| Repository                | `JihanIsfalana-oss/Project_BasisData_A_InahuyShop`                  |
-| Branch terakhir diketahui | `ci/rs-01-7-ci-foundation`                                          |
+| Atribut                   | Nilai                                                                   |
+| ------------------------- | ----------------------------------------------------------------------- |
+| Proyek                    | InahuyShop --- Product Digital E-Commerce                               |
+| Versi dokumen             | 1.6                                                                     |
+| Tanggal pembaruan         | 4 November 2026                                                         |
+| Status                    | RS-01.7 CI lulus; RS-01.10 teruji lokal; verifikasi CI Docker menunggu |
+| Repository                | `JihanIsfalana-oss/Project_BasisData_A_InahuyShop`                      |
+| Branch terakhir diketahui | `chore/repository-stabilization-01-8-integration-proof`                 |
 
 > **Catatan status:** `[x]` berarti selesai dan telah dikonfirmasi.
 > `[ ]` berarti belum selesai, belum dimulai, atau belum ada bukti yang
@@ -45,8 +45,10 @@ pemisahan UI web dan native ketika kebutuhan platform berbeda.
 | RS-01.4                   | Selesai dengan butir terbuka        | Commit `6c2a075`; verifikasi konsumsi package oleh aplikasi dipindahkan ke RS-01.8                 |
 | RS-01.5                   | Selesai                             | Commit `046fb2b`, ter-push                                                                         |
 | RS-01.6                   | Selesai bersyarat (1 November 2026) | `pnpm verify` exit 0; butir cakupan terbuka dipindahkan ke RS-01.8                                 |
-| RS-01.7                   | Dalam proses                        | Workflow ditulis dan divalidasi lokal; belum dijalankan pada runner GitHub                         |
-| RS-01.8                   | Disetujui (2 November 2026)         | Integration proof source-first ESM; dikerjakan setelah RS-01.7                                     |
+| RS-01.7                   | CI terverifikasi (4 Nov 2026)       | Run GitHub Actions pada PR #4 lulus; branch protection masih tindakan owner                         |
+| RS-01.8                   | Ditutup atas sign-off (4 Nov 2026)  | Owner menerima validasi manual; perubahan R8/PascalCase dan pemeriksaan terarah lulus              |
+| RS-01.9                   | Disetujui (3 November 2026)         | Repository Governance; belum dimulai, dokumen ditetapkan privat                                    |
+| RS-01.10                  | Uji lokal lulus (4 Nov 2026)        | Build image, Compose API/MySQL, kredensial DB, health API, dan user non-root lulus; CI menunggu       |
 | Implementasi fitur produk | Belum dikonfirmasi                  | Starter app bukan fitur produk yang selesai                                                        |
 
 ## 2. Konvensi status
@@ -162,6 +164,10 @@ arsitektur, dan implementasi.
       integrasi aktual.
 - [ ] Memvalidasi batas abstraksi UI lintas platform berdasarkan
       kebutuhan nyata.
+- [x] Menyetujui containerization Docker untuk API dan MySQL sebagai
+      lingkungan lokal; detail deployment image API masuk M-14.
+- [ ] Memutuskan hosting web statis; Docker/Nginx atau hosting statis
+      tetap terbuka. Aplikasi mobile Expo tidak dikontainerisasi.
 
 **Deliverable:** `Architecture.md` / `docs/ARC/Architecture.md`.
 
@@ -496,56 +502,116 @@ Diselesaikan pada 1 November 2026. Branch:
 package dikonsumsi dengan benar, karena belum ada aplikasi yang
 mengimpor package runtime secara permanen.
 
-### RS-01.7 CI Foundation --- Dalam proses
+### RS-01.7 CI Foundation --- CI terverifikasi; tindakan owner terbuka (4 November 2026)
 
 Artefak: `.github/workflows/ci.yml`, `.nvmrc`, `docs/CI.md`. Workflow
-telah lulus `actionlint` dan `pnpm verify` lokal, tetapi **belum pernah
-dijalankan pada runner GitHub**. Butir bertanda `[ ]` di bawah menunggu
-run pertama.
+telah lulus `actionlint`, `pnpm verify` lokal, dan GitHub Actions run
+`41788134570` pada PR #4. Branch protection tetap menunggu tindakan
+owner.
 
 - [x] Menentukan platform CI: GitHub Actions.
 - [x] Menentukan trigger: `pull_request`, `push` ke `main`, dan
       `workflow_dispatch`.
 - [x] Menentukan versi Node: 22, melalui `.nvmrc`.
-- [ ] Pnpm versi terkunci pada CI (dibaca dari `packageManager`; belum
-      terbukti pada runner).
-- [ ] Frozen lockfile install pada CI.
-- [ ] Prettier check, ESLint, dan build web pada CI (melalui
+- [x] Pnpm versi terkunci pada CI (dibaca dari `packageManager` dan
+      terverifikasi pada runner).
+- [x] Frozen lockfile install pada CI.
+- [x] Prettier check, ESLint, dan build web pada CI (melalui
       `pnpm verify`).
 - [x] Menentukan pemeriksaan API/mobile yang realistis: sintaks API
       dan `expo lint`. Build Android/iOS dan uji startup API belum
       masuk CI (dicatat pada `docs/CI.md`).
-- [ ] Dependency caching (`cache: pnpm`; belum terbukti pada runner).
+- [x] Dependency caching (`cache: pnpm`) terkonfirmasi pada runner.
 - [ ] Memastikan versi Node lokal pengembang sesuai `.nvmrc`.
-- [ ] Menguji workflow melalui Pull Request percobaan.
+- [x] Menguji workflow melalui Pull Request #4; job **Verify** lulus.
 - [ ] Menetapkan branch protection dan required check **Verify**
       (setelah workflow terbukti hijau).
 - [x] Mendokumentasikan cara membaca kegagalan CI: `docs/CI.md`.
 
-### RS-01.8 Integration Proof --- Disetujui (belum dimulai)
+### RS-01.8 Integration Proof --- Ditutup atas sign-off owner (4 November 2026)
 
 Tujuan: membuktikan asumsi source-first ESM pada ketiga runtime dan
 menutup butir terbuka RS-01.4.5 dan RS-01.6.
 
-- [ ] Satu package (`contracts`) diimpor secara permanen oleh API
+- [x] Satu package (`contracts`) diimpor secara permanen oleh API
       (Node ESM).
-- [ ] Package yang sama diimpor oleh storefront-web dan admin-web
+- [x] Package yang sama diimpor oleh storefront-web dan admin-web
       (build Vite berhasil).
-- [ ] Package yang sama diimpor oleh customer-mobile dan admin-mobile
+- [x] Package yang sama diimpor oleh customer-mobile dan admin-mobile
       (Expo; Android, iOS, dev server, dan web Expo diuji).
-- [ ] `ui-native` (peer dependency React Native) diimpor oleh aplikasi
+- [x] `ui-native` (peer dependency React Native) diimpor oleh aplikasi
       mobile tanpa duplikasi React.
-- [ ] `ui-web` diimpor oleh aplikasi web (JSX melalui Vite).
-- [ ] Dependency graph aktual diperiksa (`pnpm why` / `pnpm ls`); web
+- [x] `ui-web` diimpor oleh aplikasi web (JSX melalui Vite).
+- [x] Dependency graph aktual diperiksa (`pnpm why` / `pnpm ls`); web
       dan mobile tidak memuat `database`.
-- [ ] Audit peer/dependencies antar package.
-- [ ] Jika source-first gagal pada salah satu runtime: keputusan dan
+- [x] Audit peer/dependencies antar package.
+- [x] Jika source-first gagal pada salah satu runtime: keputusan dan
       alasan perubahan strategi didokumentasikan sebelum M-06.
-- [ ] Hasil dicatat dan `pnpm verify` tetap lulus.
+- [x] Keputusan audit RS-01.8.7 diterapkan: komponen bernama PascalCase,
+      R7 memisahkan UI web/native, dan R8 menyamakan versi `react` /
+      `react-native` pada `ui-native` dengan kedua aplikasi mobile.
+- [x] Pemeriksaan terarah lulus: R0-R8, sintaks skrip, whitespace,
+      Prettier file terkait, serta build storefront-web dan admin-web.
+- [x] `pnpm verify` penuh lulus pada runner GitHub Actions dalam PR #4
+      (run `41788134570`); verifikasi lokal tetap mengikuti batasan
+      line ending Windows yang dicatat pada RS-01.10.
 
 **Kriteria selesai RS-01:** workspace stabil, dependency terkonsolidasi,
 package/tooling memiliki boundary jelas, dan pemeriksaan lokal serta CI
 dapat dijalankan secara konsisten.
+
+**Catatan penutupan RS-01.8:** Falan mengonfirmasi validasi tampilan
+secara manual dan menyetujui penutupan. Tidak ada log terminal untuk
+observasi manual tersebut. Pemeriksaan otomatis terarah dan dua build
+web dijalankan lokal pada 4 November 2026. `pnpm verify` penuh belum
+selesai karena instalasi dependency workspace macet saat linking pada
+lingkungan lokal; bukti CI runner tetap menjadi pekerjaan RS-01.7.
+
+### RS-01.9 Repository Governance --- Disetujui (belum dimulai)
+
+Disetujui pada 3 November 2026. Lisensi diputuskan **All Rights
+Reserved** dan materi di `docs/` tidak boleh dipublikasikan lagi.
+
+- [ ] Audit dan lengkapi README untuk penggunaan repository.
+- [ ] Menambahkan CONTRIBUTING dan SECURITY policy.
+- [ ] Menambahkan Pull Request template dan CODEOWNERS.
+- [ ] Menambahkan `.editorconfig`; meninjau `.gitattributes` yang sudah ada.
+- [ ] Menambahkan pernyataan lisensi All Rights Reserved yang disetujui.
+- [ ] Menghentikan pelacakan `docs/` pada snapshot publik tanpa
+      menghapus salinan kerja lokal.
+- [ ] Membuat issue owner untuk memindahkan materi `docs/` ke lokasi
+      privat dan menentukan penanganan riwayat Git publik yang sudah ada.
+- [ ] Mengaudit riwayat Git untuk secret tanpa menampilkan nilainya.
+- [ ] Membuat issue owner untuk mengaktifkan secret scanning dan
+      branch protection/required checks yang perlu konfigurasi GitHub.
+
+**Batas privasi:** menghapus `docs/` dari snapshot mendatang tidak
+menghapus salinan pada riwayat Git publik. Pembersihan riwayat dan
+pemindahan ke lokasi privat harus ditangani owner secara terkoordinasi.
+
+### RS-01.10 Docker Containerization --- Uji lokal lulus; verifikasi CI pending
+
+Disetujui pada 4 November 2026 dengan batas ruang lingkup berikut:
+Issue pelacakan: [#6](https://github.com/JihanIsfalana-oss/Project_BasisData_A_InahuyShop/issues/6).
+
+- [x] Menambahkan Dockerfile untuk API dan `.dockerignore`.
+- [x] Menyediakan Docker Compose untuk API dan MySQL.
+- [x] Mendokumentasikan penggunaan Docker lokal dalam `docs/Docker.md`.
+- [ ] Menambahkan job build image API ke CI setelah RS-01.7 terbukti
+      berjalan pada GitHub Actions (job ditambahkan; run Docker belum
+      terverifikasi).
+- [ ] Menetapkan deployment image API pada M-14.
+
+**Batas ruang lingkup:** aplikasi mobile Expo tidak dikontainerisasi.
+Keputusan hosting web statis (Docker/Nginx atau hosting statis) tetap
+terbuka dan tidak termasuk persetujuan ini.
+
+**Catatan verifikasi lokal (4 November 2026):** image berhasil dibangun;
+Compose memulai API dan MySQL, MySQL mencapai status `healthy`, user
+MySQL dapat memilih database `ci_inahuyshop`, dan `/api/health`
+memberikan respons sukses yang diharapkan. Image berjalan sebagai user
+non-root `node`. Job CI Docker sudah ditambahkan, tetapi belum berjalan
+pada GitHub Actions. Issue tetap terbuka sampai job CI Docker berhasil.
 
 ---
 
@@ -878,6 +944,8 @@ selesai.
 ## 18. M-14 --- Deployment & Production Readiness
 
 - [ ] Memilih hosting frontend.
+- [ ] Menetapkan dan menjalankan deployment image API yang dibangun
+      melalui CI (RS-01.10).
 - [ ] Memilih hosting API.
 - [ ] Menyiapkan MySQL production.
 - [ ] Menyiapkan domain, DNS, TLS, dan environment.
@@ -912,25 +980,25 @@ selesai.
 
 ## 20. Urutan milestone
 
-| Urutan | Milestone                                      | Status                                  |
-| -----: | ---------------------------------------------- | --------------------------------------- |
-|      1 | M-00 Project Discovery & Repository Assessment | Selesai                                 |
-|      2 | M-01 Product Requirement Baseline              | Baseline dokumen tersedia               |
-|      3 | M-02 Target Architecture Definition            | Selesai sebagai rancangan               |
-|      4 | M-03 Application & Monorepo Structure Design   | Selesai sebagai rancangan               |
-|      5 | M-04 Design System & UX Blueprint              | Selesai sebagai blueprint               |
-|      6 | M-05 UML & System Model Documentation          | Artefak tersedia; review belum          |
-|      7 | RS-01 Repository Stabilization                 | Dalam proses (RS-01.1--RS-01.6 selesai) |
-|      8 | M-06 Backend & Data Foundation                 | Belum dikonfirmasi                      |
-|      9 | M-07 Shared Runtime Packages                   | Skeleton; isi belum                     |
-|     10 | M-08 Storefront Web                            | Belum dikonfirmasi                      |
-|     11 | M-09 Customer Mobile                           | Belum dikonfirmasi                      |
-|     12 | M-10 Admin Web                                 | Belum dikonfirmasi                      |
-|     13 | M-11 Admin Mobile                              | Belum dikonfirmasi                      |
-|     14 | M-12 Cross-Platform Integration                | Belum dimulai                           |
-|     15 | M-13 QA & Security                             | Belum dimulai                           |
-|     16 | M-14 Deployment & Production Readiness         | Belum dimulai                           |
-|     17 | M-15 Release & Handover                        | Belum dimulai                           |
+| Urutan | Milestone                                      | Status                                                            |
+| -----: | ---------------------------------------------- | ----------------------------------------------------------------- |
+|      1 | M-00 Project Discovery & Repository Assessment | Selesai                                                           |
+|      2 | M-01 Product Requirement Baseline              | Baseline dokumen tersedia                                         |
+|      3 | M-02 Target Architecture Definition            | Selesai sebagai rancangan                                         |
+|      4 | M-03 Application & Monorepo Structure Design   | Selesai sebagai rancangan                                         |
+|      5 | M-04 Design System & UX Blueprint              | Selesai sebagai blueprint                                         |
+|      6 | M-05 UML & System Model Documentation          | Artefak tersedia; review belum                                    |
+|      7 | RS-01 Repository Stabilization                 | Dalam proses; RS-01.7 pending, RS-01.8 ditutup, RS-01.9 disetujui |
+|      8 | M-06 Backend & Data Foundation                 | Belum dikonfirmasi                                                |
+|      9 | M-07 Shared Runtime Packages                   | Skeleton; isi belum                                               |
+|     10 | M-08 Storefront Web                            | Belum dikonfirmasi                                                |
+|     11 | M-09 Customer Mobile                           | Belum dikonfirmasi                                                |
+|     12 | M-10 Admin Web                                 | Belum dikonfirmasi                                                |
+|     13 | M-11 Admin Mobile                              | Belum dikonfirmasi                                                |
+|     14 | M-12 Cross-Platform Integration                | Belum dimulai                                                     |
+|     15 | M-13 QA & Security                             | Belum dimulai                                                     |
+|     16 | M-14 Deployment & Production Readiness         | Belum dimulai                                                     |
+|     17 | M-15 Release & Handover                        | Belum dimulai                                                     |
 
 ---
 
@@ -957,20 +1025,28 @@ selesai.
         `046fb2b`.
 2.  [x] **Selesaikan RS-01.6 Verification** (bersyarat; butir terbuka
         dipindahkan ke RS-01.8).
-3.  [ ] **Selesaikan RS-01.7 CI Foundation** (dalam proses). CI minimum yang
-        menjalankan frozen install dan `pnpm verify`.
-4.  [ ] **Kerjakan RS-01.8 Integration Proof** (disetujui 2 November
-        2026): buktikan source-first ESM pada Vite, Expo, dan Node
-        sebelum M-06.
-5.  [ ] **Tinjau M-05 UML.** Artefak tersedia di `docs/UML`; lakukan
-        review silang terhadap PRD, Architecture, dan ERD.
-6.  [ ] **Validasi ERD dan database schema** sebagai prasyarat backend.
-        `schema.prisma` saat ini kosong.
-7.  [ ] **Mulai M-06 Backend & Data Foundation** berdasarkan PRD dan
-        ERD.
-8.  [ ] Implementasikan shared packages berdasarkan kebutuhan consumer
+3.  [x] **Verifikasi workflow RS-01.7** melalui PR #4; GitHub Actions
+        run `41788134570` lulus. Required check/branch protection tetap
+        menunggu tindakan owner.
+4.  [x] **Tutup RS-01.8 Integration Proof** atas sign-off owner
+        (4 November 2026); pemeriksaan `pnpm verify` penuh masih harus
+        dibuktikan melalui runner RS-01.7.
+5.  [ ] **Mulai RS-01.9 Repository Governance** setelah RS-01.7:
+        siapkan artefak repo dan issue owner untuk pemindahan `docs/`
+        privat serta pengaturan GitHub.
+6.  [ ] **Selesaikan RS-01.10 Docker Containerization:** implementasi
+        lokal sudah ditambahkan; verifikasi build image, Compose, dan
+        health endpoint melalui CI masih menunggu. Web statis tetap
+        menunggu keputusan hosting.
+7.  [ ] **Tinjau M-05 UML.** Artefak tersedia di `docs/UML`; lakukan
+       review silang terhadap PRD, Architecture, dan ERD.
+8.  [ ] **Validasi ERD dan database schema** sebagai prasyarat backend.
+       `schema.prisma` saat ini kosong.
+9.  [ ] **Mulai M-06 Backend & Data Foundation** berdasarkan PRD dan
+       ERD.
+10. [ ] Implementasikan shared packages berdasarkan kebutuhan consumer
         nyata, bukan spekulasi.
-9.  [ ] Bangun kanal secara bertahap dan integrasikan melalui API yang
+11. [ ] Bangun kanal secara bertahap dan integrasikan melalui API yang
         sama.
 
 ## 23. Risiko dan pengendalian
@@ -1016,6 +1092,10 @@ selesai.
 | 1.0   | 1 November 2026 | Inisialisasi rangkuman milestone, submilestone, checklist, urutan eksekusi, dan gate proyek                                                                                                                                                 |
 | 1.1   | 2 November 2026 | Rekonsiliasi pasca RS-01.6: status RS-01.4 sampai RS-01.6 dan hash commit diperbarui; checklist RS-01.6 dipulihkan; RS-01.8 diusulkan; lima tabel yang rusak akibat Prettier diperbaiki; risiko dan prioritas diperbarui; header diperbarui |
 | 1.2   | 2 November 2026 | RS-01.7 dimulai: workflow CI, `.nvmrc`, dan `docs/CI.md` ditambahkan; RS-01.8 disetujui; status dan prioritas diperbarui                                                                                                                    |
+| 1.3   | 4 November 2026 | RS-01.8 ditutup atas sign-off owner; audit D1/R8 dan hasil pemeriksaan terarah dicatat; RS-01.7 tetap terbuka; RS-01.9 Repository Governance disetujui dan dokumen `docs/` ditetapkan privat                                                |
+| 1.4   | 4 November 2026 | Persetujuan RS-01.10 Docker Containerization untuk API/MySQL dicatat; job build image CI dan deployment M-14 ditambahkan; hosting web statis tetap menunggu keputusan                                                                                   |
+| 1.5   | 4 November 2026 | CI RS-01.7 terverifikasi lulus di PR #4; implementasi lokal RS-01.10 ditambahkan; Dockerfile dan Compose health check dimasukkan ke job CI untuk verifikasi                                                                                                    |
+| 1.6   | 4 November 2026 | Uji Docker lokal lulus: image, Compose API/MySQL, autentikasi dan database MySQL, health endpoint API, dan user non-root; verifikasi GitHub Actions masih menunggu                                                                                          |
 
 ## 26. Sumber baseline
 
