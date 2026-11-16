@@ -1,0 +1,179 @@
+classDiagram
+    direction TB
+
+    %% IDENTITY & ACCESS
+    class User {
+        +UUID id
+        +String fullName
+        +String email
+        -String passwordHash
+        +UserStatus status
+        +DateTime createdAt
+        +DateTime updatedAt
+        +hasRole(roleCode: String) boolean
+    }
+    class Role {
+        +UUID id
+        +String code
+        +String name
+        +String description
+        +boolean isSystemRole
+    }
+    class UserStatus {
+        <<enumeration>>
+        ACTIVE
+        SUSPENDED
+        DEACTIVATED
+    }
+
+    %% PRODUCT CATALOG
+    class Product {
+        +UUID id
+        +String name
+        +String slug
+        +String description
+        +Decimal priceAmount
+        +String currency
+        +ProductStatus status
+        +DateTime? publishedAt
+        +DateTime createdAt
+        +DateTime updatedAt
+        +publish() void
+        +archive() void
+    }
+    class Category {
+        +UUID id
+        +String name
+        +String slug
+        +String description
+    }
+    class ProductMedia {
+        +UUID id
+        +String storageKey
+        +String mediaType
+        +String altText
+        +int sortOrder
+    }
+    class DigitalAsset {
+        +UUID id
+        +String storageKey
+        +String fileName
+        +String mimeType
+        +long sizeBytes
+        +String version
+        +boolean isActive
+    }
+    class ProductStatus {
+        <<enumeration>>
+        DRAFT
+        PUBLISHED
+        ARCHIVED
+    }
+
+    %% CART
+    class Cart {
+        +UUID id
+        +CartStatus status
+        +DateTime createdAt
+        +DateTime updatedAt
+        +addItem(product: Product, quantity: int) void
+        +removeItem(productId: UUID) void
+        +clear() void
+    }
+    class CartItem {
+        +UUID id
+        +int quantity
+        +DateTime createdAt
+        +changeQuantity(quantity: int) void
+    }
+    class CartStatus {
+        <<enumeration>>
+        ACTIVE
+        CHECKED_OUT
+        ABANDONED
+    }
+
+    %% ORDER & PAYMENT
+    class Order {
+        +UUID id
+        +String orderNumber
+        +OrderStatus status
+        +Decimal totalAmount
+        +String currency
+        +DateTime placedAt
+        +DateTime? paidAt
+        +DateTime createdAt
+        +calculateTotal() Decimal
+        +markPaid() void
+        +cancel() void
+    }
+    class OrderItem {
+        +UUID id
+        +String productNameSnapshot
+        +Decimal unitPriceSnapshot
+        +int quantity
+        +Decimal lineTotalSnapshot
+        +calculateLineTotal() Decimal
+    }
+    class Payment {
+        +UUID id
+        +String provider
+        +String? providerReference
+        +Decimal amount
+        +String currency
+        +PaymentStatus status
+        +DateTime createdAt
+        +DateTime updatedAt
+        +DateTime? succeededAt
+    }
+    class OrderStatus {
+        <<enumeration>>
+        PENDING_PAYMENT
+        PAID
+        COMPLETED
+        CANCELLED
+        REFUNDED
+    }
+    class PaymentStatus {
+        <<enumeration>>
+        PENDING
+        SUCCEEDED
+        FAILED
+        CANCELLED
+        EXPIRED
+        REFUNDED
+    }
+
+    %% DIGITAL DELIVERY
+    class DownloadEntitlement {
+        +UUID id
+        +EntitlementStatus status
+        +DateTime grantedAt
+        +DateTime? expiresAt
+        +int downloadCount
+        +int? maxDownloads
+        +canDownload(at: DateTime) boolean
+        +recordDownload() void
+    }
+    class EntitlementStatus {
+        <<enumeration>>
+        ACTIVE
+        REVOKED
+        EXPIRED
+    }
+
+    %% RELATIONSHIPS & MULTIPLICITIES
+    User "0..*" -- "0..*" Role : assigned roles
+    User "1" --> "0..*" Cart : owns
+    Cart "1" *-- "0..*" CartItem : contains
+    CartItem "0..*" --> "1" Product : selects
+
+    User "1" --> "0..*" Order : places
+    Order "1" *-- "0..*" OrderItem : contains
+    OrderItem "0..*" --> "1" Product : purchased product
+    Order "1" --> "0..*" Payment : payment attempts
+
+    Category "0..1" <-- "0..*" Product : classified as
+    Product "1" *-- "0..*" ProductMedia : public presentation media
+    Product "1" *-- "0..*" DigitalAsset : protected deliverables
+    OrderItem "1" --> "0..*" DownloadEntitlement : grants after payment
