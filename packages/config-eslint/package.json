@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     "./web": "./eslint/web.mjs",
-    "./native": "./eslint/native.mjs"
+    "./native": "./eslint/native.mjs",
+    "./node": "./eslint/node.mjs"
   },
   "peerDependencies": {
     "@eslint/js": "^10.0.1",

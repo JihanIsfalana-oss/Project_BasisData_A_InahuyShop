@@ -7,6 +7,11 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3000
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: ${MYSQL_DATABASE:?Copy .env.example to .env and configure it}
+      MYSQL_USER: ${MYSQL_USER:?Copy .env.example to .env and configure it}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?Copy .env.example to .env and configure it}
     ports:
       - '127.0.0.1:3000:3000'
     depends_on:
