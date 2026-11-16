@@ -21,6 +21,7 @@
   "packageManager": "pnpm@12.16.1",
   "type": "module",
   "dependencies": {
+    "@inahuyshop/contracts": "workspace:*",
     "dotenv": "^18.0.9",
     "express": "^5.3.0"
   },

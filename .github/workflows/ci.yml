@@ -43,3 +43,36 @@ jobs:
       # Urutan: format:check, lint, build, check:api, check:repo.
       - name: Verify
         run: pnpm verify
+
+  build-api-image:
+    name: Build API image
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Generate temporary MySQL credentials
+        run: |
+          {
+            echo "MYSQL_DATABASE=ci_inahuyshop"
+            echo "MYSQL_USER=ci_inahuyshop"
+            echo "MYSQL_PASSWORD=$(openssl rand -hex 24)"
+            echo "MYSQL_ROOT_PASSWORD=$(openssl rand -hex 24)"
+          } >> "$GITHUB_ENV"
+
+      - name: Build API image
+        run: docker build --file apps/api/Dockerfile --tag inahuyshop-api:local .
+
+      - name: Start API and MySQL with Compose
+        run: docker compose up --detach --wait --no-build --wait-timeout 120
+
+      - name: Check API health endpoint
+        run: curl --fail --retry 30 --retry-delay 1 --retry-connrefused http://127.0.0.1:3000/api/health
+
+      - name: Stop API and MySQL
+        if: always()
+        run: docker compose down --volumes
