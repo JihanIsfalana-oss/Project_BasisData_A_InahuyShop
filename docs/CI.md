@@ -5,6 +5,9 @@ Workflow: `.github/workflows/ci.yml`. Job: **Verify**.
 ## Prinsip
 
 - CI menjalankan perintah yang sama dengan pemeriksaan lokal: `pnpm verify`.
+- `pnpm verify` menjalankan format, lint, pemeriksaan sintaks API, pengujian
+  otomatis API, build web, pemeriksaan dependency boundary, dan higiene
+  repository.
 - Versi Node dibaca dari `.nvmrc`; versi pnpm dari `packageManager` pada
   `package.json` root. Ubah versi hanya di dua tempat tersebut.
 - Action GitHub di-pin ke commit SHA. Perbarui secara sengaja dan catat
@@ -30,6 +33,7 @@ yang sedang berjalan; kegagalan berada pada perintah `$` terakhir.
 | `eslint .` / `expo lint`      | Pelanggaran lint                                                       | `pnpm lint`, perbaiki pada aplikasi terkait |
 | `vite build`                  | Build web gagal                                                        | `pnpm build`                                |
 | `node --check`                | Sintaks API tidak valid                                                | `pnpm check:api`                            |
+| `node --test`                 | Pengujian otomatis API gagal                                           | `pnpm test:api`                             |
 | `verify-repo` / `git diff`    | `node_modules`, lockfile liar, `.env`, atau whitespace error ter-track | `pnpm check:repo`                           |
 
 Reproduksi lokal secara penuh:

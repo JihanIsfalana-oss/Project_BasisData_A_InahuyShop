@@ -3,7 +3,25 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "db:format": "prisma format",
+    "db:validate": "prisma validate",
+    "db:generate": "prisma generate",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:status": "prisma migrate status",
+    "db:seed": "prisma db seed"
+  },
   "exports": {
     ".": "./src/client.js"
+  },
+  "dependencies": {
+    "@prisma/adapter-mariadb": "7.10.1",
+    "@prisma/client": "7.10.1",
+    "mariadb": "3.5.4"
+  },
+  "devDependencies": {
+    "prisma": "7.10.1",
+    "tsx": "4.23.15"
   }
 }

@@ -2,11 +2,13 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "lint": "eslint .",
+    "test": "node --test",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "admin:create": "node scripts/create-admin.js"
   },
   "keywords": [],
   "author": "",
@@ -22,10 +24,16 @@
   "type": "module",
   "dependencies": {
     "@inahuyshop/contracts": "workspace:*",
+    "@inahuyshop/database": "workspace:*",
     "dotenv": "^18.0.9",
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.4"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@inahuyshop/config-eslint": "workspace:*",
+    "eslint": "^10.13.0",
+    "globals": "^17.13.0",
     "nodemon": "^3.1.14"
   }
 }
