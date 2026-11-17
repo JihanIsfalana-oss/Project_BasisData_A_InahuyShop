@@ -461,6 +461,9 @@ importers:
 
   apps/storefront-web:
     dependencies:
+      '@inahuyshop/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@inahuyshop/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
