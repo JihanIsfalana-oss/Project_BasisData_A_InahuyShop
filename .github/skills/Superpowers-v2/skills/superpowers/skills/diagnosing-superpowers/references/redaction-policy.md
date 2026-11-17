@@ -3,16 +3,16 @@
 Apply these categories with the supplied `PUBLIC_REPOS` and `PROPRIETARY`
 lists.
 
-| Category | Placeholder | What to catch |
-|---|---|---|
-| Email addresses | `<EMAIL-n>` | anything shaped like an email |
-| People | `<PERSON-n>` | given names, surnames, handles (`@name`), git author names; replace the whole name; role words ("the reviewer", "your human partner") stay |
-| Account / org identifiers | `<ORG-n>` | UUIDs and ids labelled account, org, owner, tenant, workspace, team |
-| Secrets | `<SECRET-n>` | API keys, tokens, passwords, bearer strings, private keys, anything assigned to a variable named like `*_KEY`, `*_TOKEN`, `*_SECRET`, `PASSWORD`, `Authorization` |
-| Hosts and addresses | `<HOST-n>` | hostnames that are not public package or docs domains, IPv4/IPv6 addresses, internal URLs |
-| Home paths | `~` | any absolute path under a home directory becomes `~/…`; the account-name segment is removed |
-| Repositories | `<REPO-n>` | repository names, slugs, and remote URLs, unless the name or URL is in `PUBLIC_REPOS` |
-| Proprietary terms | `<PROPRIETARY-n>` | each term in `PROPRIETARY`, case-insensitive, whole-word |
+| Category                  | Placeholder       | What to catch                                                                                                                                                     |
+| ------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Email addresses           | `<EMAIL-n>`       | anything shaped like an email                                                                                                                                     |
+| People                    | `<PERSON-n>`      | given names, surnames, handles (`@name`), git author names; replace the whole name; role words ("the reviewer", "your human partner") stay                        |
+| Account / org identifiers | `<ORG-n>`         | UUIDs and ids labelled account, org, owner, tenant, workspace, team                                                                                               |
+| Secrets                   | `<SECRET-n>`      | API keys, tokens, passwords, bearer strings, private keys, anything assigned to a variable named like `*_KEY`, `*_TOKEN`, `*_SECRET`, `PASSWORD`, `Authorization` |
+| Hosts and addresses       | `<HOST-n>`        | hostnames that are not public package or docs domains, IPv4/IPv6 addresses, internal URLs                                                                         |
+| Home paths                | `~`               | any absolute path under a home directory becomes `~/…`; the account-name segment is removed                                                                       |
+| Repositories              | `<REPO-n>`        | repository names, slugs, and remote URLs, unless the name or URL is in `PUBLIC_REPOS`                                                                             |
+| Proprietary terms         | `<PROPRIETARY-n>` | each term in `PROPRIETARY`, case-insensitive, whole-word                                                                                                          |
 
 Session ids, tool names, skill names, superpowers file paths relative to the
 install root, model ids, harness versions, and line numbers are kept: the

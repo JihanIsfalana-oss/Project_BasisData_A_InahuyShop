@@ -31,11 +31,11 @@ passes no matter what that code does:
 
 ```typescript
 // ❌ Mirror assertion: the same builder computes both sides — always true
-const expected = buildSearchQuery({ tag: 'urgent' });
-expect(buildSearchQuery({ tag: 'urgent' })).toBe(expected);
+const expected = buildSearchQuery({ tag: 'urgent' })
+expect(buildSearchQuery({ tag: 'urgent' })).toBe(expected)
 
 // ✅ Hand-derived literal
-expect(buildSearchQuery({ tag: 'urgent' })).toBe('tag:"urgent"');
+expect(buildSearchQuery({ tag: 'urgent' })).toBe('tag:"urgent"')
 ```
 
 **No change detectors.** If only intentional decisions can fail a test —
@@ -87,10 +87,10 @@ are checking, unmock it or delete the assertion.
 
 ```typescript
 // ✅ Real behavior
-expect(screen.getByRole('navigation')).toBeInTheDocument();
+expect(screen.getByRole('navigation')).toBeInTheDocument()
 
 // ❌ Mock existence
-expect(screen.getByTestId('sidebar-mock')).toBeInTheDocument();
+expect(screen.getByTestId('sidebar-mock')).toBeInTheDocument()
 ```
 
 **your human partner's correction:** "Are we testing the behavior of a
@@ -104,11 +104,11 @@ implementation first and observe what actually needs to happen.
 ```typescript
 // ❌ The mock swallows the config write that duplicate detection reads
 vi.mock('ToolCatalog', () => ({
-  discoverAndCacheTools: vi.fn().mockResolvedValue(undefined)
-}));
+  discoverAndCacheTools: vi.fn().mockResolvedValue(undefined),
+}))
 
 // ✅ Mock only the slow server startup; the config write stays real
-vi.mock('MCPServerManager');
+vi.mock('MCPServerManager')
 ```
 
 **Make doubles specific.** When arguments, call counts, or ordering are
@@ -170,18 +170,18 @@ test as tautological.
 
 ## Quick Reference
 
-| When you... | Do |
-|-------------|-----|
-| Write any test | Name the break it catches — a bug, not a decision |
-| Build an expected value | Derive it by hand; never with the code under test |
-| Test a script or document | Run it / pressure-test its consumer; never grep its text |
-| Reach for a dependency test | Test your boundary contract, not their documented mechanics |
-| Want to assert on a mocked element | Test the real component, or unmock it |
-| Are about to mock a method | Learn its side effects; mock the slow/external level |
-| Build a mock response | Mirror the real structure completely |
-| Need cleanup only tests use | Put it in test utilities |
-| Watch mock setup balloon | Switch to an integration test with real components |
-| Finish a test file | Run the mutation check |
+| When you...                        | Do                                                          |
+| ---------------------------------- | ----------------------------------------------------------- |
+| Write any test                     | Name the break it catches — a bug, not a decision           |
+| Build an expected value            | Derive it by hand; never with the code under test           |
+| Test a script or document          | Run it / pressure-test its consumer; never grep its text    |
+| Reach for a dependency test        | Test your boundary contract, not their documented mechanics |
+| Want to assert on a mocked element | Test the real component, or unmock it                       |
+| Are about to mock a method         | Learn its side effects; mock the slow/external level        |
+| Build a mock response              | Mirror the real structure completely                        |
+| Need cleanup only tests use        | Put it in test utilities                                    |
+| Watch mock setup balloon           | Switch to an integration test with real components          |
+| Finish a test file                 | Run the mutation check                                      |
 
 ## Warning Signs
 

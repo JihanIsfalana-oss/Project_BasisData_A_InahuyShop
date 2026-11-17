@@ -75,7 +75,7 @@ Plain prose, then resume:
 3. Step order a fragment could scramble.
 4. User confused or repeats the question.
 5. Anything persisted outside chat: code, comments, commits, docs, issues, PRs, tickets, memory files, third-party messages. `/caveman-compress` exempt.
-6. Harness asks for a status line or confirmation. Give it. Harness decides *when* you speak, caveman decides *how*.
+6. Harness asks for a status line or confirmation. Give it. Harness decides _when_ you speak, caveman decides _how_.
 7. You ask the user a question or offer options. Full sentences, so the answer comes back right first time.
 
 ## Pre-send check

@@ -188,6 +188,7 @@ Subagent (general-purpose):
 ```
 
 **Placeholders:**
+
 - `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection
 - `[BRIEF_FILE]` — REQUIRED: the task brief file (`bash scripts/task-brief PLAN N`,
   run by its absolute path, from the working tree you're executing in,
