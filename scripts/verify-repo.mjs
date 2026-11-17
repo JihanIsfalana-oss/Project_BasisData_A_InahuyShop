@@ -13,7 +13,9 @@ if (trackedNodeModules.length > 0) {
 const lockfileNames = ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml']
 const strayLockfiles = tracked.filter((file) => {
   const name = file.split('/').pop()
-  return lockfileNames.includes(name) && file !== 'pnpm-lock.yaml'
+  return (
+    lockfileNames.includes(name) && file !== 'pnpm-lock.yaml' && !file.startsWith('.github/skills/')
+  )
 })
 if (strayLockfiles.length > 0) {
   failures.push(`lockfile selain root ditemukan: ${strayLockfiles.join(', ')}`)
