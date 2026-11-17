@@ -17,9 +17,20 @@ test('exports stable status enums and existing health contract', () => {
 
 test('request schemas reject unknown fields', () => {
   assert.throws(() =>
-    authRequestSchema.parse({ username: 'admin', password: 'secret', extra: true }),
+    authRequestSchema.parse({ identifier: 'admin', password: 'secret', extra: true }),
   )
-  assert.throws(() => checkoutRequestSchema.parse({ items: [], extra: true }))
+  assert.throws(() => checkoutRequestSchema.parse({ addressId: 1, extra: true }))
+})
+
+test('request schemas match API request shapes', () => {
+  assert.deepEqual(authRequestSchema.parse({ identifier: 'admin', password: 'secret' }), {
+    identifier: 'admin',
+    password: 'secret',
+  })
+  assert.deepEqual(checkoutRequestSchema.parse({ addressId: 1, voucherCode: 'SAVE' }), {
+    addressId: 1,
+    voucherCode: 'SAVE',
+  })
 })
 
 test('response schema accepts product DTO', () => {

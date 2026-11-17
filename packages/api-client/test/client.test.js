@@ -33,7 +33,11 @@ test('client normalizes API errors', async () => {
     timeoutMs: 1000,
     fetchImpl: async () =>
       response(
-        { code: 'INVALID', message: 'Bad request', fieldIssues: [{ path: ['email'] }] },
+        {
+          success: false,
+          error: { code: 'INVALID', message: 'Bad request', details: [{ path: ['email'] }] },
+          requestId: 'body-1',
+        },
         { status: 400, headers: { 'x-request-id': 'req-1' } },
       ),
   })
@@ -44,7 +48,38 @@ test('client normalizes API errors', async () => {
       assert.equal(error.status, 400)
       assert.equal(error.code, 'INVALID')
       assert.equal(error.requestId, 'req-1')
+      assert.deepEqual(error.fieldIssues, [{ path: ['email'] }])
       return true
     },
+  )
+})
+
+test('client rejects empty responses and preserves timeout with caller signal', async () => {
+  const caller = new AbortController()
+  const client = createApiClient({
+    baseUrl: 'https://api.example.test',
+    timeoutMs: 5,
+    fetchImpl: (_url, init) =>
+      new Promise((resolve, reject) => {
+        init.signal.addEventListener('abort', () =>
+          reject(Object.assign(new Error(), { name: 'AbortError' })),
+        )
+      }),
+  })
+  await assert.rejects(
+    () => client.request('/slow', { signal: caller.signal }),
+    (error) => {
+      assert.equal(error.code, 'TIMEOUT')
+      return true
+    },
+  )
+  const emptyClient = createApiClient({
+    baseUrl: 'https://api.example.test',
+    timeoutMs: 1000,
+    fetchImpl: async () => response(undefined),
+  })
+  await assert.rejects(
+    () => emptyClient.request('/empty'),
+    (error) => error.code === 'INVALID_RESPONSE',
   )
 })

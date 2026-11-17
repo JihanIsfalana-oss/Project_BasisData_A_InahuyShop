@@ -11,7 +11,13 @@ export class ApiClientError extends Error {
 
 const parseBody = async (response) => {
   const text = await response.text()
-  if (!text) return null
+  if (!text) {
+    throw new ApiClientError({
+      status: response.status,
+      code: 'INVALID_RESPONSE',
+      message: 'Response body is empty',
+    })
+  }
   try {
     return JSON.parse(text)
   } catch {
@@ -43,6 +49,8 @@ export const createApiClient = ({
       const controller = new AbortController()
       const timeout = setTimeout(() => controller.abort(), timeoutMs)
       const token = getToken?.()
+      const abort = () => controller.abort()
+      signal?.addEventListener('abort', abort, { once: true })
       const requestHeaders = { Accept: 'application/json', ...headers }
       if (body !== undefined) requestHeaders['Content-Type'] = 'application/json'
       if (token) requestHeaders.Authorization = `Bearer ${token}`
@@ -52,16 +60,19 @@ export const createApiClient = ({
           method,
           headers: requestHeaders,
           body: body === undefined ? undefined : JSON.stringify(body),
-          signal: signal ?? controller.signal,
+          signal: controller.signal,
         })
         const payload = await parseBody(response)
         if (!response.ok) {
           throw new ApiClientError({
             status: response.status,
-            code: payload?.code ?? `HTTP_${response.status}`,
-            message: payload?.message ?? `Request failed with status ${response.status}`,
-            requestId: response.headers.get('x-request-id') ?? undefined,
-            fieldIssues: payload?.fieldIssues ?? [],
+            code: payload?.error?.code ?? payload?.code ?? `HTTP_${response.status}`,
+            message:
+              payload?.error?.message ??
+              payload?.message ??
+              `Request failed with status ${response.status}`,
+            requestId: response.headers.get('x-request-id') ?? payload?.requestId ?? undefined,
+            fieldIssues: payload?.error?.details ?? payload?.fieldIssues ?? [],
           })
         }
         return payload
@@ -73,6 +84,7 @@ export const createApiClient = ({
         throw error
       } finally {
         clearTimeout(timeout)
+        signal?.removeEventListener('abort', abort)
       }
     },
   }

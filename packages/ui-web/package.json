@@ -9,5 +9,11 @@
   "peerDependencies": {
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
+  },
+  "scripts": {
+    "test": "tsx --test test/components.test.js"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15"
   }
 }
