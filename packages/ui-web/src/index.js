@@ -1,1 +1,6 @@
 export { Card } from './components/Card.jsx'
+export { Button } from './components/Button.jsx'
+export { PriceText } from './components/PriceText.jsx'
+export { ProductCard } from './components/ProductCard.jsx'
+export { Badge } from './components/badge.jsx'
+export { Input } from './components/input.jsx'

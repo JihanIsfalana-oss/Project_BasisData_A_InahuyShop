@@ -523,16 +523,16 @@ importers:
         version: 3.3.7(supports-color@8.1.1)
       '@eslint/js':
         specifier: ^10.0.1
-        version: 10.0.1(eslint@10.13.0(jiti@2.7.0)(supports-color@8.1.1))
+        version: 10.0.1(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))
       eslint:
         specifier: ^9.0.0 || ^10.0.0
-        version: 10.13.0(jiti@2.7.0)(supports-color@8.1.1)
+        version: 9.39.5(jiti@2.7.0)(supports-color@8.1.1)
       eslint-plugin-react-hooks:
         specifier: ^7.1.1
-        version: 7.1.1(eslint@10.13.0(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)
+        version: 7.1.1(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))(supports-color@8.1.1)
       eslint-plugin-react-refresh:
         specifier: ^0.5.7
-        version: 0.5.7(eslint@10.13.0(jiti@2.7.0)(supports-color@8.1.1))
+        version: 0.5.7(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))
       globals:
         specifier: ^17.13.0
         version: 17.13.0
@@ -545,7 +545,11 @@ importers:
 
   packages/config-typescript: {}
 
-  packages/contracts: {}
+  packages/contracts:
+    dependencies:
+      zod:
+        specifier: ^4.1.12
+        version: 4.6.7
 
   packages/database:
     dependencies:
@@ -588,7 +592,11 @@ importers:
         specifier: ^19.3.1
         version: 19.3.1(react@19.3.1)
 
-  packages/validation: {}
+  packages/validation:
+    dependencies:
+      zod:
+        specifier: ^4.1.12
+        version: 4.6.7
 
 packages:
 
@@ -6105,6 +6113,10 @@ snapshots:
     optionalDependencies:
       eslint: 10.13.0(jiti@2.7.0)(supports-color@8.1.1)
 
+  '@eslint/js@10.0.1(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1))':
+    optionalDependencies:
+      eslint: 9.39.5(jiti@2.7.0)(supports-color@8.1.1)
+
   '@eslint/js@9.39.5': {}
 
   '@eslint/object-schema@2.1.7': {}
@@ -8377,6 +8389,10 @@ snapshots:
   eslint-plugin-react-refresh@0.5.7(eslint@10.13.0(jiti@2.7.0)(supports-color@8.1.1)):
     dependencies:
       eslint: 10.13.0(jiti@2.7.0)(supports-color@8.1.1)
+
+  eslint-plugin-react-refresh@0.5.7(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1)):
+    dependencies:
+      eslint: 9.39.5(jiti@2.7.0)(supports-color@8.1.1)
 
   eslint-plugin-react@7.37.5(eslint@9.39.5(jiti@2.7.0)(supports-color@8.1.1)):
     dependencies:

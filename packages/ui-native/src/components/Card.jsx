@@ -7,5 +7,9 @@ import { View } from 'react-native'
  * @param {{ children?: import('react').ReactNode }} props
  */
 export function Card({ children }) {
-  return <View testID="ui-native-card">{children}</View>
+  return (
+    <View testID="ui-native-card" accessibilityRole="summary" style={{ minHeight: 44 }}>
+      {children}
+    </View>
+  )
 }
