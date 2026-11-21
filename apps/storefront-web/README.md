@@ -1,19 +1,26 @@
-# React + Vite
+# Storefront Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Customer storefront for InahuyShop. It uses React/Vite and the shared API
+client. The API base defaults to `http://localhost:3000/api/v1`; set
+`VITE_API_BASE_URL` for another environment.
 
-Currently, two official plugins are available:
+## Routes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- `/` and `/catalog`: public discovery, search, and category filtering.
+- `/products/:id`: product detail, gallery, variant selection, and reviews.
+- `/auth`: customer login and registration.
+- `/cart`, `/checkout`, `/payment/:id`: protected shopping and simulation.
+- `/orders`, `/orders/:id`: protected order, download, shipment, and review
+  flows.
+- `/account`: protected profile and address management.
 
-## React Compiler
+Run from the repository root:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+```bash
+pnpm --filter storefront-web dev
+pnpm --filter storefront-web lint
+pnpm --filter storefront-web build
+```
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The API must be running with the catalog and customer routes enabled for
+authenticated flows.
