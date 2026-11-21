@@ -11,11 +11,11 @@ Result depends on model and workload. Measured once on the 3.1.0 skill text (`ev
 
 Caveman is one of three sibling skills:
 
-| Skill | Command | What change |
-|-------|---------|-------------|
-| `caveman` | `/caveman` | The voice. Default. Answer first, fluff gone, every fact kept. |
+| Skill       | Command      | What change                                                                    |
+| ----------- | ------------ | ------------------------------------------------------------------------------ |
+| `caveman`   | `/caveman`   | The voice. Default. Answer first, fluff gone, every fact kept.                 |
 | `ultracave` | `/ultracave` | Grammar stripped. Fragments, one word when one word is enough, each fact once. |
-| `megacave` | `/megacave` | Classical Chinese (文言文). Far fewer characters, technical terms verbatim. |
+| `megacave`  | `/megacave`  | Classical Chinese (文言文). Far fewer characters, technical terms verbatim.    |
 
 `/caveman ultra` and `/caveman wenyan` still work as aliases.
 
@@ -50,15 +50,19 @@ activation rules.
 Question: "Why does my React component re-render?"
 
 Normal prose:
+
 > Your component re-renders because you create a new object reference each render. Wrapping it in `useMemo` will fix the issue.
 
 caveman:
+
 > New object ref each render, so React re-renders. Wrap the prop in `useMemo`.
 
 ultracave:
+
 > Inline object prop, new ref, re-render. `useMemo`.
 
 megacave:
+
 > 每繪新生對象參照，故重繪；以 `useMemo` 包之則免。
 
 ## See also

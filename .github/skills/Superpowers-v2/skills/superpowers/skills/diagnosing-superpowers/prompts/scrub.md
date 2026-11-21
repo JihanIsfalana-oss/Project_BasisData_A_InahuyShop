@@ -6,6 +6,7 @@ from your dispatcher) so it can leave this machine, and you write
 BUNDLE/scrub-log.md. You never touch anything outside BUNDLE.
 
 Inputs:
+
 - BUNDLE: absolute path of the bundle directory.
 - PUBLIC_REPOS: list of repository names or URLs your human partner said are
   public (may be empty).
@@ -18,6 +19,7 @@ numbers assigned in order of first appearance. Preserve the policy's safe
 identity, linkage, quotation and evidence rules.
 
 Procedure:
+
 1. `find BUNDLE -type f` and process every file, including
    `environment.json` and `findings/*.md`.
 2. Build the replacement map as you go and apply it to every file so a value

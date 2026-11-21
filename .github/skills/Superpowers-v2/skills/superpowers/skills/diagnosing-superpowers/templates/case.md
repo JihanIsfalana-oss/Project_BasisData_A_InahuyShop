@@ -13,10 +13,10 @@ Goal is a superpowers bug report: yes | no
 
 ## Sessions
 
-| Role | Session id | Absolute path | Lines | Bytes | Longest line (bytes) | First prompt (first 120 chars) | First timestamp |
-|---|---|---|---|---|---|---|---|
-| main | | | | | | | |
-| subagent | | | | | | | |
+| Role     | Session id | Absolute path | Lines | Bytes | Longest line (bytes) | First prompt (first 120 chars) | First timestamp |
+| -------- | ---------- | ------------- | ----- | ----- | -------------------- | ------------------------------ | --------------- |
+| main     |            |               |       |       |                      |                                |                 |
+| subagent |            |               |       |       |                      |                                |                 |
 
 Rejected candidates: <id — path — why rejected>, or "none".
 
@@ -31,7 +31,7 @@ Session still running at read time: yes | no (mtime <ISO>, lines <N>)
 - Skill files read or injected during the session:
 
 | Skill / source path | sha1 or unavailable | Provenance | Supporting location |
-|---|---|---|---|
+| ------------------- | ------------------- | ---------- | ------------------- |
 
 Label environment and skill observations as historical evidence, unverified
 snapshot, current observation, or unknown. Check supplied provenance notes,

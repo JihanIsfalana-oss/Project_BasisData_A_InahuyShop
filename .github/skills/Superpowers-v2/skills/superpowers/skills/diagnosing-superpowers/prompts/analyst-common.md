@@ -4,6 +4,7 @@ modify any file under the session store, and you do not say what
 superpowers should change.
 
 Inputs (from your dispatcher):
+
 - CASE: absolute path of the case file. Read it first. It names the session
   files, the discovered sources and record meanings to use, and the
   context-safety rules you must follow. Use the recorded meanings rather than

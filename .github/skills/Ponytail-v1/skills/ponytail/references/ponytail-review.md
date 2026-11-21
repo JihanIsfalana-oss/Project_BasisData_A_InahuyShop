@@ -74,6 +74,7 @@ term the first time you use it. The reader may never have seen this code.
 Start with `What this change does:` in two or three sentences.
 
 Then the findings in three groups, skip empty groups:
+
 - **Must fix:** bug, security, data loss, breaks at the expected load.
 - **Should fix:** risky code without a test, real slowness, duplication, a
   function that mixes jobs, code that should not exist.
@@ -91,6 +92,7 @@ Every finding has all four parts, each one or two short sentences:
    - **If we skip it:** Late orders show the wrong date, and accounting fixes them by hand.
 
 End with:
+
 - `Verdict: Ship.` or `Verdict: fix 1 and 3 first.`
 - `Lean: -<N> lines possible.` when lean findings exist.
 - `Not checked:` one line, if something mattered and you could not check it.

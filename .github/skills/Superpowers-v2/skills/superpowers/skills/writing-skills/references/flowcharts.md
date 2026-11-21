@@ -18,11 +18,13 @@ digraph when_flowchart {
 ```
 
 **Use flowcharts ONLY for:**
+
 - Non-obvious decision points
 - Process loops where you might stop too early
 - "When to use A vs B" decisions
 
 **Never use flowcharts for:**
+
 - Reference material → Tables, lists
 - Code examples → Markdown blocks
 - Linear instructions → Numbered lists
@@ -31,6 +33,7 @@ digraph when_flowchart {
 See `graphviz-conventions.dot` in this directory for graphviz style rules.
 
 **Visualizing for your human partner:** Use `render-graphs.js` in the writing-skills directory to render a skill's flowcharts to SVG, run from there:
+
 ```bash
 node ./render-graphs.js ../some-skill           # Each diagram separately
 node ./render-graphs.js ../some-skill --combine # All diagrams in one SVG

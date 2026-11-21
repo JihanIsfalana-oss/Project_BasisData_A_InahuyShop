@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, modifying behavior, or planning anything new, in software or out of it (a talk, a business, a renovation)."
+description: 'You MUST use this before any creative work - creating features, building components, adding functionality, modifying behavior, or planning anything new, in software or out of it (a talk, a business, a renovation).'
 ---
 
 # Brainstorming
@@ -211,10 +211,10 @@ message. Once they've accepted, put a mockup next to the description.
 Once you understand what they want and they've picked an approach, say
 how big the work is in plain words. They can override it.
 
-| Size | The design doc |
-|------|----------------|
+| Size           | The design doc                                               |
+| -------------- | ------------------------------------------------------------ |
 | A small change | a short one: what you already covered together, written down |
-| A project | the full written design (below) |
+| A project      | the full written design (below)                              |
 
 Short or full, the design doc has an **Approaches** part: the two or
 three ways you considered building it, what each trades off, which one
@@ -284,14 +284,14 @@ superpowers:writing-plans and no other skill.
 
 ## Red Flags
 
-| Thought | Reality |
-|---------|---------|
-| "I'll offer a menu of what they might want" | Options steer. Ask them to describe it first. |
-| "I'll fill in sensible defaults" | Good. Say them out loud. A default they never heard is one they couldn't reject. |
+| Thought                                                | Reality                                                                                                                                   |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| "I'll offer a menu of what they might want"            | Options steer. Ask them to describe it first.                                                                                             |
+| "I'll fill in sensible defaults"                       | Good. Say them out loud. A default they never heard is one they couldn't reject.                                                          |
 | "I've answered their questions, so I'll write the doc" | Lay out the approaches first, in a message of their own (or, when nothing was open from the start, in your first message's short design). |
-| "I should explain the process first" | Ask your question. The process shows itself. |
-| "They said 'sounds good' to the idea" | Approval covers what you showed them. A design doc you haven't written isn't approved. |
-| "The spike works, I'll keep building on it" | Keeping it is a new request. Back through the gate. |
+| "I should explain the process first"                   | Ask your question. The process shows itself.                                                                                              |
+| "They said 'sounds good' to the idea"                  | Approval covers what you showed them. A design doc you haven't written isn't approved.                                                    |
+| "The spike works, I'll keep building on it"            | Keeping it is a new request. Back through the gate.                                                                                       |
 
 ## Visual Companion
 
