@@ -882,33 +882,42 @@ TypeScript tidak digunakan pada aplikasi ini, Vite build lulus, dan
 
 ## 15. M-11 --- Admin Mobile
 
-**Status:** Expo starter tersedia; fitur operasional belum dikonfirmasi
-selesai.
+**Status:** Implementasi Admin Mobile tersedia pada branch
+`feat/m11-admin-mobile`; pengujian Android/iOS fisik tetap terbuka.
 
 ### M-11.1 Foundation
 
-- [ ] Admin authentication khusus.
-- [ ] Navigation operasional.
-- [ ] Permission-aware action.
-- [ ] Secure session handling.
+- [x] Admin authentication khusus.
+- [x] Navigation operasional.
+- [x] Permission-aware action.
+- [x] Secure session handling.
 
 ### M-11.2 Operations
 
-- [ ] Ringkasan antrean operasional.
-- [ ] Daftar pesanan dan filter.
-- [ ] Detail pesanan.
-- [ ] Tindak lanjut shipment dan tracking.
-- [ ] Produk ringkas dan quick action yang aman.
-- [ ] Error, loading, empty, dan confirmation states.
+- [x] Ringkasan antrean operasional.
+- [x] Daftar pesanan dan filter.
+- [x] Detail pesanan.
+- [x] Tindak lanjut shipment dan tracking.
+- [x] Produk ringkas dan quick action yang aman.
+- [x] Error, loading, empty, dan confirmation states.
 
 ### M-11.3 Scope control
 
-- [ ] Memprioritaskan pekerjaan operasional harian.
-- [ ] Tidak memaksakan editor tabel massal atau konfigurasi kompleks
+- [x] Memprioritaskan pekerjaan operasional harian.
+- [x] Tidak memaksakan editor tabel massal atau konfigurasi kompleks
       admin web ke mobile.
-- [ ] Mengarahkan pekerjaan kompleks ke admin web bila belum didukung
+- [x] Mengarahkan pekerjaan kompleks ke admin web bila belum didukung
       mobile.
 - [ ] Menguji Android dan iOS.
+
+**Bukti M-11 (21 November 2026):** commit
+`53616c4 feat: build admin mobile operations console` tersedia pada branch
+`feat/m11-admin-mobile`. Implementasi mencakup login admin, SecureStore,
+dashboard, filter pesanan, detail pesanan, status/cancellation,
+shipment/tracking, dan ringkasan produk read-only. Validasi: 4 unit/helper
+test lulus, Expo lint lulus, TypeScript lulus, Expo Doctor 20/20 lulus,
+dan Expo web export lulus. Pengujian perangkat/emulator Android/iOS serta
+MySQL integration belum dijalankan.
 
 ---
 
@@ -1024,8 +1033,8 @@ selesai.
 |      9 | M-07 Shared Runtime Packages                   | Skeleton; isi belum                                               |
 |     10 | M-08 Storefront Web                            | Belum dikonfirmasi                                                |
 |     11 | M-09 Customer Mobile                           | Belum dikonfirmasi                                                |
-|     12 | M-10 Admin Web                                 | Belum dikonfirmasi                                                |
-|     13 | M-11 Admin Mobile                              | Belum dikonfirmasi                                                |
+|     12 | M-10 Admin Web                                 | Implementasi tersedia; CRUD/digital/E2E terbuka                      |
+|     13 | M-11 Admin Mobile                              | Implementasi tersedia; pengujian Android/iOS terbuka                |
 |     14 | M-12 Cross-Platform Integration                | Belum dimulai                                                     |
 |     15 | M-13 QA & Security                             | Belum dimulai                                                     |
 |     16 | M-14 Deployment & Production Readiness         | Belum dimulai                                                     |
