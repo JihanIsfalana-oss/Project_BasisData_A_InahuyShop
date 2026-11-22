@@ -8,7 +8,7 @@ export class ApiError extends Error {
   }
 }
 
-export function errorHandler(error, req, res, next) {
+export function errorHandler(error, req, res, next, captureException) {
   if (res.headersSent) {
     next(error)
     return
@@ -48,6 +48,7 @@ export function errorHandler(error, req, res, next) {
         errorType: error?.cause?.name ?? error?.name ?? 'Error',
       }),
     )
+    captureException?.(error)
   }
 
   res.status(status).json({

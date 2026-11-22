@@ -1,0 +1,80 @@
+name: Deploy production API
+
+on:
+  workflow_dispatch:
+    inputs:
+      migration_applied:
+        description: Confirm backup completed and production migration deployed
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: api-production
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Require main branch
+        run: test "$GITHUB_REF" = "refs/heads/main"
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify
+        run: |
+          pnpm lint
+          pnpm check:api
+          pnpm test:api
+          pnpm build
+          pnpm check:boundaries
+          pnpm check:repo
+
+      - name: Build API image
+        run: docker build --file apps/api/Dockerfile --tag inahuyshop-api:release .
+
+  deploy:
+    name: Deploy API
+    needs: verify
+    runs-on: ubuntu-24.04
+    environment: production
+    steps:
+      - name: Require production migration confirmation
+        env:
+          MIGRATION_APPLIED: ${{ inputs.migration_applied }}
+        run: |
+          if [ "$MIGRATION_APPLIED" != "true" ]; then
+            echo "Back up the database and apply db:migrate:deploy before releasing." >&2
+            exit 1
+          fi
+
+      - name: Trigger Render deployment
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            echo "RENDER_DEPLOY_HOOK is required in the production environment." >&2
+            exit 1
+          fi
+          curl --fail-with-body --silent --show-error --request POST "$RENDER_DEPLOY_HOOK"

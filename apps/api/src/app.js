@@ -1,6 +1,7 @@
 import express from 'express'
 import { API_HEALTH_MESSAGE } from '@inahuyshop/contracts'
 import { ApiError, errorHandler } from './errors.js'
+import { createCorsMiddleware } from './middleware/cors.js'
 import { authenticate } from './middleware/authenticate.js'
 import { requestContext, requestLogger } from './middleware/request-context.js'
 import { createAuthRouter } from './routes/auth.js'
@@ -9,7 +10,7 @@ import { createCatalogRouter } from './routes/catalog.js'
 import { createCommerceRouter } from './routes/commerce.js'
 import { createCustomerRouter } from './routes/customer.js'
 
-export function createApp({ checkDatabase, prisma }) {
+export function createApp({ checkDatabase, prisma, captureException, allowedOrigins = [] }) {
   if (typeof checkDatabase !== 'function') {
     throw new TypeError('createApp requires a database readiness check')
   }
@@ -19,6 +20,7 @@ export function createApp({ checkDatabase, prisma }) {
   app.disable('x-powered-by')
   app.use(requestContext)
   app.use(requestLogger)
+  app.use(createCorsMiddleware(allowedOrigins))
   app.use(express.json({ limit: '1mb' }))
 
   if (prisma) {
@@ -65,7 +67,7 @@ export function createApp({ checkDatabase, prisma }) {
     next(new ApiError(404, 'NOT_FOUND', 'Route not found'))
   })
 
-  app.use(errorHandler)
+  app.use((error, req, res, next) => errorHandler(error, req, res, next, captureException))
 
   return app
 }

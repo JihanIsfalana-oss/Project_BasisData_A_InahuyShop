@@ -1,16 +1,10 @@
 import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
-import { defineConfig, env } from 'prisma/config'
+import { defineConfig } from 'prisma/config'
+import { buildPrismaDatabaseUrl } from './src/prisma-config.js'
 
 const rootEnvPath = fileURLToPath(new URL('../../.env', import.meta.url))
 if (existsSync(rootEnvPath)) process.loadEnvFile(rootEnvPath)
-
-const databaseUrl = new URL('mysql://localhost')
-databaseUrl.hostname = env('MYSQL_HOST')
-databaseUrl.port = env('MYSQL_PORT')
-databaseUrl.username = env('MYSQL_USER')
-databaseUrl.password = env('MYSQL_PASSWORD')
-databaseUrl.pathname = `/${env('MYSQL_DATABASE')}`
 
 export default defineConfig({
   schema: 'prisma/schema.prisma',
@@ -19,6 +13,6 @@ export default defineConfig({
     seed: 'tsx seed.ts',
   },
   datasource: {
-    url: databaseUrl.toString(),
+    url: buildPrismaDatabaseUrl(process.env, { generate: process.argv[2] === 'generate' }),
   },
 })
