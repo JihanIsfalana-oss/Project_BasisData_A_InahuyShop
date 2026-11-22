@@ -5,5 +5,6 @@
  * @param {{ children?: import('react').ReactNode }} props
  */
 export function Card({ children }) {
-  return <div data-ui="card">{children}</div>
+  return <section data-ui="card">{children}</section>
 }
+import React from 'react'

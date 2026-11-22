@@ -74,14 +74,14 @@ Create a todo per step. Steps 5–7 run only on their stated condition.
 All seven analysts always run. This table says which region to read
 yourself in step 3 and which findings to lead with in the verdict.
 
-| Complaint | Read first, lead with |
-|---|---|
-| "It took too long" | cost-and-time, stumbles |
-| "Why did it do this extra work?" | repeated-work, plan-adherence |
-| "Why is it so expensive?" | cost-and-time |
+| Complaint                                    | Read first, lead with                        |
+| -------------------------------------------- | -------------------------------------------- |
+| "It took too long"                           | cost-and-time, stumbles                      |
+| "Why did it do this extra work?"             | repeated-work, plan-adherence                |
+| "Why is it so expensive?"                    | cost-and-time                                |
 | "What the hell is it doing?" (still running) | skill-timeline; note in-progress in coverage |
-| "It ignored the plan" | plan-adherence, compaction lines first |
-| "Skill X never fired" | skill-timeline |
+| "It ignored the plan"                        | plan-adherence, compaction lines first       |
+| "Skill X never fired"                        | skill-timeline                               |
 
 ## Hard rules
 
@@ -110,11 +110,11 @@ yourself in step 3 and which findings to lead with in the verdict.
 
 ## Red Flags
 
-| Thought | Reality |
-|---------|---------|
-| "The problem is obvious, skip intake" | The problem statement scopes everything. Ask. |
-| "They're away, so I'll reconstruct the statement" | You cannot reconstruct what they wanted. Write the questions and stop. |
-| "I'll sweep everything now and ask at the end" | An unscoped sweep spends their budget on the wrong question. Ask first. |
+| Thought                                                | Reality                                                                         |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| "The problem is obvious, skip intake"                  | The problem statement scopes everything. Ask.                                   |
+| "They're away, so I'll reconstruct the statement"      | You cannot reconstruct what they wanted. Write the questions and stop.          |
+| "I'll sweep everything now and ask at the end"         | An unscoped sweep spends their budget on the wrong question. Ask first.         |
 | "They want a bug report, so I'll build the bundle now" | The bundle is their session data, packaged. Build it only when they ask for it. |
-| "Small, targeted edit, no restructuring needed" | Not your call, however small. Report the evidence; the triager decides. |
-| "The price per token is well known" | Numbers you did not compute from the transcript are invented. Cite or drop. |
+| "Small, targeted edit, no restructuring needed"        | Not your call, however small. Report the evidence; the triager decides.         |
+| "The price per token is well known"                    | Numbers you did not compute from the transcript are invented. Cite or drop.     |

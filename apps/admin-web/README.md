@@ -1,19 +1,32 @@
-# React + Vite
+# Admin Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Admin web console for InahuyShop.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Admin login and session restoration
+- Operational dashboard
+- Order search and filtering
+- Order status updates
+- Physical shipment and tracking updates
+- Category and active product views
+- Category and voucher management
 
-## React Compiler
+## Development
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+```powershell
+pnpm --filter admin-web dev
+pnpm --filter admin-web test
+pnpm --filter admin-web lint
+pnpm --filter admin-web build
+```
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+The API base URL defaults to `http://localhost:3000/api/v1`. Set
+`VITE_API_URL` to an HTTPS API base in preview and production. This Vite
+variable is public configuration, not a secret.
 
-## Expanding the ESLint configuration
+Run installation and local MySQL setup from the repository root; see the
+[root setup guide](../../README.md).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+For supported order, category, voucher, and product-visibility workflows and
+their limits, see the [admin operations guide](../../ops/admin-operations.md).

@@ -26,11 +26,13 @@ Write code before test? Delete it.
 Write code before test? Delete it. Start over.
 
 **No exceptions:**
+
 - Don't keep it as "reference"
 - Don't "adapt" it while writing tests
 - Don't look at it
 - Delete means delete
-```
+
+````
 </Good>
 
 ### Address "Spirit vs Letter" Arguments
@@ -39,7 +41,7 @@ Add foundational principle early:
 
 ```markdown
 **Violating the letter of the rules is violating the spirit of the rules.**
-```
+````
 
 This cuts off entire class of "I'm following the spirit" rationalizations.
 
@@ -48,10 +50,10 @@ This cuts off entire class of "I'm following the spirit" rationalizations.
 Capture rationalizations from baseline testing (see Testing section below). Every excuse agents make goes in the table:
 
 ```markdown
-| Excuse | Reality |
-|--------|---------|
-| "Too simple to test" | Simple code breaks. Test takes 30 seconds. |
-| "I'll test after" | Tests passing immediately prove nothing. |
+| Excuse                           | Reality                                                                 |
+| -------------------------------- | ----------------------------------------------------------------------- |
+| "Too simple to test"             | Simple code breaks. Test takes 30 seconds.                              |
+| "I'll test after"                | Tests passing immediately prove nothing.                                |
 | "Tests after achieve same goals" | Tests-after = "what does this do?" Tests-first = "what should this do?" |
 ```
 

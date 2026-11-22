@@ -12,12 +12,13 @@ Find work the session did more than once.
    searches.
 2. Group by `(tool, key)` and report the groups at or over threshold:
 
-   | Category | Threshold | Exempt |
-   |---|---|---|
-   | reads, searches | 3 | |
-   | edits | 2 | |
-   | shell commands | 2 | status checks and test runs (`git status`, `ls`, `pwd`, test runners) |
-   | subagent dispatches | 2 with the same description | |
+   | Category            | Threshold                   | Exempt                                                                |
+   | ------------------- | --------------------------- | --------------------------------------------------------------------- |
+   | reads, searches     | 3                           |                                                                       |
+   | edits               | 2                           |                                                                       |
+   | shell commands      | 2                           | status checks and test runs (`git status`, `ls`, `pwd`, test runners) |
+   | subagent dispatches | 2 with the same description |                                                                       |
+
 3. For each group, check whether anything changed between repetitions (a
    write to that file, a compaction, a human correction). Say which case
    it is; a re-read after an edit is not a finding, a re-read after a

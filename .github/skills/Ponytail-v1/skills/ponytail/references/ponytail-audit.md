@@ -75,6 +75,7 @@ Start with `What this repo does:` in two or three sentences, and the load
 you assumed.
 
 Then the findings in three groups, most important first, skip empty groups:
+
 - **Must fix:** bug, security, data loss, breaks at the expected load.
 - **Should fix:** risky code without a test, real slowness, duplication, a
   function that mixes jobs, code that should not exist.
@@ -93,6 +94,7 @@ Every finding has all four parts, each one or two short sentences:
    - **If we skip it:** Late orders show the wrong date, and accounting fixes them by hand.
 
 End with:
+
 - `Verdict:` one line: healthy, or what to fix first.
 - `Lean: -<N> lines, -<M> dependencies possible.` when lean findings exist.
 - `Not checked:` the parts you did not read or could not run.

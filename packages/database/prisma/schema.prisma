@@ -1,0 +1,357 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum DeliveryType {
+  digital
+  physical
+}
+
+enum OrderStatus {
+  pending_payment
+  paid
+  processing
+  shipped
+  completed
+  cancelled
+  expired
+}
+
+enum PaymentMethod {
+  simulation
+}
+
+enum PaymentStatus {
+  pending
+  success
+  failed
+  expired
+}
+
+enum ShipmentTrackingStatus {
+  picked_up
+  in_transit
+  out_for_delivery
+  delivered
+}
+
+enum DiscountType {
+  percentage
+  fixed
+}
+
+model Customer {
+  customerId   Int               @id @default(autoincrement()) @map("customer_id") @db.UnsignedInt
+  fullName     String            @map("full_name") @db.VarChar(191)
+  email        String            @unique @db.VarChar(254)
+  phone        String?           @unique @db.VarChar(32)
+  passwordHash String            @map("password_hash") @db.VarChar(255)
+  birthDate    DateTime?         @map("birth_date") @db.Date
+  createdAt    DateTime          @default(now()) @map("created_at") @db.DateTime(3)
+  isActive     Boolean           @default(true) @map("is_active")
+  addresses    CustomerAddress[]
+  cart         Cart?
+  orders       Order[]
+  sessions     AuthSession[]
+
+  @@map("customers")
+}
+
+model CustomerAddress {
+  addressId  Int      @id @default(autoincrement()) @map("address_id") @db.UnsignedInt
+  customerId Int      @map("customer_id") @db.UnsignedInt
+  label      String   @db.VarChar(80)
+  street     String   @db.VarChar(255)
+  district   String   @db.VarChar(120)
+  city       String   @db.VarChar(120)
+  province   String   @db.VarChar(120)
+  postalCode String   @map("postal_code") @db.VarChar(16)
+  isDefault  Boolean  @default(false) @map("is_default")
+  customer   Customer @relation(fields: [customerId], references: [customerId], onDelete: Restrict, onUpdate: Cascade)
+  orders     Order[]
+
+  @@index([customerId])
+  @@map("customer_address")
+}
+
+model Seller {
+  adminId      Int             @id @default(autoincrement()) @map("admin_id") @db.UnsignedInt
+  username     String          @unique @db.VarChar(80)
+  passwordHash String          @map("password_hash") @db.VarChar(255)
+  sessions     AuthSession[]
+  auditLogs    AdminAuditLog[]
+
+  @@map("seller")
+}
+
+model AdminAuditLog {
+  auditId      Int      @id @default(autoincrement()) @map("audit_id") @db.UnsignedInt
+  adminId      Int      @map("admin_id") @db.UnsignedInt
+  action       String   @db.VarChar(80)
+  resourceType String   @map("resource_type") @db.VarChar(50)
+  resourceId   String   @map("resource_id") @db.VarChar(64)
+  requestId    String   @map("request_id") @db.VarChar(128)
+  createdAt    DateTime @default(now()) @map("created_at") @db.DateTime(3)
+  expiresAt    DateTime @map("expires_at") @db.DateTime(3)
+  admin        Seller   @relation(fields: [adminId], references: [adminId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([expiresAt])
+  @@index([adminId, createdAt])
+  @@index([requestId])
+  @@map("admin_audit_log")
+}
+
+model AuthSession {
+  tokenHash  String    @id @map("token_hash") @db.Char(64)
+  customerId Int?      @map("customer_id") @db.UnsignedInt
+  adminId    Int?      @map("admin_id") @db.UnsignedInt
+  expiresAt  DateTime  @map("expires_at") @db.DateTime(3)
+  revokedAt  DateTime? @map("revoked_at") @db.DateTime(3)
+  createdAt  DateTime  @default(now()) @map("created_at") @db.DateTime(3)
+  customer   Customer? @relation(fields: [customerId], references: [customerId], onDelete: Cascade, onUpdate: Cascade)
+  admin      Seller?   @relation(fields: [adminId], references: [adminId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([customerId, expiresAt])
+  @@index([adminId, expiresAt])
+  @@index([expiresAt])
+  @@map("auth_sessions")
+}
+
+model Category {
+  categoryId Int        @id @default(autoincrement()) @map("category_id") @db.UnsignedInt
+  parentId   Int?       @map("parent_id") @db.UnsignedInt
+  name       String     @db.VarChar(120)
+  slug       String     @unique @db.VarChar(191)
+  parent     Category?  @relation("CategoryHierarchy", fields: [parentId], references: [categoryId], onDelete: SetNull, onUpdate: Cascade)
+  children   Category[] @relation("CategoryHierarchy")
+  products   Product[]
+
+  @@index([parentId])
+  @@map("categories")
+}
+
+model Product {
+  productId   Int              @id @default(autoincrement()) @map("product_id") @db.UnsignedInt
+  categoryId  Int              @map("category_id") @db.UnsignedInt
+  name        String           @db.VarChar(191)
+  description String?          @db.Text
+  brand       String?          @db.VarChar(120)
+  isActive    Boolean          @default(true) @map("is_active")
+  createdAt   DateTime         @default(now()) @map("created_at") @db.DateTime(3)
+  category    Category         @relation(fields: [categoryId], references: [categoryId], onDelete: Restrict, onUpdate: Cascade)
+  variants    ProductVariant[]
+  images      ProductImage[]
+
+  @@index([categoryId, isActive])
+  @@map("products")
+}
+
+model ProductVariant {
+  // Referenced without product_id by cart_item and order_item; the ID is global.
+  variantId     Int            @id @default(autoincrement()) @map("variant_id") @db.UnsignedInt
+  productId     Int            @map("product_id") @db.UnsignedInt
+  sku           String         @db.VarChar(80)
+  variantName   String         @map("variant_name") @db.VarChar(191)
+  price         Decimal        @db.Decimal(15, 0)
+  stockQty      Int            @default(0) @map("stock_qty") @db.UnsignedInt
+  weightGram    Int?           @map("weight_gram") @db.UnsignedInt
+  deliveryType  DeliveryType   @map("delivery_type")
+  product       Product        @relation(fields: [productId], references: [productId], onDelete: Restrict, onUpdate: Cascade)
+  cartItems     CartItem[]
+  orderItems    OrderItem[]
+  digitalAssets DigitalAsset[]
+
+  @@unique([productId, sku])
+  @@index([productId])
+  @@map("product_variant")
+}
+
+model ProductImage {
+  imageId   Int     @default(autoincrement()) @map("image_id") @db.UnsignedInt
+  productId Int     @map("product_id") @db.UnsignedInt
+  url       String  @db.Text
+  altText   String  @map("alt_text") @db.VarChar(255)
+  sortOrder Int     @default(0) @map("sort_order") @db.UnsignedInt
+  product   Product @relation(fields: [productId], references: [productId], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([imageId, productId])
+  @@index([productId, sortOrder])
+  @@map("product_image")
+}
+
+model Cart {
+  cartId     Int        @id @default(autoincrement()) @map("cart_id") @db.UnsignedInt
+  customerId Int        @unique @map("customer_id") @db.UnsignedInt
+  updatedAt  DateTime   @updatedAt @map("updated_at") @db.DateTime(3)
+  customer   Customer   @relation(fields: [customerId], references: [customerId], onDelete: Cascade, onUpdate: Cascade)
+  items      CartItem[]
+
+  @@map("carts")
+}
+
+model CartItem {
+  cartId    Int            @map("cart_id") @db.UnsignedInt
+  variantId Int            @map("variant_id") @db.UnsignedInt
+  quantity  Int            @default(1) @db.UnsignedInt
+  cart      Cart           @relation(fields: [cartId], references: [cartId], onDelete: Cascade, onUpdate: Cascade)
+  variant   ProductVariant @relation(fields: [variantId], references: [variantId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@id([cartId, variantId])
+  @@index([variantId])
+  @@map("cart_item")
+}
+
+model Order {
+  orderId           Int              @id @default(autoincrement()) @map("order_id") @db.UnsignedInt
+  orderNumber       String           @unique @map("order_number") @db.VarChar(64)
+  checkoutKey       String?          @unique @map("checkout_key") @db.VarChar(128)
+  customerId        Int              @map("customer_id") @db.UnsignedInt
+  shippingAddressId Int?             @map("shipping_address_id") @db.UnsignedInt
+  orderDate         DateTime         @default(now()) @map("order_date") @db.DateTime(3)
+  status            OrderStatus      @default(pending_payment)
+  subtotal          Decimal          @db.Decimal(15, 0)
+  discountAmount    Decimal          @default(0) @map("discount_amount") @db.Decimal(15, 0)
+  shippingCost      Decimal          @default(0) @map("shipping_cost") @db.Decimal(15, 0)
+  grandTotal        Decimal          @map("grand_total") @db.Decimal(15, 0)
+  customer          Customer         @relation(fields: [customerId], references: [customerId], onDelete: Restrict, onUpdate: Cascade)
+  shippingAddress   CustomerAddress? @relation(fields: [shippingAddressId], references: [addressId], onDelete: Restrict, onUpdate: Cascade)
+  items             OrderItem[]
+  payments          Payment[]
+  voucher           OrderVoucher?
+  shipment          Shipment?
+
+  @@index([customerId, orderDate])
+  @@index([shippingAddressId])
+  @@index([status, orderDate])
+  @@map("orders")
+}
+
+model OrderItem {
+  orderItemId         Int               @id @default(autoincrement()) @map("order_item_id") @db.UnsignedInt
+  orderId             Int               @map("order_id") @db.UnsignedInt
+  variantId           Int               @map("variant_id") @db.UnsignedInt
+  productNameSnapshot String            @map("product_name_snapshot") @db.VarChar(191)
+  unitPrice           Decimal           @map("unit_price") @db.Decimal(15, 0)
+  quantity            Int               @db.UnsignedInt
+  lineTotal           Decimal           @map("line_total") @db.Decimal(15, 0)
+  order               Order             @relation(fields: [orderId], references: [orderId], onDelete: Restrict, onUpdate: Cascade)
+  variant             ProductVariant    @relation(fields: [variantId], references: [variantId], onDelete: Restrict, onUpdate: Cascade)
+  review              Review?
+  digitalDeliveries   DigitalDelivery[]
+
+  @@index([orderId])
+  @@index([variantId])
+  @@map("order_item")
+}
+
+model Payment {
+  paymentId        Int           @id @default(autoincrement()) @map("payment_id") @db.UnsignedInt
+  orderId          Int           @map("order_id") @db.UnsignedInt
+  method           PaymentMethod @default(simulation)
+  amount           Decimal       @db.Decimal(15, 0)
+  status           PaymentStatus @default(pending)
+  paymentReference String?       @map("payment_reference") @db.VarChar(191)
+  paidAt           DateTime?     @map("paid_at") @db.DateTime(3)
+  order            Order         @relation(fields: [orderId], references: [orderId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@unique([orderId])
+  @@index([status, paidAt])
+  @@map("payments")
+}
+
+model Voucher {
+  voucherId     Int            @id @default(autoincrement()) @map("voucher_id") @db.UnsignedInt
+  code          String         @unique @db.VarChar(80)
+  discountType  DiscountType   @map("discount_type")
+  discountValue Decimal        @map("discount_value") @db.Decimal(12, 2)
+  minPurchase   Decimal        @default(0) @map("min_purchase") @db.Decimal(15, 0)
+  validUntil    DateTime       @map("valid_until") @db.DateTime(3)
+  usageLimit    Int?           @map("usage_limit") @db.UnsignedInt
+  orderVouchers OrderVoucher[]
+
+  @@index([validUntil])
+  @@map("vouchers")
+}
+
+model OrderVoucher {
+  orderId         Int     @map("order_id") @db.UnsignedInt
+  voucherId       Int     @map("voucher_id") @db.UnsignedInt
+  discountApplied Decimal @map("discount_applied") @db.Decimal(15, 0)
+  order           Order   @relation(fields: [orderId], references: [orderId], onDelete: Restrict, onUpdate: Cascade)
+  voucher         Voucher @relation(fields: [voucherId], references: [voucherId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@id([orderId, voucherId])
+  @@unique([orderId])
+  @@index([voucherId])
+  @@map("order_vouchers")
+}
+
+model Shipment {
+  shipmentId     Int             @id @default(autoincrement()) @map("shipment_id") @db.UnsignedInt
+  orderId        Int             @unique @map("order_id") @db.UnsignedInt
+  courier        String?         @db.VarChar(120)
+  serviceType    String?         @map("service_type") @db.VarChar(120)
+  trackingNumber String?         @map("tracking_number") @db.VarChar(191)
+  shippedAt      DateTime?       @map("shipped_at") @db.DateTime(3)
+  order          Order           @relation(fields: [orderId], references: [orderId], onDelete: Restrict, onUpdate: Cascade)
+  tracking       ShipmentTrack[]
+
+  @@map("shipments")
+}
+
+model ShipmentTrack {
+  shipmentId  Int                    @map("shipment_id") @db.UnsignedInt
+  trackingSeq Int                    @map("tracking_seq") @db.UnsignedInt
+  status      ShipmentTrackingStatus
+  eventTime   DateTime               @map("event_time") @db.DateTime(3)
+  shipment    Shipment               @relation(fields: [shipmentId], references: [shipmentId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@id([shipmentId, trackingSeq])
+  @@index([status, eventTime])
+  @@map("shipment_track")
+}
+
+model Review {
+  reviewId    Int       @id @default(autoincrement()) @map("review_id") @db.UnsignedInt
+  orderItemId Int       @unique @map("order_item_id") @db.UnsignedInt
+  rating      Int       @db.UnsignedTinyInt
+  comment     String?   @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at") @db.DateTime(3)
+  orderItem   OrderItem @relation(fields: [orderItemId], references: [orderItemId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@map("reviews")
+}
+
+model DigitalAsset {
+  assetId    Int               @id @default(autoincrement()) @map("asset_id") @db.UnsignedInt
+  variantId  Int               @map("variant_id") @db.UnsignedInt
+  fileUrl    String            @map("file_url") @db.Text
+  fileName   String            @map("file_name") @db.VarChar(255)
+  fileSize   BigInt            @map("file_size") @db.UnsignedBigInt
+  createdAt  DateTime          @default(now()) @map("created_at") @db.DateTime(3)
+  variant    ProductVariant    @relation(fields: [variantId], references: [variantId], onDelete: Restrict, onUpdate: Cascade)
+  deliveries DigitalDelivery[]
+
+  @@index([variantId])
+  @@map("digital_asset")
+}
+
+model DigitalDelivery {
+  deliveryId        Int          @id @default(autoincrement()) @map("delivery_id") @db.UnsignedInt
+  orderItemId       Int          @map("order_item_id") @db.UnsignedInt
+  assetId           Int          @map("asset_id") @db.UnsignedInt
+  downloadTokenHash String       @unique @map("download_token_hash") @db.Char(64)
+  expiresAt         DateTime     @map("expires_at") @db.DateTime(3)
+  downloadCount     Int          @default(0) @map("download_count") @db.UnsignedInt
+  createdAt         DateTime     @default(now()) @map("created_at") @db.DateTime(3)
+  orderItem         OrderItem    @relation(fields: [orderItemId], references: [orderItemId], onDelete: Restrict, onUpdate: Cascade)
+  asset             DigitalAsset @relation(fields: [assetId], references: [assetId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([orderItemId])
+  @@index([assetId])
+  @@map("digital_delivery")
+}

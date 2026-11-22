@@ -251,7 +251,7 @@
         },
         "data": {
           "label": "product_variant",
-          "type": "Weak",
+          "type": "Regular",
           "isConnectable": false,
           "isSelected": false
         },
@@ -1024,7 +1024,7 @@
         "data": {
           "label": "variant_id",
           "types": {
-            "Partially Unique": true
+            "Unique": true
           },
           "isSelected": false,
           "isConnectable": false

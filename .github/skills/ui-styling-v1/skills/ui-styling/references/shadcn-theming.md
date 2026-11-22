@@ -7,17 +7,19 @@ Theme configuration, CSS variables, dark mode, and component customization.
 ### Next.js App Router
 
 **1. Install next-themes:**
+
 ```bash
 npm install next-themes
 ```
 
 **2. Create theme provider:**
+
 ```tsx
 // components/theme-provider.tsx
-"use client"
+'use client'
 
-import * as React from "react"
-import { ThemeProvider as NextThemesProvider } from "next-themes"
+import * as React from 'react'
+import { ThemeProvider as NextThemesProvider } from 'next-themes'
 
 export function ThemeProvider({
   children,
@@ -28,9 +30,10 @@ export function ThemeProvider({
 ```
 
 **3. Wrap app:**
+
 ```tsx
 // app/layout.tsx
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from '@/components/theme-provider'
 
 export default function RootLayout({ children }) {
   return (
@@ -51,10 +54,11 @@ export default function RootLayout({ children }) {
 ```
 
 **4. Theme toggle component:**
+
 ```tsx
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
-import { Button } from "@/components/ui/button"
+import { Moon, Sun } from 'lucide-react'
+import { useTheme } from 'next-themes'
+import { Button } from '@/components/ui/button'
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme()
@@ -63,7 +67,7 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
     >
       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -85,9 +89,10 @@ function toggleDarkMode() {
 }
 
 // Initialize on load
-if (localStorage.theme === 'dark' ||
-    (!('theme' in localStorage) &&
-     window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+if (
+  localStorage.theme === 'dark' ||
+  (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+) {
   document.documentElement.classList.add('dark')
 }
 ```
@@ -140,14 +145,16 @@ shadcn/ui uses CSS variables for theming. Variables defined in `globals.css`:
 ### Color Format
 
 Values use HSL format without `hsl()` wrapper for better opacity control:
+
 ```css
---primary: 222.2 47.4% 11.2%;  /* H S L */
+--primary: 222.2 47.4% 11.2%; /* H S L */
 ```
 
 Usage in Tailwind:
+
 ```css
 background: hsl(var(--primary));
-background: hsl(var(--primary) / 0.5);  /* 50% opacity */
+background: hsl(var(--primary) / 0.5); /* 50% opacity */
 ```
 
 ## Tailwind Configuration
@@ -157,40 +164,40 @@ Map CSS variables to Tailwind utilities:
 ```ts
 // tailwind.config.ts
 export default {
-  darkMode: ["class"],
+  darkMode: ['class'],
   theme: {
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
     },
   },
@@ -205,12 +212,12 @@ Change colors by modifying CSS variables in `globals.css`:
 
 ```css
 :root {
-  --primary: 262.1 83.3% 57.8%;  /* Purple */
+  --primary: 262.1 83.3% 57.8%; /* Purple */
   --primary-foreground: 210 20% 98%;
 }
 
 .dark {
-  --primary: 263.4 70% 50.4%;  /* Darker purple */
+  --primary: 263.4 70% 50.4%; /* Darker purple */
   --primary-foreground: 210 20% 98%;
 }
 ```
@@ -226,18 +233,19 @@ Select base color, generate theme, copy CSS variables.
 Create theme variants with data attributes:
 
 ```css
-[data-theme="violet"] {
+[data-theme='violet'] {
   --primary: 262.1 83.3% 57.8%;
   --primary-foreground: 210 20% 98%;
 }
 
-[data-theme="rose"] {
+[data-theme='rose'] {
   --primary: 346.8 77.2% 49.8%;
   --primary-foreground: 355.7 100% 97.3%;
 }
 ```
 
 Apply theme:
+
 ```tsx
 <div data-theme="violet">
   <Button>Violet theme</Button>
@@ -253,35 +261,38 @@ Components live in your codebase - modify directly.
 ```tsx
 // components/ui/button.tsx
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium",
+  'inline-flex items-center justify-center rounded-md text-sm font-medium',
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground",
-        destructive: "bg-destructive text-destructive-foreground",
-        outline: "border border-input bg-background",
+        default: 'bg-primary text-primary-foreground',
+        destructive: 'bg-destructive text-destructive-foreground',
+        outline: 'border border-input bg-background',
         // Add custom variant
-        gradient: "bg-gradient-to-r from-purple-500 to-pink-500 text-white",
+        gradient: 'bg-gradient-to-r from-purple-500 to-pink-500 text-white',
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
+        default: 'h-10 px-4 py-2',
+        sm: 'h-9 rounded-md px-3',
+        lg: 'h-11 rounded-md px-8',
         // Add custom size
-        xl: "h-14 rounded-md px-10 text-lg",
+        xl: 'h-14 rounded-md px-10 text-lg',
       },
     },
     defaultVariants: {
-      variant: "default",
-      size: "default",
+      variant: 'default',
+      size: 'default',
     },
-  }
+  },
 )
 ```
 
 Usage:
+
 ```tsx
-<Button variant="gradient" size="xl">Custom Button</Button>
+<Button variant="gradient" size="xl">
+  Custom Button
+</Button>
 ```
 
 ### Customize Styles
@@ -290,19 +301,18 @@ Modify base styles in component:
 
 ```tsx
 // components/ui/card.tsx
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-xl border bg-card text-card-foreground shadow-lg",  // Modified
-      className
-    )}
-    {...props}
-  />
-))
+const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        'rounded-xl border bg-card text-card-foreground shadow-lg', // Modified
+        className,
+      )}
+      {...props}
+    />
+  ),
+)
 ```
 
 ### Override with className
@@ -351,15 +361,16 @@ Control border radius globally:
 
 ```css
 :root {
-  --radius: 0.5rem;  /* Default */
-  --radius: 0rem;    /* Sharp corners */
-  --radius: 1rem;    /* Rounded */
+  --radius: 0.5rem; /* Default */
+  --radius: 0rem; /* Sharp corners */
+  --radius: 1rem; /* Rounded */
 }
 ```
 
 Components use radius variable:
+
 ```tsx
-className="rounded-lg"  /* Uses var(--radius) */
+className = 'rounded-lg' /* Uses var(--radius) */
 ```
 
 ## Best Practices

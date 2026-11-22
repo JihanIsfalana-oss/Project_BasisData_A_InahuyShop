@@ -1,56 +1,53 @@
-# Welcome to your Expo app 👋
+# InahuyShop Customer Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Expo customer app for catalog discovery, checkout, orders, downloads, shipment
+tracking, profile, addresses, and reviews.
 
-## Get started
+## Environment
 
-1. Install dependencies
+Set `EXPO_PUBLIC_API_BASE_URL` when the API is not available at
+`http://localhost:3000/api/v1`. Use a LAN address for a physical device.
+Use an `https://` URL for preview and production builds. Cleartext allowances
+are enabled only for non-production builds that use `http://`.
 
-   ```bash
-   npm install
-   ```
+The variable is public app configuration, not a secret. Do not put credentials
+or tokens in any `EXPO_PUBLIC_*` value.
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Development
 
 ```bash
-npm run reset-project
+pnpm install --frozen-lockfile
+pnpm --filter customer-mobile start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Use Expo Go for JavaScript-only work. Use a development build after adding
+native modules such as SecureStore or FileSystem:
 
-### Other setup steps
+```bash
+npx expo run:android
+npx expo run:ios
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Validation
 
-## Learn more
+```bash
+pnpm --filter customer-mobile lint
+pnpm --filter customer-mobile exec tsc --noEmit
+node --test apps/customer-mobile/src/lib/*.test.js
+npx expo-doctor
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Release
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+pnpm dlx eas-cli@27.11.0 build --profile preview
+pnpm dlx eas-cli@27.11.0 build --platform all --profile production
+```
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Before a production build, link the Expo project and configure
+`extra.eas.projectId`, `android.package`, and `ios.bundleIdentifier`. Set
+`EXPO_PUBLIC_API_BASE_URL` to the production HTTPS API URL ending in
+`/api/v1`, then configure signing credentials in Expo. The repository's
+manual [EAS workflow](../../.github/workflows/eas-release.yml) checks these
+values and builds only; it does not submit to app stores. See the
+[production runbook](../../ops/production-runbook.md).

@@ -7,6 +7,7 @@ Find every point where the session stopped going forward.
 
 Sources, each using the case file's evidenced record meanings and extraction
 commands to locate line numbers:
+
 - tool results marked as errors, non-zero exits, or explicit failure records;
 - shell commands that failed (non-zero exit in the result, "command not
   found", "No such file");

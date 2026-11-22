@@ -30,7 +30,7 @@ supporting evidence location.
 ## 4. Sessions examined (REQUIRED)
 
 | Role | Session id | Absolute path | Lines | Bytes |
-|---|---|---|---|---|
+| ---- | ---------- | ------------- | ----- | ----- |
 
 Rejected candidates: <id — path — why>, or "none".
 
@@ -40,26 +40,35 @@ One row per human-typed prompt. Events column lists skills invoked,
 subagents dispatched, compaction, errors, resumes, aborts.
 
 | Turn | Line | Time | Request (one line) | Events |
-|---|---|---|---|---|
+| ---- | ---- | ---- | ------------------ | ------ |
 
 ## 6. Findings (REQUIRED, one subsection per dimension)
 
 Each finding:
+
 ```
 - finding: <one sentence>
   evidence: <path:line> — "<short quote>"
   turns: <first>–<last>
   confidence: high | medium | low
 ```
+
 A dimension with nothing to report says `none found — checked: <what was checked>`.
 
 ### 6.1 Skill timeline
+
 ### 6.2 Plan adherence
+
 ### 6.3 Repeated work
+
 ### 6.4 Stumbles
+
 ### 6.5 Quality evidence
+
 ### 6.6 Request conflicts
+
 ### 6.7 Cost and time
+
 ### 6.8 Other plugins and skills used
 
 ## 7. Superpowers involvement (REQUIRED)
@@ -79,4 +88,4 @@ does not name a defect and does not propose a change.
 ## 9. Similar sessions (only when requested)
 
 | Session id | Path | Date | Harness | Matched | Did not match |
-|---|---|---|---|---|---|
+| ---------- | ---- | ---- | ------- | ------- | ------------- |

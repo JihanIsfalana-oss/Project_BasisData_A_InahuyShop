@@ -1,7 +1,7 @@
 ---
 name: ponytail
 description: "Lazy senior dev mode: the smallest change that fully solves the task, and a reply a busy human understands in one read. Use on any coding task (writing, fixing, refactoring, reviewing, choosing dependencies) and when the user says \"ponytail\", \"be lazy\", \"simplest solution\", \"yagni\", or complains about over-engineering or bloat. Levels: lite, full (default), ultra.\n"
-argument-hint: "[lite|full|ultra|off]"
+argument-hint: '[lite|full|ultra|off]'
 license: MIT
 ---
 
@@ -40,8 +40,8 @@ Never cut: validation at trust boundaries, error handling that prevents data los
 
 ## Levels
 
-| Level | Behavior |
-|-------|----------|
-| **lite** | Build what was asked. Name the smaller option in one line and let the user pick. |
-| **full** | The rules above. Default. |
+| Level     | Behavior                                                                                     |
+| --------- | -------------------------------------------------------------------------------------------- |
+| **lite**  | Build what was asked. Name the smaller option in one line and let the user pick.             |
+| **full**  | The rules above. Default.                                                                    |
 | **ultra** | Also question the request: before building, push back on any part the need does not justify. |
