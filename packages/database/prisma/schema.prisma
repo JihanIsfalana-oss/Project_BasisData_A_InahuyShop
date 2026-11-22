@@ -79,12 +79,30 @@ model CustomerAddress {
 }
 
 model Seller {
-  adminId      Int    @id @default(autoincrement()) @map("admin_id") @db.UnsignedInt
-  username     String @unique @db.VarChar(80)
-  passwordHash String @map("password_hash") @db.VarChar(255)
+  adminId      Int             @id @default(autoincrement()) @map("admin_id") @db.UnsignedInt
+  username     String          @unique @db.VarChar(80)
+  passwordHash String          @map("password_hash") @db.VarChar(255)
   sessions     AuthSession[]
+  auditLogs    AdminAuditLog[]
 
   @@map("seller")
+}
+
+model AdminAuditLog {
+  auditId      Int      @id @default(autoincrement()) @map("audit_id") @db.UnsignedInt
+  adminId      Int      @map("admin_id") @db.UnsignedInt
+  action       String   @db.VarChar(80)
+  resourceType String   @map("resource_type") @db.VarChar(50)
+  resourceId   String   @map("resource_id") @db.VarChar(64)
+  requestId    String   @map("request_id") @db.VarChar(128)
+  createdAt    DateTime @default(now()) @map("created_at") @db.DateTime(3)
+  expiresAt    DateTime @map("expires_at") @db.DateTime(3)
+  admin        Seller   @relation(fields: [adminId], references: [adminId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([expiresAt])
+  @@index([adminId, createdAt])
+  @@index([requestId])
+  @@map("admin_audit_log")
 }
 
 model AuthSession {

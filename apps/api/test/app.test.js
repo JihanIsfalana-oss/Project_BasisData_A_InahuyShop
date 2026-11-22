@@ -198,6 +198,67 @@ test('customer login creates a hashed, revocable session and role guards protect
   })
 })
 
+test('admin category writes record minimal audit metadata with 365-day expiry', async () => {
+  const admin = { adminId: 7, username: 'test-admin', passwordHash: 'unused' }
+  const category = { categoryId: 42, name: 'Test category', slug: 'test-category' }
+  const token = 'A'.repeat(43)
+  let auditRecord
+  let expiredBefore
+  const transaction = {
+    category: { create: async () => category },
+    adminAuditLog: {
+      deleteMany: async ({ where }) => {
+        expiredBefore = where.expiresAt.lte
+      },
+      create: async ({ data }) => {
+        auditRecord = data
+      },
+    },
+  }
+  const prisma = {
+    authSession: {
+      findUnique: async () => ({
+        tokenHash: 'session-hash',
+        customer: null,
+        admin,
+        revokedAt: null,
+        expiresAt: new Date(Date.now() + 60_000),
+      }),
+    },
+    category: { create: async () => category },
+    $transaction: async (run) => run(transaction),
+  }
+
+  await withServer(createApp({ checkDatabase: async () => {}, prisma }), async (baseUrl) => {
+    const startedAt = Date.now()
+    const response = await fetch(`${baseUrl}/api/v1/admin/categories`, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${token}`,
+        'content-type': 'application/json',
+        'x-request-id': 'audit-category-42',
+      },
+      body: JSON.stringify({ name: category.name, slug: category.slug }),
+    })
+    const body = await response.json()
+
+    assert.equal(response.status, 201)
+    assert.equal(body.data.categoryId, category.categoryId)
+    assert.ok(auditRecord)
+    assert.equal(auditRecord.adminId, admin.adminId)
+    assert.equal(auditRecord.action, 'category.create')
+    assert.equal(auditRecord.resourceType, 'category')
+    assert.equal(auditRecord.resourceId, String(category.categoryId))
+    assert.equal(auditRecord.requestId, 'audit-category-42')
+    assert.equal('name' in auditRecord, false)
+    assert.equal('body' in auditRecord, false)
+    assert.ok(expiredBefore instanceof Date)
+    assert.ok(expiredBefore.getTime() >= startedAt)
+    assert.ok(auditRecord.expiresAt.getTime() >= startedAt + 365 * 24 * 60 * 60 * 1000)
+    assert.ok(auditRecord.expiresAt.getTime() <= Date.now() + 365 * 24 * 60 * 60 * 1000)
+  })
+})
+
 test('authentication endpoints rate-limit attempts and preserve request correlation', async () => {
   const prisma = {
     customer: { findUnique: async () => null },

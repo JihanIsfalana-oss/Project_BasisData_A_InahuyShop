@@ -25,6 +25,7 @@
   "dependencies": {
     "@inahuyshop/contracts": "workspace:*",
     "@inahuyshop/database": "workspace:*",
+    "@sentry/node": "^11.16.0",
     "dotenv": "^18.0.9",
     "express": "^5.3.0",
     "express-rate-limit": "^8.7.4"
@@ -32,7 +33,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@inahuyshop/config-eslint": "workspace:*",
-    "eslint": "^10.13.0",
+    "eslint": "^10.15.0",
     "globals": "^17.13.0",
     "nodemon": "^3.1.14"
   }

@@ -6,6 +6,11 @@ sharedWorkspaceLockfile: true
 
 overrides:
   'rolldown@~1.2.14': '1.2.15'
+  node-forge: 1.4.3
+  '@expo/fingerprint>minimatch': 11.0.9
+  '@prisma/config>effect': 3.22.1
+  'nodemon>minimatch': 11.0.9
+  '@typescript-eslint/typescript-estree>minimatch': 11.0.9
 
 allowBuilds:
   unrs-resolver: false

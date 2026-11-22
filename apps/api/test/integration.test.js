@@ -101,6 +101,13 @@ test(
       })
       assert.equal(categoryResponse.response.status, 201)
       const categoryId = categoryResponse.data.data.categoryId
+      const categoryAudit = await prisma.adminAuditLog.findFirst({
+        where: { requestId: categoryResponse.response.headers.get('x-request-id') },
+      })
+      assert.equal(categoryAudit.action, 'category.create')
+      assert.equal(categoryAudit.resourceType, 'category')
+      assert.equal(categoryAudit.resourceId, String(categoryId))
+      assert.ok(categoryAudit.expiresAt > categoryAudit.createdAt)
 
       const productResponse = await request('/api/v1/admin/products', {
         method: 'POST',
@@ -398,6 +405,12 @@ test(
         body: { status: 'cancelled' },
       })
       assert.equal(cancelled.response.status, 200)
+      const cancellationAudit = await prisma.adminAuditLog.findFirst({
+        where: { requestId: cancelled.response.headers.get('x-request-id') },
+      })
+      assert.equal(cancellationAudit.action, 'order.status.update')
+      assert.equal(cancellationAudit.resourceType, 'order')
+      assert.equal(cancellationAudit.resourceId, String(winningOrder.orderId))
       const raceStock = await prisma.productVariant.findUnique({
         where: { variantId: physicalVariant.variantId },
       })

@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { ApiError } from '../errors.js'
 import { authenticate } from '../middleware/authenticate.js'
 import { validateBody } from '../middleware/validate-body.js'
+import { auditAdminMutation } from '../security/admin-audit.js'
 import { resolvePrivateFile } from '../security/private-storage.js'
 import {
   bodyIssues,
@@ -264,10 +265,16 @@ export function createAdminRouter(prisma) {
   router.post('/vouchers/:voucherId/deactivate', async (req, res) => {
     const voucherId = routeId(req.params.voucherId, 'Voucher')
     try {
-      const voucher = await prisma.voucher.update({
-        where: { voucherId },
-        data: { validUntil: new Date() },
-      })
+      const voucher = await auditAdminMutation(
+        prisma,
+        req,
+        { action: 'voucher.deactivate', resourceType: 'voucher', resourceId: voucherId },
+        (tx) =>
+          tx.voucher.update({
+            where: { voucherId },
+            data: { validUntil: new Date() },
+          }),
+      )
       res.json({ success: true, data: voucher })
     } catch (error) {
       if (error?.code === 'P2025') throw new ApiError(404, 'NOT_FOUND', 'Voucher not found')
@@ -277,13 +284,23 @@ export function createAdminRouter(prisma) {
 
   router.post('/categories', categoryValidation, async (req, res) => {
     try {
-      const category = await prisma.category.create({
-        data: {
-          name: req.body.name.trim(),
-          slug: req.body.slug,
-          ...(req.body.parentId ? { parentId: req.body.parentId } : {}),
+      const category = await auditAdminMutation(
+        prisma,
+        req,
+        {
+          action: 'category.create',
+          resourceType: 'category',
+          resourceId: (created) => created.categoryId,
         },
-      })
+        (tx) =>
+          tx.category.create({
+            data: {
+              name: req.body.name.trim(),
+              slug: req.body.slug,
+              ...(req.body.parentId ? { parentId: req.body.parentId } : {}),
+            },
+          }),
+      )
       res.status(201).json({ success: true, data: category })
     } catch (error) {
       prismaConflict(error, 'Category')
@@ -306,14 +323,20 @@ export function createAdminRouter(prisma) {
       }
     }
     try {
-      const category = await prisma.category.update({
-        where: { categoryId },
-        data: {
-          name: req.body.name.trim(),
-          slug: req.body.slug,
-          parentId: req.body.parentId ?? null,
-        },
-      })
+      const category = await auditAdminMutation(
+        prisma,
+        req,
+        { action: 'category.update', resourceType: 'category', resourceId: categoryId },
+        (tx) =>
+          tx.category.update({
+            where: { categoryId },
+            data: {
+              name: req.body.name.trim(),
+              slug: req.body.slug,
+              parentId: req.body.parentId ?? null,
+            },
+          }),
+      )
       res.json({ success: true, data: category })
     } catch (error) {
       if (error?.code === 'P2025') throw new ApiError(404, 'NOT_FOUND', 'Category not found')
@@ -324,7 +347,12 @@ export function createAdminRouter(prisma) {
   router.delete('/categories/:categoryId', async (req, res) => {
     const categoryId = routeId(req.params.categoryId, 'Category')
     try {
-      await prisma.category.delete({ where: { categoryId } })
+      await auditAdminMutation(
+        prisma,
+        req,
+        { action: 'category.delete', resourceType: 'category', resourceId: categoryId },
+        (tx) => tx.category.delete({ where: { categoryId } }),
+      )
     } catch (error) {
       if (error?.code === 'P2025') throw new ApiError(404, 'NOT_FOUND', 'Category not found')
       prismaConflict(error, 'Category')
@@ -350,26 +378,36 @@ export function createAdminRouter(prisma) {
       throw new ApiError(400, 'WEIGHT_REQUIRED', 'Physical variants require weightGram')
     }
     try {
-      const product = await prisma.product.create({
-        data: {
-          categoryId: Number(req.body.categoryId),
-          name: req.body.name.trim(),
-          description: req.body.description ?? null,
-          brand: req.body.brand?.trim() || null,
-          isActive: req.body.isActive ?? true,
-          variants: {
-            create: req.body.variants.map((variant) => ({
-              sku: variant.sku.trim(),
-              variantName: variant.variantName.trim(),
-              price: variant.price,
-              stockQty: variant.deliveryType === 'physical' ? variant.stockQty : 0,
-              deliveryType: variant.deliveryType,
-              weightGram: variant.deliveryType === 'physical' ? variant.weightGram : null,
-            })),
-          },
+      const product = await auditAdminMutation(
+        prisma,
+        req,
+        {
+          action: 'product.create',
+          resourceType: 'product',
+          resourceId: (created) => created.productId,
         },
-        include: { variants: true },
-      })
+        (tx) =>
+          tx.product.create({
+            data: {
+              categoryId: Number(req.body.categoryId),
+              name: req.body.name.trim(),
+              description: req.body.description ?? null,
+              brand: req.body.brand?.trim() || null,
+              isActive: req.body.isActive ?? true,
+              variants: {
+                create: req.body.variants.map((variant) => ({
+                  sku: variant.sku.trim(),
+                  variantName: variant.variantName.trim(),
+                  price: variant.price,
+                  stockQty: variant.deliveryType === 'physical' ? variant.stockQty : 0,
+                  deliveryType: variant.deliveryType,
+                  weightGram: variant.deliveryType === 'physical' ? variant.weightGram : null,
+                })),
+              },
+            },
+            include: { variants: true },
+          }),
+      )
       res.status(201).json({ success: true, data: product })
     } catch (error) {
       if (error?.code === 'P2025')
@@ -421,7 +459,12 @@ export function createAdminRouter(prisma) {
             key === 'name' || key === 'brand' ? req.body[key]?.trim() || null : req.body[key]
       }
       try {
-        const product = await prisma.product.update({ where: { productId }, data })
+        const product = await auditAdminMutation(
+          prisma,
+          req,
+          { action: 'product.update', resourceType: 'product', resourceId: productId },
+          (tx) => tx.product.update({ where: { productId }, data }),
+        )
         res.json({ success: true, data: product })
       } catch (error) {
         if (error?.code === 'P2025') throw new ApiError(404, 'NOT_FOUND', 'Product not found')
@@ -467,16 +510,22 @@ export function createAdminRouter(prisma) {
       ) {
         throw new ApiError(400, 'INVALID_DIGITAL_STOCK', 'Digital variants must use stockQty 0')
       }
-      const updated = await prisma.productVariant.update({
-        where: { variantId },
-        data: {
-          ...(req.body.price !== undefined ? { price: req.body.price } : {}),
-          ...(req.body.stockQty !== undefined ? { stockQty: req.body.stockQty } : {}),
-          ...(req.body.variantName !== undefined
-            ? { variantName: req.body.variantName.trim() }
-            : {}),
-        },
-      })
+      const updated = await auditAdminMutation(
+        prisma,
+        req,
+        { action: 'variant.update', resourceType: 'variant', resourceId: variantId },
+        (tx) =>
+          tx.productVariant.update({
+            where: { variantId },
+            data: {
+              ...(req.body.price !== undefined ? { price: req.body.price } : {}),
+              ...(req.body.stockQty !== undefined ? { stockQty: req.body.stockQty } : {}),
+              ...(req.body.variantName !== undefined
+                ? { variantName: req.body.variantName.trim() }
+                : {}),
+            },
+          }),
+      )
       res.json({ success: true, data: updated })
     },
   )
@@ -494,14 +543,20 @@ export function createAdminRouter(prisma) {
     async (req, res) => {
       const productId = routeId(req.params.productId, 'Product')
       try {
-        const image = await prisma.productImage.create({
-          data: {
-            productId,
-            url: req.body.url.trim(),
-            altText: req.body.altText.trim(),
-            sortOrder: req.body.sortOrder ?? 0,
-          },
-        })
+        const image = await auditAdminMutation(
+          prisma,
+          req,
+          { action: 'product.image.create', resourceType: 'product', resourceId: productId },
+          (tx) =>
+            tx.productImage.create({
+              data: {
+                productId,
+                url: req.body.url.trim(),
+                altText: req.body.altText.trim(),
+                sortOrder: req.body.sortOrder ?? 0,
+              },
+            }),
+        )
         res.status(201).json({ success: true, data: image })
       } catch (error) {
         if (error?.code === 'P2003') throw new ApiError(404, 'NOT_FOUND', 'Product not found')
@@ -528,14 +583,24 @@ export function createAdminRouter(prisma) {
     if (fileInfo.size !== req.body.fileSize) {
       throw new ApiError(400, 'FILE_SIZE_MISMATCH', 'fileSize must match the private asset file')
     }
-    const asset = await prisma.digitalAsset.create({
-      data: {
-        variantId,
-        fileUrl: req.body.fileUrl,
-        fileName: req.body.fileName.trim(),
-        fileSize: BigInt(req.body.fileSize),
+    const asset = await auditAdminMutation(
+      prisma,
+      req,
+      {
+        action: 'digital_asset.create',
+        resourceType: 'digital_asset',
+        resourceId: (created) => created.assetId,
       },
-    })
+      (tx) =>
+        tx.digitalAsset.create({
+          data: {
+            variantId,
+            fileUrl: req.body.fileUrl,
+            fileName: req.body.fileName.trim(),
+            fileSize: BigInt(req.body.fileSize),
+          },
+        }),
+    )
     res.status(201).json({
       success: true,
       data: {
@@ -549,16 +614,26 @@ export function createAdminRouter(prisma) {
 
   router.post('/vouchers', voucherValidation, async (req, res) => {
     try {
-      const voucher = await prisma.voucher.create({
-        data: {
-          code: req.body.code.trim().toUpperCase(),
-          discountType: req.body.discountType,
-          discountValue: req.body.discountValue,
-          minPurchase: req.body.minPurchase ?? 0,
-          usageLimit: req.body.usageLimit ?? null,
-          validUntil: new Date(req.body.validUntil),
+      const voucher = await auditAdminMutation(
+        prisma,
+        req,
+        {
+          action: 'voucher.create',
+          resourceType: 'voucher',
+          resourceId: (created) => created.voucherId,
         },
-      })
+        (tx) =>
+          tx.voucher.create({
+            data: {
+              code: req.body.code.trim().toUpperCase(),
+              discountType: req.body.discountType,
+              discountValue: req.body.discountValue,
+              minPurchase: req.body.minPurchase ?? 0,
+              usageLimit: req.body.usageLimit ?? null,
+              validUntil: new Date(req.body.validUntil),
+            },
+          }),
+      )
       res.status(201).json({ success: true, data: voucher })
     } catch (error) {
       prismaConflict(error, 'Voucher code')
@@ -568,17 +643,23 @@ export function createAdminRouter(prisma) {
   router.patch('/vouchers/:voucherId', voucherValidation, async (req, res) => {
     const voucherId = routeId(req.params.voucherId, 'Voucher')
     try {
-      const voucher = await prisma.voucher.update({
-        where: { voucherId },
-        data: {
-          code: req.body.code.trim().toUpperCase(),
-          discountType: req.body.discountType,
-          discountValue: req.body.discountValue,
-          minPurchase: req.body.minPurchase ?? 0,
-          usageLimit: req.body.usageLimit ?? null,
-          validUntil: new Date(req.body.validUntil),
-        },
-      })
+      const voucher = await auditAdminMutation(
+        prisma,
+        req,
+        { action: 'voucher.update', resourceType: 'voucher', resourceId: voucherId },
+        (tx) =>
+          tx.voucher.update({
+            where: { voucherId },
+            data: {
+              code: req.body.code.trim().toUpperCase(),
+              discountType: req.body.discountType,
+              discountValue: req.body.discountValue,
+              minPurchase: req.body.minPurchase ?? 0,
+              usageLimit: req.body.usageLimit ?? null,
+              validUntil: new Date(req.body.validUntil),
+            },
+          }),
+      )
       res.json({ success: true, data: voucher })
     } catch (error) {
       if (error?.code === 'P2025') throw new ApiError(404, 'NOT_FOUND', 'Voucher not found')
@@ -601,7 +682,12 @@ export function createAdminRouter(prisma) {
     if (voucher.orderVouchers.length) {
       throw new ApiError(409, 'VOUCHER_USED', 'Voucher with order history cannot be deleted')
     }
-    await prisma.voucher.delete({ where: { voucherId } })
+    await auditAdminMutation(
+      prisma,
+      req,
+      { action: 'voucher.delete', resourceType: 'voucher', resourceId: voucherId },
+      (tx) => tx.voucher.delete({ where: { voucherId } }),
+    )
     res.status(204).end()
   })
 
@@ -702,89 +788,99 @@ export function createAdminRouter(prisma) {
         )
       }
     }
-    const updated =
-      req.body.status === 'cancelled'
-        ? await prisma.$transaction(async (tx) => {
-            const current = await tx.order.findUnique({
-              where: { orderId },
-              include: {
-                items: { include: { variant: { select: { deliveryType: true } } } },
-                payments: true,
-              },
-            })
-            if (!current || current.status !== 'pending_payment') {
-              throw new ApiError(
-                409,
-                'INVALID_ORDER_TRANSITION',
-                'Order is no longer pending payment',
-              )
-            }
-            for (const item of current.items) {
-              if (item.variant.deliveryType === 'physical') {
-                await tx.productVariant.update({
-                  where: { variantId: item.variantId },
-                  data: { stockQty: { increment: item.quantity } },
-                })
-              }
-            }
-            if (current.payments[0]?.status === 'pending') {
-              await tx.payment.update({
-                where: { paymentId: current.payments[0].paymentId },
-                data: { status: 'failed' },
+    const updated = await auditAdminMutation(
+      prisma,
+      req,
+      { action: 'order.status.update', resourceType: 'order', resourceId: orderId },
+      async (tx) => {
+        if (req.body.status === 'cancelled') {
+          const current = await tx.order.findUnique({
+            where: { orderId },
+            include: {
+              items: { include: { variant: { select: { deliveryType: true } } } },
+              payments: true,
+            },
+          })
+          if (!current || current.status !== 'pending_payment') {
+            throw new ApiError(
+              409,
+              'INVALID_ORDER_TRANSITION',
+              'Order is no longer pending payment',
+            )
+          }
+          for (const item of current.items) {
+            if (item.variant.deliveryType === 'physical') {
+              await tx.productVariant.update({
+                where: { variantId: item.variantId },
+                data: { stockQty: { increment: item.quantity } },
               })
             }
-            return tx.order.update({ where: { orderId }, data: { status: 'cancelled' } })
-          })
-        : await prisma.order.update({
-            where: { orderId },
-            data: { status: req.body.status },
-          })
+          }
+          if (current.payments[0]?.status === 'pending') {
+            await tx.payment.update({
+              where: { paymentId: current.payments[0].paymentId },
+              data: { status: 'failed' },
+            })
+          }
+        }
+        return tx.order.update({ where: { orderId }, data: { status: req.body.status } })
+      },
+    )
     res.json({ success: true, data: updated })
   })
 
   router.post('/orders/:orderId/shipment', shipmentValidation, async (req, res) => {
     const orderId = routeId(req.params.orderId, 'Order')
     try {
-      const shipment = await prisma.$transaction(async (tx) => {
-        const order = await tx.order.findUnique({
-          where: { orderId },
-          include: {
-            items: { include: { variant: { select: { deliveryType: true } } } },
-            shipment: true,
-          },
-        })
-        if (!order) throw new ApiError(404, 'NOT_FOUND', 'Order not found')
-        if (
-          order.status !== 'processing' ||
-          !order.items.some((item) => item.variant.deliveryType === 'physical')
-        ) {
-          throw new ApiError(
-            409,
-            'INVALID_SHIPMENT',
-            'Only processing orders containing physical items can be shipped',
-          )
-        }
-        if (order.shipment) throw new ApiError(409, 'SHIPMENT_EXISTS', 'Shipment already exists')
-        const created = await tx.shipment.create({
-          data: {
-            orderId,
-            courier: req.body.courier.trim(),
-            serviceType: req.body.serviceType.trim(),
-            trackingNumber: req.body.trackingNumber.trim(),
-            shippedAt: new Date(),
-          },
-        })
-        await tx.shipmentTrack.create({
-          data: {
-            shipmentId: created.shipmentId,
-            trackingSeq: 1,
-            status: 'picked_up',
-            eventTime: new Date(),
-          },
-        })
-        await tx.order.update({ where: { orderId }, data: { status: 'shipped' } })
-        return created
-      })
+      const shipment = await auditAdminMutation(
+        prisma,
+        req,
+        {
+          action: 'shipment.create',
+          resourceType: 'shipment',
+          resourceId: (created) => created.shipmentId,
+        },
+        async (tx) => {
+          const order = await tx.order.findUnique({
+            where: { orderId },
+            include: {
+              items: { include: { variant: { select: { deliveryType: true } } } },
+              shipment: true,
+            },
+          })
+          if (!order) throw new ApiError(404, 'NOT_FOUND', 'Order not found')
+          if (
+            order.status !== 'processing' ||
+            !order.items.some((item) => item.variant.deliveryType === 'physical')
+          ) {
+            throw new ApiError(
+              409,
+              'INVALID_SHIPMENT',
+              'Only processing orders containing physical items can be shipped',
+            )
+          }
+          if (order.shipment) throw new ApiError(409, 'SHIPMENT_EXISTS', 'Shipment already exists')
+          const created = await tx.shipment.create({
+            data: {
+              orderId,
+              courier: req.body.courier.trim(),
+              serviceType: req.body.serviceType.trim(),
+              trackingNumber: req.body.trackingNumber.trim(),
+              shippedAt: new Date(),
+            },
+          })
+          await tx.shipmentTrack.create({
+            data: {
+              shipmentId: created.shipmentId,
+              trackingSeq: 1,
+              status: 'picked_up',
+              eventTime: new Date(),
+            },
+          })
+          await tx.order.update({ where: { orderId }, data: { status: 'shipped' } })
+          return created
+        },
+      )
       res.status(201).json({ success: true, data: shipment })
     } catch (error) {
       if (error instanceof ApiError) throw error
@@ -796,42 +892,47 @@ export function createAdminRouter(prisma) {
 
   router.post('/shipments/:shipmentId/tracking', trackingValidation, async (req, res) => {
     const shipmentId = routeId(req.params.shipmentId, 'Shipment')
-    const transition = await prisma.$transaction(async (tx) => {
-      const shipment = await tx.shipment.findUnique({
-        where: { shipmentId },
-        include: { tracking: { orderBy: { trackingSeq: 'desc' }, take: 1 } },
-      })
-      if (!shipment) throw new ApiError(404, 'NOT_FOUND', 'Shipment not found')
-      const previous = shipment.tracking[0]
-      const allowedNext = {
-        picked_up: ['in_transit'],
-        in_transit: ['out_for_delivery'],
-        out_for_delivery: ['delivered'],
-        delivered: [],
-      }
-      if (previous && !allowedNext[previous.status].includes(req.body.status)) {
-        throw new ApiError(
-          409,
-          'INVALID_TRACKING_TRANSITION',
-          'Tracking status transition is invalid',
-        )
-      }
-      const created = await tx.shipmentTrack.create({
-        data: {
-          shipmentId,
-          trackingSeq: (previous?.trackingSeq ?? 0) + 1,
-          status: req.body.status,
-          eventTime: new Date(),
-        },
-      })
-      if (req.body.status === 'delivered') {
-        await tx.order.update({
-          where: { orderId: shipment.orderId },
-          data: { status: 'completed' },
+    const transition = await auditAdminMutation(
+      prisma,
+      req,
+      { action: 'shipment.tracking.create', resourceType: 'shipment', resourceId: shipmentId },
+      async (tx) => {
+        const shipment = await tx.shipment.findUnique({
+          where: { shipmentId },
+          include: { tracking: { orderBy: { trackingSeq: 'desc' }, take: 1 } },
         })
-      }
-      return created
-    })
+        if (!shipment) throw new ApiError(404, 'NOT_FOUND', 'Shipment not found')
+        const previous = shipment.tracking[0]
+        const allowedNext = {
+          picked_up: ['in_transit'],
+          in_transit: ['out_for_delivery'],
+          out_for_delivery: ['delivered'],
+          delivered: [],
+        }
+        if (previous && !allowedNext[previous.status].includes(req.body.status)) {
+          throw new ApiError(
+            409,
+            'INVALID_TRACKING_TRANSITION',
+            'Tracking status transition is invalid',
+          )
+        }
+        const created = await tx.shipmentTrack.create({
+          data: {
+            shipmentId,
+            trackingSeq: (previous?.trackingSeq ?? 0) + 1,
+            status: req.body.status,
+            eventTime: new Date(),
+          },
+        })
+        if (req.body.status === 'delivered') {
+          await tx.order.update({
+            where: { orderId: shipment.orderId },
+            data: { status: 'completed' },
+          })
+        }
+        return created
+      },
+    )
     res.status(201).json({ success: true, data: transition })
   })
 
