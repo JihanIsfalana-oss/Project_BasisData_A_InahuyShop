@@ -22,14 +22,36 @@ through the API.
 
 Use `db:migrate:deploy` to apply committed migrations in a deployment
 environment. Never run development seeds or `migrate dev` against production.
+Production API and migration connections require `NODE_ENV=production` and
+`MYSQL_SSL_CA_FILE` to point to the provider CA certificate. Both connections
+verify the certificate; do not disable TLS verification. Prisma client
+generation does not connect to MySQL and does not require database variables.
+Local development may leave the CA value empty.
+
+Check migration state before and after production deployment:
+
+```powershell
+$env:NODE_ENV = 'production'
+pnpm --filter @inahuyshop/database db:migrate:status
+pnpm --filter @inahuyshop/database db:migrate:deploy
+pnpm --filter @inahuyshop/database db:migrate:status
+```
+
+The Prisma CLI uses the configured CA with strict certificate validation.
+Missing or unreadable production CA files stop the command before connecting.
+Follow the [production runbook](../../ops/production-runbook.md) for backup,
+approval, deployment, and rollback gates.
 
 ## Data integrity
 
-The schema follows the 19 entities and transaction rules in the fixed PRD.
+The schema follows the 19 business entities and transaction rules in the fixed PRD.
 It preserves the composite keys for cart items, order vouchers, and shipment
 tracking; database uniqueness also enforces one cart per customer, at most
 one voucher and one shipment per order, and one review per order item.
 Foreign keys restrict deletion of records referenced by transaction history.
+The additional `admin_audit_log` table stores administrative action metadata
+and expires records after 365 days; its foreign key restricts deleting an
+admin account while its audit records remain.
 
 The ERD marked `product_variant.variant_id` as only partially unique, but
 `cart_item` and `order_item` reference that ID without `product_id`, and the

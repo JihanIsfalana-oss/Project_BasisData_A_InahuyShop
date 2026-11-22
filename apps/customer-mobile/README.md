@@ -8,7 +8,10 @@ tracking, profile, addresses, and reviews.
 Set `EXPO_PUBLIC_API_BASE_URL` when the API is not available at
 `http://localhost:3000/api/v1`. Use a LAN address for a physical device.
 Use an `https://` URL for preview and production builds. Cleartext allowances
-are enabled only when this variable uses `http://`.
+are enabled only for non-production builds that use `http://`.
+
+The variable is public app configuration, not a secret. Do not put credentials
+or tokens in any `EXPO_PUBLIC_*` value.
 
 ## Development
 
@@ -37,7 +40,14 @@ npx expo-doctor
 ## Release
 
 ```bash
-npx eas-cli build --profile preview
-npx eas-cli build --profile production
-npx eas-cli submit --profile production
+pnpm dlx eas-cli@27.11.0 build --profile preview
+pnpm dlx eas-cli@27.11.0 build --platform all --profile production
 ```
+
+Before a production build, link the Expo project and configure
+`extra.eas.projectId`, `android.package`, and `ios.bundleIdentifier`. Set
+`EXPO_PUBLIC_API_BASE_URL` to the production HTTPS API URL ending in
+`/api/v1`, then configure signing credentials in Expo. The repository's
+manual [EAS workflow](../../.github/workflows/eas-release.yml) checks these
+values and builds only; it does not submit to app stores. See the
+[production runbook](../../ops/production-runbook.md).

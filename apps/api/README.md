@@ -11,6 +11,12 @@ The API reads `PORT`, `NODE_ENV`, and the `MYSQL_*` settings from the process
 environment. In local development, copy the root `.env.example` to `.env`.
 Production secrets must be injected by the deployment platform's secret
 manager; do not commit `.env` files or log environment values.
+Production also requires `MYSQL_SSL_CA_FILE`, `SENTRY_DSN`, and exact HTTPS
+origins in `CORS_ALLOWED_ORIGINS`. The API validates the MySQL server
+certificate and rejects production startup when its CA file or browser
+origins are missing. Mount private digital files at the persistent
+`DIGITAL_STORAGE_ROOT`; keep one API instance while storage and rate limits
+are instance-local. See the [production runbook](../../ops/production-runbook.md).
 
 ## Endpoints
 
@@ -28,6 +34,8 @@ manager; do not commit `.env` files or log environment values.
 | `POST` | `/api/v1/auth/admin/login` | Public    |
 | `GET`  | `/api/v1/auth/me`          | Signed in |
 | `POST` | `/api/v1/auth/logout`      | Signed in |
+| `GET`  | `/api/v1/admin/session`    | Admin     |
+| `GET`  | `/api/v1/customer/session` | Customer  |
 
 Successful authentication returns an opaque bearer token once. Tokens are
 stored as SHA-256 digests in `auth_sessions`, expire after seven days, and
@@ -36,6 +44,42 @@ are revoked on logout. Authentication attempts are limited to ten per
 with multiple instances should configure a shared rate-limit store before
 public launch. Customer registration requires name, email, phone, birth date,
 and a password of at least 12 characters.
+
+Send session tokens as `Authorization: Bearer <token>`. Admin and customer
+sessions are separate. JSON request bodies are limited to 1 MB. Most
+successful responses use `{ success: true, data, requestId }`; paginated
+responses also include `meta`. Errors use
+`{ success: false, error: { code, message, details? }, requestId }`.
+Validation errors return `400`; paginated list endpoints default to `page=1` and
+`pageSize=20`, with a maximum page size of 100. The response header
+`x-request-id` can be used to correlate a response with server logs.
+
+Customer login example:
+
+```http
+POST /api/v1/auth/login
+Content-Type: application/json
+
+{"identifier":"customer@example.test","password":"<password>"}
+```
+
+Checkout requires an `Idempotency-Key` of 8 to 100 characters. Physical
+orders also require an owned `addressId`; `voucherCode` is optional:
+
+```http
+POST /api/v1/customer/checkout
+Authorization: Bearer <customer-token>
+Idempotency-Key: checkout-order-0001
+Content-Type: application/json
+
+{"addressId":1,"voucherCode":"WELCOME"}
+```
+
+Repeating a checkout with the same customer and key returns the existing
+order. Digital delivery tokens are bearer credentials. Issue or rotate one
+with `POST /api/v1/customer/digital-deliveries/:deliveryId/token`, then send
+the returned token in `x-download-token` when downloading. Never put it in a
+URL or log it.
 
 Create or rotate an admin account through a controlled local/operations
 command; do not expose admin registration over HTTP:
@@ -107,6 +151,19 @@ All paths below require an admin bearer token.
 | `PATCH`                 | `/api/v1/admin/orders/:orderId/status`                                | Begin processing or cancel a pending order                |
 | `POST`                  | `/api/v1/admin/orders/:orderId/shipment`                              | Register manual shipment                                  |
 | `POST`                  | `/api/v1/admin/shipments/:shipmentId/tracking`                        | Advance tracking status                                   |
+
+The API exposes product, variant, image, and digital-asset management, but
+the current Admin Web and Admin Mobile interfaces do not provide full
+product/variant or asset editing. See the
+[admin operations guide](../../ops/admin-operations.md) before using those
+endpoints operationally.
+
+Successful admin mutations write actor, action, resource ID, and request ID
+to `admin_audit_log` in the same database transaction. Request bodies,
+credentials, and digital-file paths are not copied into audit records.
+Records expire after 365 days; the API prunes expired rows at startup, daily,
+and before each admin mutation. Apply migration
+`20261122191008_admin_audit_log` before deploying this API version.
 
 The current checkout uses zero shipping cost because the PRD does not define
 a shipping calculation policy. Set a product-approved policy before

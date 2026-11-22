@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Badge, Button, Card, Input } from '@inahuyshop/ui-web'
 import './App.css'
-import { clearAdminSession, formatCurrency, readAdminSession, writeAdminSession } from './lib/admin-state.js'
+import {
+  clearAdminSession,
+  formatCurrency,
+  readAdminSession,
+  writeAdminSession,
+} from './lib/admin-state.js'
 import { createAdminApi } from './lib/api.js'
 
 const api = createAdminApi({ getToken: () => readAdminSession()?.token })
@@ -75,7 +80,10 @@ function Dashboard() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    api.get('/admin/dashboard').then(setSummary).catch((requestError) => setError(requestError.message))
+    api
+      .get('/admin/dashboard')
+      .then(setSummary)
+      .catch((requestError) => setError(requestError.message))
   }, [])
 
   if (error) return <div className="alert alert-error">{error}</div>
@@ -149,7 +157,11 @@ function Orders() {
     const trackingNumber = window.prompt('Nomor resi')
     if (!courier || !serviceType || !trackingNumber) return
     try {
-      await api.post(`/admin/orders/${order.orderId}/shipment`, { courier, serviceType, trackingNumber })
+      await api.post(`/admin/orders/${order.orderId}/shipment`, {
+        courier,
+        serviceType,
+        trackingNumber,
+      })
       await load()
     } catch (requestError) {
       setError(requestError.message)
@@ -171,11 +183,26 @@ function Orders() {
     <section>
       <PageHeader title="Pesanan" description="Pantau dan tindak lanjuti pesanan" />
       <div className="toolbar">
-        <Input aria-label="Cari pesanan" placeholder="Cari nomor pesanan atau pelanggan" value={query} onChange={(event) => setQuery(event.target.value)} />
+        <Input
+          aria-label="Cari pesanan"
+          placeholder="Cari nomor pesanan atau pelanggan"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+        />
         <select value={status} onChange={(event) => setStatus(event.target.value)}>
           <option value="">Semua status</option>
-          {['pending_payment', 'paid', 'processing', 'shipped', 'completed', 'cancelled', 'expired'].map((item) => (
-            <option key={item} value={item}>{item}</option>
+          {[
+            'pending_payment',
+            'paid',
+            'processing',
+            'shipped',
+            'completed',
+            'cancelled',
+            'expired',
+          ].map((item) => (
+            <option key={item} value={item}>
+              {item}
+            </option>
           ))}
         </select>
         <Button onClick={() => load(status, query)}>Cari</Button>
@@ -183,21 +210,53 @@ function Orders() {
       {error && <div className="alert alert-error">{error}</div>}
       <div className="table-wrap">
         <table>
-          <thead><tr><th>Pesanan</th><th>Pelanggan</th><th>Total</th><th>Status</th><th>Aksi</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Pesanan</th>
+              <th>Pelanggan</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
           <tbody>
             {orders.map((order) => (
               <tr key={order.orderId}>
                 <td>{order.orderNumber}</td>
                 <td>{order.customer?.fullName}</td>
                 <td>{formatCurrency(order.totalAmount)}</td>
-                <td><Badge>{order.status}</Badge></td>
+                <td>
+                  <Badge>{order.status}</Badge>
+                </td>
                 <td>
                   <div className="action-row">
-                    <Button variant="secondary" onClick={() => setSelected(order)}>Detail</Button>
-                    {order.status === 'paid' && <Button onClick={() => updateStatus(order.orderId, 'processing')}>Proses</Button>}
-                    {order.status === 'processing' && <Button onClick={() => createShipment(order)}>Kirim</Button>}
-                    {order.status === 'pending_payment' && <Button variant="danger" onClick={() => updateStatus(order.orderId, 'cancelled')}>Batalkan</Button>}
-                    {order.shipment && <Button variant="secondary" onClick={() => updateTracking(order.shipment.shipmentId)}>Tracking</Button>}
+                    <Button variant="secondary" onClick={() => setSelected(order)}>
+                      Detail
+                    </Button>
+                    {order.status === 'paid' && (
+                      <Button onClick={() => updateStatus(order.orderId, 'processing')}>
+                        Proses
+                      </Button>
+                    )}
+                    {order.status === 'processing' && (
+                      <Button onClick={() => createShipment(order)}>Kirim</Button>
+                    )}
+                    {order.status === 'pending_payment' && (
+                      <Button
+                        variant="danger"
+                        onClick={() => updateStatus(order.orderId, 'cancelled')}
+                      >
+                        Batalkan
+                      </Button>
+                    )}
+                    {order.shipment && (
+                      <Button
+                        variant="secondary"
+                        onClick={() => updateTracking(order.shipment.shipmentId)}
+                      >
+                        Tracking
+                      </Button>
+                    )}
                   </div>
                 </td>
               </tr>
@@ -207,10 +266,21 @@ function Orders() {
       </div>
       {selected && (
         <div className="detail-panel" role="dialog" aria-label="Detail pesanan">
-          <button className="icon-button" onClick={() => setSelected(null)} aria-label="Tutup detail">×</button>
+          <button
+            className="icon-button"
+            onClick={() => setSelected(null)}
+            aria-label="Tutup detail"
+          >
+            ×
+          </button>
           <h2>{selected.orderNumber}</h2>
           <p>{selected.customer?.email}</p>
-          <dl><dt>Status</dt><dd>{selected.status}</dd><dt>Total</dt><dd>{formatCurrency(selected.totalAmount)}</dd></dl>
+          <dl>
+            <dt>Status</dt>
+            <dd>{selected.status}</dd>
+            <dt>Total</dt>
+            <dd>{formatCurrency(selected.totalAmount)}</dd>
+          </dl>
         </div>
       )}
     </section>
@@ -234,7 +304,11 @@ function Catalog() {
   async function addCategory() {
     const name = window.prompt('Nama kategori')
     if (!name) return
-    const slug = name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+    const slug = name
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
     try {
       await api.post('/admin/categories', { name, slug })
       setCategories(await api.get('/categories'))
@@ -259,22 +333,32 @@ function Catalog() {
       {error && <div className="alert alert-error">{error}</div>}
       <div className="two-column">
         <Card>
-          <div className="card-heading"><h2>Kategori</h2><Button onClick={addCategory}>Tambah</Button></div>
+          <div className="card-heading">
+            <h2>Kategori</h2>
+            <Button onClick={addCategory}>Tambah</Button>
+          </div>
           <ul className="simple-list">
             {categories.map((category) => (
               <li key={category.categoryId}>
                 <span>{category.name}</span>
-                <Button variant="danger" onClick={() => deleteCategory(category)}>Hapus</Button>
+                <Button variant="danger" onClick={() => deleteCategory(category)}>
+                  Hapus
+                </Button>
               </li>
             ))}
           </ul>
         </Card>
         <Card>
-          <div className="card-heading"><h2>Produk aktif</h2></div>
+          <div className="card-heading">
+            <h2>Produk aktif</h2>
+          </div>
           <ul className="simple-list">
             {products.map((product) => (
               <li key={product.productId}>
-                <span>{product.name}<small>{product.category?.name}</small></span>
+                <span>
+                  {product.name}
+                  <small>{product.category?.name}</small>
+                </span>
                 <Badge>{product.variants?.length || 0} varian</Badge>
               </li>
             ))}
@@ -318,7 +402,13 @@ function Vouchers() {
     const validUntil = window.prompt('Berakhir (YYYY-MM-DD)')
     if (!discountValue || !validUntil) return
     try {
-      await api.post('/admin/vouchers', { code, discountType, discountValue, minPurchase, validUntil: `${validUntil}T23:59:59.000Z` })
+      await api.post('/admin/vouchers', {
+        code,
+        discountType,
+        discountValue,
+        minPurchase,
+        validUntil: `${validUntil}T23:59:59.000Z`,
+      })
       await load()
     } catch (requestError) {
       setError(requestError.message)
@@ -338,14 +428,26 @@ function Vouchers() {
   return (
     <section>
       <PageHeader title="Voucher" description="Kelola voucher dan masa berlaku" />
-      <div className="card-heading"><h2>Daftar voucher</h2><Button onClick={addVoucher}>Tambah voucher</Button></div>
+      <div className="card-heading">
+        <h2>Daftar voucher</h2>
+        <Button onClick={addVoucher}>Tambah voucher</Button>
+      </div>
       {error && <div className="alert alert-error">{error}</div>}
       <div className="voucher-grid">
         {vouchers.map((voucher) => (
           <Card key={voucher.voucherId}>
-            <div className="card-heading"><strong>{voucher.code}</strong><Badge>{voucher.isActive ? 'active' : 'inactive'}</Badge></div>
-            <p>{voucher.discountType === 'percentage' ? `${voucher.discountValue}%` : formatCurrency(voucher.discountValue)}</p>
-            <Button variant="danger" onClick={() => deactivate(voucher)}>Nonaktifkan</Button>
+            <div className="card-heading">
+              <strong>{voucher.code}</strong>
+              <Badge>{voucher.isActive ? 'active' : 'inactive'}</Badge>
+            </div>
+            <p>
+              {voucher.discountType === 'percentage'
+                ? `${voucher.discountValue}%`
+                : formatCurrency(voucher.discountValue)}
+            </p>
+            <Button variant="danger" onClick={() => deactivate(voucher)}>
+              Nonaktifkan
+            </Button>
           </Card>
         ))}
       </div>
@@ -374,7 +476,8 @@ function App() {
     })
   }
 
-  if (!session) return <Login onLogin={(admin) => setSession({ token: readAdminSession()?.token, admin })} />
+  if (!session)
+    return <Login onLogin={(admin) => setSession({ token: readAdminSession()?.token, admin })} />
 
   return (
     <div className="admin-layout">
@@ -382,14 +485,22 @@ function App() {
         <div className="brand">INAHUYSHOP</div>
         <nav aria-label="Navigasi admin">
           {sections.map(([key, label]) => (
-            <button key={key} className={section === key ? 'nav-item active' : 'nav-item'} onClick={() => setSection(key)}>{label}</button>
+            <button
+              key={key}
+              className={section === key ? 'nav-item active' : 'nav-item'}
+              onClick={() => setSection(key)}
+            >
+              {label}
+            </button>
           ))}
         </nav>
       </aside>
       <main className="admin-main">
         <header className="topbar">
           <span>Admin: {session.admin.username}</span>
-          <Button variant="secondary" onClick={logout}>Keluar</Button>
+          <Button variant="secondary" onClick={logout}>
+            Keluar
+          </Button>
         </header>
         <div className="content">
           {section === 'dashboard' && <Dashboard />}

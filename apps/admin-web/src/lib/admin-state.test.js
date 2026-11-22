@@ -20,7 +20,10 @@ test('admin session stores token and admin identity', () => {
 })
 
 test('admin session clearing removes only admin credentials', () => {
-  const storage = new Map([['admin-session', 'value'], ['customer-session', 'keep']])
+  const storage = new Map([
+    ['admin-session', 'value'],
+    ['customer-session', 'keep'],
+  ])
   clearAdminSession(storage)
 
   assert.equal(storage.has('admin-session'), false)
