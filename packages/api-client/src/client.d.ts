@@ -19,6 +19,15 @@ export function createApiClient(options: {
 }): {
   request<T = Record<string, unknown>>(
     path: string,
+    options: {
+      method: 'DELETE'
+      body?: unknown
+      headers?: Record<string, string>
+      signal?: AbortSignal
+    },
+  ): Promise<ApiResponse<T> | null>
+  request<T = Record<string, unknown>>(
+    path: string,
     options?: {
       method?: string
       body?: unknown

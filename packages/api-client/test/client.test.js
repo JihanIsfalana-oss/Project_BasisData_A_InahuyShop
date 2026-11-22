@@ -27,6 +27,36 @@ test('client serializes JSON and injects auth token', async () => {
   assert.equal(request.init.body, '{"items":[]}')
 })
 
+test('client preserves the API base path for endpoint paths with or without a leading slash', async () => {
+  const requestedUrls = []
+  const client = createApiClient({
+    baseUrl: 'https://api.example.test/api/v1',
+    timeoutMs: 1000,
+    fetchImpl: async (url) => {
+      requestedUrls.push(String(url))
+      return response({ success: true })
+    },
+  })
+
+  await client.request('/customer/cart')
+  await client.request('customer/cart')
+
+  assert.deepEqual(requestedUrls, [
+    'https://api.example.test/api/v1/customer/cart',
+    'https://api.example.test/api/v1/customer/cart',
+  ])
+})
+
+test('client accepts an empty 204 response', async () => {
+  const client = createApiClient({
+    baseUrl: 'https://api.example.test/api/v1',
+    timeoutMs: 1000,
+    fetchImpl: async () => new Response(null, { status: 204 }),
+  })
+
+  assert.equal(await client.request('/admin/categories/1', { method: 'DELETE' }), null)
+})
+
 test('client normalizes API errors', async () => {
   const client = createApiClient({
     baseUrl: 'https://api.example.test',

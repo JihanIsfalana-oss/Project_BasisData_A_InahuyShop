@@ -21,6 +21,37 @@ test('admin API adds bearer token and normalizes successful data', async () => {
   assert.equal(result.pendingOrders, 2)
 })
 
+test('admin API resolves paths without a leading slash under the versioned base URL', async () => {
+  let requestUrl
+  const api = createAdminApi({
+    baseUrl: 'http://localhost:3000/api/v1',
+    fetchImpl: async (url) => {
+      requestUrl = url
+      return new Response(JSON.stringify({ success: true, data: {} }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    },
+  })
+
+  await api.get('admin/dashboard')
+
+  assert.equal(requestUrl, 'http://localhost:3000/api/v1/admin/dashboard')
+})
+
+test('admin API preserves the empty response shape for 204 deletes', async () => {
+  const api = createAdminApi({
+    baseUrl: 'http://localhost:3000/api/v1',
+    fetchImpl: async () => new Response(null, { status: 204 }),
+  })
+
+  assert.deepEqual(await api.delete('/admin/categories/1'), {
+    data: null,
+    meta: undefined,
+    payload: null,
+  })
+})
+
 test('admin API throws normalized 401 error', async () => {
   const api = createAdminApi({
     baseUrl: 'http://localhost:3000/api/v1',

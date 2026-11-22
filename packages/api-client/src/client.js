@@ -56,13 +56,15 @@ export const createApiClient = ({
       if (token) requestHeaders.Authorization = `Bearer ${token}`
 
       try {
-        const response = await fetchImpl(String(new URL(path, baseUrl)), {
+        const apiBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`
+        const endpoint = String(path).replace(/^\/+/, '')
+        const response = await fetchImpl(String(new URL(endpoint, apiBaseUrl)), {
           method,
           headers: requestHeaders,
           body: body === undefined ? undefined : JSON.stringify(body),
           signal: controller.signal,
         })
-        const payload = await parseBody(response)
+        const payload = response.status === 204 ? null : await parseBody(response)
         if (!response.ok) {
           throw new ApiClientError({
             status: response.status,
